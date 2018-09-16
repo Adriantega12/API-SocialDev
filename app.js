@@ -1,5 +1,6 @@
-var express = require('express'),
-	app = express();
+const express = require('express');
+
+const app = express();
 
 // USERS
 
@@ -13,4 +14,4 @@ var express = require('express'),
 // MESSAGES
 
 
-app.listen( 3000, () => console.log( 'Started listening on port 3000!' ) );
+app.listen(3000, () => console.log('Started listening on port 3000!'));
