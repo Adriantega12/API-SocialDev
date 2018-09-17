@@ -6,34 +6,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Router requires
+const postsRoutes = require('./routes/posts.js');
+
 // Users
 
 
 // Posts
-// INDEX Post
-app.get('/posts', (req, res) => {
-	
-});
-
-// NEW Post
-app.post('/users/:userId/posts', (req, res) => {
-
-});
-
-// SHOW Post
-app.get('/users/:userId/posts/:postId', (req, res) => {
-
-});
-
-// UPDATE Post
-app.put('/users/:userId/posts/:postId', (req, res) => {
-
-});
-
-// DESTROY Post
-app.delete('/users/:userId/posts/:postId', (req, res) => {
-
-});
+app.use('/users/:userId/posts', postsRoutes);
 
 // Comments
 
