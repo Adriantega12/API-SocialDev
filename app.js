@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Router requires
 const postsRoutes = require('./routes/posts.js');
 const commentsRoutes = require('./routes/comments.js');
+const messagesRoutes = require('./routes/messages.js');
 
 // Users
 
@@ -16,10 +17,8 @@ const commentsRoutes = require('./routes/comments.js');
 // Posts
 app.use('/users/:userId/posts', postsRoutes);
 
-
 // Comments
 app.use('/users/:userId/posts/:postId', commentsRoutes);
-
 
 // User and Comments
 // INDEX
@@ -28,6 +27,6 @@ app.get('/users/:userId/comments', (req, res) => {
 });
 
 // Messages
-
+app.use('/users/:userId/messages', commentsRoutes);
 
 app.listen(3000, () => console.log('Started listening on port 3000!'));
