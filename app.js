@@ -6,16 +6,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// USERS
+// Router requires
+const postsRoutes = require('./routes/posts.js');
+
+// Users
 
 
-// PUBLICATIONS
+// Posts
+app.use('/users/:userId/posts', postsRoutes);
+
+// Comments
 
 
-// COMMENTS
-
-
-// MESSAGES
+// Messages
 
 
 app.listen(3000, () => console.log('Started listening on port 3000!'));
