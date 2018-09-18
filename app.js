@@ -7,18 +7,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Router requires
+const postsRoutes = require('./routes/posts.js');
 const messagesRoutes = require('./routes/messages.js');
 
-// USERS
+
+// Users
 
 
-// PUBLICATIONS
+// Posts
+app.use('/users/:userId/posts', postsRoutes);
+
+// Comments
 
 
-// COMMENTS
-
-
-// MESSAGES
+// Messages
 app.use('/users/:userId/messages', commentsRoutes);
 
 
