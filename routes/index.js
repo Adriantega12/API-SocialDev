@@ -1,5 +1,4 @@
 const { Router } = require('express');
-
 const bodyParser = require('body-parser');
 
 const router = Router();
@@ -14,7 +13,7 @@ const postsRoutes = require('./posts.js');
 const commentsRoutes = require('./comments.js');
 const messagesRoutes = require('./messages.js');
 
-router.get('/', (req, res) =>{ res.send('Principal'); });
+router.get('/', (req, res) => { res.send('Principal'); });
 
 // Users
 router.use('/users/', usersRoutes);
@@ -32,6 +31,6 @@ router.get('/users/:userId/comments', (req, res) => {
 });
 
 // Messages
-router.use('/users/:userId/messages', commentsRoutes);
+router.use('/users/:userId/messages', messagesRoutes);
 
 module.exports = router;
