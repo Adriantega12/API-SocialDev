@@ -19,16 +19,18 @@ router.get('/', (req, res) => { res.send('Principal'); });
 router.use('/users/', usersRoutes);
 
 // Posts
-router.use('/users/:userId/posts', postsRoutes);
+router.use('/posts', postsRoutes);
 
 // Comments
-router.use('/users/:userId/posts/:postId', commentsRoutes);
+router.use('/posts/:postId/comments', commentsRoutes);
 
 // User and Comments
 // INDEX
+/*
 router.get('/users/:userId/comments', (req, res) => {
 	res.send('INDEX');
 });
+*/
 
 // Messages
 router.use('/users/:userId/messages', messagesRoutes);
