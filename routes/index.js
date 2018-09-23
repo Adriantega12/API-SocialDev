@@ -12,6 +12,7 @@ const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
+const emailsRoutes = require('./emails');
 
 // Test
 router.get('/', (req, res) => { res.send('Principal'); });
@@ -27,5 +28,8 @@ router.use('/posts/:postId/comments', commentsRoutes);
 
 // Messages
 router.use('/users/:userId/messages', messagesRoutes);
+
+// Emails
+router.use('/users/:userId/emails', emailsRoutes);
 
 module.exports = router;
