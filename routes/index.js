@@ -13,24 +13,17 @@ const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
 
+// Test
 router.get('/', (req, res) => { res.send('Principal'); });
 
 // Users
-router.use('/users/', usersRoutes);
+router.use('/users', usersRoutes);
 
 // Posts
 router.use('/posts', postsRoutes);
 
 // Comments
 router.use('/posts/:postId/comments', commentsRoutes);
-
-// User and Comments
-// INDEX
-/*
-router.get('/users/:userId/comments', (req, res) => {
-	res.send('INDEX');
-});
-*/
 
 // Messages
 router.use('/users/:userId/messages', messagesRoutes);
