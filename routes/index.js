@@ -8,10 +8,10 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // Router requires
-const usersRoutes = require('./users.js');
-const postsRoutes = require('./posts.js');
-const commentsRoutes = require('./comments.js');
-const messagesRoutes = require('./messages.js');
+const usersRoutes = require('./users');
+const postsRoutes = require('./posts');
+const commentsRoutes = require('./comments');
+const messagesRoutes = require('./messages');
 
 router.get('/', (req, res) => { res.send('Principal'); });
 
