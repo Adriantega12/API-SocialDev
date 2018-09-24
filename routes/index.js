@@ -11,6 +11,7 @@ const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
+const emailsRoutes = require('./emails');
 const friendshipsRoutes = require('./friendships');
 
 // Test
@@ -27,6 +28,9 @@ router.use('/posts/:postId/comments', commentsRoutes);
 
 // Messages
 router.use('/users/:userId/messages', messagesRoutes);
+
+// Emails
+router.use('/users/:userId/emails', emailsRoutes);
 
 // Friendships
 router.use('/users/:userId/friendships', friendshipsRoutes);
