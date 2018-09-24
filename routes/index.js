@@ -12,6 +12,7 @@ const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
+const friendshipsRoutes = require('./friendships');
 
 // Test
 router.get('/', (req, res) => { res.send('Principal'); });
@@ -27,5 +28,8 @@ router.use('/posts/:postId/comments', commentsRoutes);
 
 // Messages
 router.use('/users/:userId/messages', messagesRoutes);
+
+// Friendships
+router.use('/users/:userId/friendships', friendshipsRoutes);
 
 module.exports = router;
