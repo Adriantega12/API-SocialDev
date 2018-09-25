@@ -1,4 +1,4 @@
-const router = require('express').Route();
+const router = require('express').Router();
 
 // INDEX Comment
 router.get('/', (req, res) => {

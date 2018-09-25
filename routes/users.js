@@ -1,4 +1,6 @@
-const router = require('express').Route();
+const router = require('express').Router();
+
+const emailsRoutes = require('./emails');
 
 // INDEX User
 router.get('/', (req, res) => {
@@ -24,5 +26,8 @@ router.put('/:userId', (req, res) => {
 router.delete('/:userId', (req, res) => {
   res.send('DELETE');
 });
+
+// Email routes
+router.use('/:userId/emails', emailsRoutes);
 
 module.exports = router;
