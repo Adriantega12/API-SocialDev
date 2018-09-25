@@ -1,6 +1,4 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express').Route();
 
 // INDEX Emails
 router.get('/', (req, res) => {
