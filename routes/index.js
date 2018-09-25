@@ -25,6 +25,6 @@ router.use('/posts', postsRoutes);
 router.use('/comments', commentsRoutes);
 
 // Messages
-router.use('/users/:userId/messages', messagesRoutes);
+router.use('/messages', messagesRoutes);
 
 module.exports = router;
