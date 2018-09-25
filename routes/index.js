@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 
 const router = Router();
 
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -13,6 +12,7 @@ const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
 const emailsRoutes = require('./emails');
+const friendshipsRoutes = require('./friendships');
 
 // Test
 router.get('/', (req, res) => { res.send('Principal'); });
@@ -31,5 +31,8 @@ router.use('/users/:userId/messages', messagesRoutes);
 
 // Emails
 router.use('/users/:userId/emails', emailsRoutes);
+
+// Friendships
+router.use('/users/:userId/friendships', friendshipsRoutes);
 
 module.exports = router;
