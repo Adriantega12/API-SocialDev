@@ -1,12 +1,12 @@
 
 class Post {
   /**
-   * Constructor for class User.
+   * Constructor for class Post.
    * @param  {number} id           Unique value identifies a unique post.
    * @param  {number} authorId     Unique value identifies a unique user.
-   * @param  {number} title        Title of post.
-   * @param  {number} text         Body of post.
-   * @param  {number} date         Creation date.
+   * @param  {string} title        Title of post.
+   * @param  {string} text         Body of post.
+   * @param  {date} date           Creation date.
    * @param  {number} score        Post score.
    */
   constructor(...args) {
