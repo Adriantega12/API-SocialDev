@@ -36,8 +36,96 @@ class User {
     this.id = value;
   }
 
+  set roleId(value) {
+    this.roleId = value;
+  }
+
+  set email(value) {
+    this.email = value;
+  }
+
+  set password(value) {
+    this.password = value;
+  }
+
+  set passwordSalt(value) {
+    this.passwordSalt = value;
+  }
+
+  set passwordHash(value) {
+    this.passwordHash = value;
+  }
+
+  set githubToken(value) {
+    this.githubToken = value;
+  }
+
+  set firstName(value) {
+    this.firstName = value;
+  }
+
+  set lastName(value) {
+    this.lastName = value;
+  }
+
+  set age(value) {
+    this.age = value;
+  }
+
+  set level(value) {
+    this.level = value;
+  }
+
+  set profilePic(value) {
+    this.profilePic = value;
+  }
+
   get id() {
     return this.id;
+  }
+
+  get roleId() {
+    return this.roleId;
+  }
+
+  get email() {
+    return this.email;
+  }
+
+  get password() {
+    return this.password;
+  }
+
+  get passwordSalt() {
+    return this.passwordSalt;
+  }
+
+  get passwordHash() {
+    return this.passwordHash;
+  }
+
+  get githubToken() {
+    return this.githubToken;
+  }
+
+  get firstName() {
+    return this.firstName;
+  }
+
+  get lastName() {
+    return this.lastName;
+  }
+
+  get age() {
+    return this.age;
+  }
+
+  get level() {
+    return this.level;
+  }
+
+  get profilePic() {
+    return this.profilePic;
   }
 }
 
