@@ -12,6 +12,7 @@ const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
 const friendshipsRoutes = require('./friendships');
+const scoresRoutes = require('./scores');
 
 // Test
 router.get('/', (req, res) => { res.send('Principal'); });
@@ -30,5 +31,8 @@ router.use('/messages', messagesRoutes);
 
 // Friendships
 router.use('/friendships', friendshipsRoutes);
+
+// Scores
+router.use('/scores', scoresRoutes);
 
 module.exports = router;
