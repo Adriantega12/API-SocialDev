@@ -11,7 +11,6 @@ const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
-const emailsRoutes = require('./emails');
 const friendshipsRoutes = require('./friendships');
 
 // Test
@@ -24,15 +23,12 @@ router.use('/users', usersRoutes);
 router.use('/posts', postsRoutes);
 
 // Comments
-router.use('/posts/:postId/comments', commentsRoutes);
+router.use('/comments', commentsRoutes);
 
 // Messages
-router.use('/users/:userId/messages', messagesRoutes);
-
-// Emails
-router.use('/users/:userId/emails', emailsRoutes);
+router.use('/messages', messagesRoutes);
 
 // Friendships
-router.use('/users/:userId/friendships', friendshipsRoutes);
+router.use('/friendships', friendshipsRoutes);
 
 module.exports = router;

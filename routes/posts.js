@@ -1,30 +1,28 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express').Router();
 
 // INDEX Post
 router.get('/', (req, res) => {
-	res.send('INDEX');
+  res.send('INDEX');
 });
 
 // NEW Post
 router.post('/', (req, res) => {
-	res.send('NEW');
+  res.send('NEW');
 });
 
 // SHOW Post
 router.get('/:postId', (req, res) => {
-	res.send('SHOW');
+  res.send('SHOW');
 });
 
 // UPDATE Post
 router.put('/:postId', (req, res) => {
-	res.send('UPDATE');
+  res.send('UPDATE');
 });
 
 // DESTROY Post
 router.delete('/:postId', (req, res) => {
-	res.send('DELETE');
+  res.send('DELETE');
 });
 
 module.exports = router;
