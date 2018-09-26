@@ -1,35 +1,44 @@
 class User {
   /**
    * Constructor for class User.
-   * @param  {number} id           [description]
-   * @param  {number} roleId       [description]
-   * @param  {string} email        [description]
-   * @param  {string} password     [description]
-   * @param  {string} passwordSalt [description]
-   * @param  {string} passwordHash [description]
-   * @param  {string} githubToken  [description]
-   * @param  {string} firstName    [description]
-   * @param  {string} lastName     [description]
-   * @param  {number} age          [description]
-   * @param  {number} level        [description]
-   * @param  {blob} profilePic   [description]
-   * @return {User}              [description]
+   * @param  {number} id           Unique value identifies a unique user.
+   * @param  {number} roleId       Indicates the permissions the user has.
+   * @param  {string} email        Main email of the user.
+   * @param  {string} password     Hashed password of the user.
+   * @param  {string} passwordSalt Salt added to the original password to make the hash.
+   * @param  {string} passwordHash Hash used to create the user password.
+   * @param  {string} githubToken  Token to login with Github.
+   * @param  {string} firstName    User's first name.
+   * @param  {string} lastName     User's last name.
+   * @param  {number} age          User's age.
+   * @param  {number} level        User's level for the gamefication of SocialDev.
+   * @param  {blob} profilePic     User's file profile picture.
+   * @return {User}                New instance of a User.
    */
   constructor(...args) {
-    this.id = id;
-    this.roleId = roleId;
-    this.email = email;
-    this.password = password;
-    this.passwordSalt = passwordSalt;
-    this.passwordHash = passwordHash;
-    this.githubToken = githubToken;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
-    this.level = level;
-    this.profilePic = profilePic;
-    console.log(args);
+    [
+      this.id,
+      this.roleId,
+      this.email,
+      this.password,
+      this.passwordSalt,
+      this.passwordHash,
+      this.githubToken,
+      this.firstName,
+      this.lastName,
+      this.age,
+      this.level,
+      this.profilePic,
+    ] = args;
+  }
+
+  set id(value) {
+    this.id = value;
+  }
+
+  get id() {
+    return this.id;
   }
 }
 
-module.exports = User();
+module.exports = User;
