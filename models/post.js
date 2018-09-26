@@ -1,7 +1,7 @@
 
 class Post {
   /**
-   * Constructor for class User.
+   * Constructor for class Post.
    * @param  {number} id           Unique value identifies a unique post.
    * @param  {number} authorId     Unique value identifies a unique user.
    * @param  {number} title        Title of post.
