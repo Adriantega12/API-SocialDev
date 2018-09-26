@@ -8,6 +8,7 @@ class Post {
    * @param  {string} text         Body of post.
    * @param  {date} date           Creation date.
    * @param  {number} score        Post score.
+   * @return {Post}              New instance of a Post.
    */
   constructor(...args) {
     [
