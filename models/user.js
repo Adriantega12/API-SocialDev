@@ -1,3 +1,5 @@
+// const db = require('./db');
+
 class User {
   /**
    * Constructor for class User.
@@ -31,6 +33,12 @@ class User {
       this.profilePic,
     ] = args;
   }
+
+  /*
+  save() {
+    db.create(this);
+  }
+  */
 
   set id(value) {
     this.id = value;
