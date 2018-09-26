@@ -1,27 +1,27 @@
 const router = require('express').Router();
 
-// INDEX Post
+// INDEX Friendships
 router.get('/', (req, res) => {
   res.send('INDEX');
 });
 
-// NEW Post
+// NEW Friendship
 router.post('/', (req, res) => {
   res.send('NEW');
 });
 
-// SHOW Post
-router.get('/:postId', (req, res) => {
+// SHOW Friendship
+router.get('/:friendId', (req, res) => {
   res.send('SHOW');
 });
 
-// UPDATE Post
-router.put('/:postId', (req, res) => {
+// UPDATE Friendship
+router.put('/:friendId', (req, res) => {
   res.send('UPDATE');
 });
 
-// DESTROY Post
-router.delete('/:postId', (req, res) => {
+// DESTROY Friendship
+router.delete('/:friendId', (req, res) => {
   res.send('DELETE');
 });
 

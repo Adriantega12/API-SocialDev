@@ -1,37 +1,38 @@
 const { Router } = require('express');
-
 const bodyParser = require('body-parser');
 
 const router = Router();
-
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 // Router requires
-const usersRoutes = require('./users.js');
-const postsRoutes = require('./posts.js');
-const commentsRoutes = require('./comments.js');
-const messagesRoutes = require('./messages.js');
+const usersRoutes = require('./users');
+const postsRoutes = require('./posts');
+const commentsRoutes = require('./comments');
+const messagesRoutes = require('./messages');
+const friendshipsRoutes = require('./friendships');
+const scoresRoutes = require('./scores');
 
-router.get('/', (req, res) =>{ res.send('Principal'); });
+// Test
+router.get('/', (req, res) => { res.send('Principal'); });
 
 // Users
-router.use('/users/', usersRoutes);
+router.use('/users', usersRoutes);
 
 // Posts
-router.use('/users/:userId/posts', postsRoutes);
+router.use('/posts', postsRoutes);
 
 // Comments
-router.use('/users/:userId/posts/:postId', commentsRoutes);
-
-// User and Comments
-// INDEX
-router.get('/users/:userId/comments', (req, res) => {
-	res.send('INDEX');
-});
+router.use('/comments', commentsRoutes);
 
 // Messages
-router.use('/users/:userId/messages', commentsRoutes);
+router.use('/messages', messagesRoutes);
+
+// Friendships
+router.use('/friendships', friendshipsRoutes);
+
+// Scores
+router.use('/scores', scoresRoutes);
 
 module.exports = router;
