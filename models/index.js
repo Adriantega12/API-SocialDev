@@ -6,3 +6,4 @@ exports.Email = require('./email');
 exports.Friendship = require('./friendship');
 exports.Score = require('./score');
 exports.Attachment = require('./attachment');
+exports.Role = require('./role');
