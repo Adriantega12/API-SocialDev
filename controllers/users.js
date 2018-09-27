@@ -23,27 +23,27 @@ class UsersController {
     this.processResult = this.processResult.bind(this);
   }
 
-  getAll(req, res) {
+  async getAll(req, res) {
 
   }
 
-  get(req, res) {
+  async get(req, res) {
 
   }
 
-  insert(req, res) {
+  async insert(req, res) {
 
   }
 
-  update(req, res) {
+  async update(req, res) {
 
   }
 
-  delete(req, res) {
+  async delete(req, res) {
 
   }
 
-  processResult(result) {
+  async processResult(result) {
 
   }
 }
