@@ -18,43 +18,43 @@ class Friendship {
     ] = args;
   }
 
-  set userOneId(value) {
+  setUserOneId(value) {
     this.userOneId = value;
   }
 
-  set userTwoId(value) {
+  setUserTwoId(value) {
     this.userTwoId = value;
   }
 
-  set lastActionId(value) {
+  setLastActionId(value) {
     this.lastActionId = value;
   }
 
-  set date(value) {
+  setDate(value) {
     this.date = value;
   }
 
-  set status(value) {
+  setStatus(value) {
     this.status = value;
   }
 
-  get userOneId() {
+  getUserOneId() {
     return this.userOneId;
   }
 
-  get userTwoId() {
+  getUserTwoId() {
     return this.userTwoId;
   }
 
-  get lastActionId() {
+  getLastActionId() {
     return this.lastActionId;
   }
 
-  get date() {
+  getDate() {
     return this.date;
   }
 
-  get status() {
+  getStatus() {
     return this.status;
   }
 }

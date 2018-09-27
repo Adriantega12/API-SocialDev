@@ -14,27 +14,27 @@ class Attachment {
     ] = args;
   }
 
-  set id(value) {
+  setId(value) {
     this.id = value;
   }
 
-  set postId(value) {
+  setPostId(value) {
     this.postId = value;
   }
 
-  set data(value) {
+  setData(value) {
     this.data = value;
   }
 
-  get id() {
+  getId() {
     return this.id;
   }
 
-  get postId() {
+  getPostId() {
     return this.postId;
   }
 
-  get data() {
+  getData() {
     return this.data;
   }
 }

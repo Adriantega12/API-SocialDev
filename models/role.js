@@ -5,10 +5,10 @@ class Role {
    * @param  {string} name                    name of Role.
    * @param  {bool} canReadPosts              .
    * @param  {bool} canWritePosts             Permission
-   * @param  {bool} canEdithOwnPosts          Permission.
-   * @param  {bool} canDeletePosts            Permission.
-   * @param  {bool} canEdithOthersPost        Permission.
-   * @param  {bool} canDeleteOthersPost       Permission.
+   * @param  {bool} canEditOwnPosts           Permission.
+   * @param  {bool} canDeleteOwnPosts         Permission.
+   * @param  {bool} canEditOthersPosts        Permission.
+   * @param  {bool} canDeleteOthersPosts      Permission.
    * @param  {bool} canManageOtherUsersPost   Permission.
    * @return {Role}                           New instance of a Role.
    */
@@ -18,84 +18,84 @@ class Role {
       this.name,
       this.canReadPosts,
       this.canWritePosts,
-      this.canEdithOwnPosts,
-      this.canDeletePosts,
-      this.canEdithOthersPost,
-      this.canDeleteOthersPost,
-      this.canManageOtherUsersPost,
+      this.canEditOwnPosts,
+      this.canDeleteOwnPosts,
+      this.canEditOthersPosts,
+      this.canDeleteOthersPosts,
+      this.canManageOtherUsers,
     ] = args;
   }
 
-  set id(value) {
+  setId(value) {
     this.id = value;
   }
 
-  set name(value) {
+  setName(value) {
     this.name = value;
   }
 
-  set canReadPosts(value) {
+  setCanReadPosts(value) {
     this.canReadPosts = value;
   }
 
-  set canWritePosts(value) {
+  setCanWritePosts(value) {
     this.canWritePosts = value;
   }
 
-  set canEdithOwnPosts(value) {
-    this.canEdithOwnPosts = value;
+  setCanEditOwnPosts(value) {
+    this.canEditOwnPosts = value;
   }
 
-  set canDeletePosts(value) {
-    this.canDeletePosts = value;
+  setcanDeleteOwnPosts(value) {
+    this.canDeleteOwnPosts = value;
   }
 
-  set canEdithOthersPost(value) {
-    this.canEdithOthersPost = value;
+  setcanEditOthersPosts(value) {
+    this.canEditOthersPosts = value;
   }
 
-  set canDeleteOthersPost(value) {
-    this.canDeleteOthersPost = value;
+  setcanDeleteOthersPosts(value) {
+    this.canDeleteOthersPosts = value;
   }
 
-  set canManageOtherUsersPost(value) {
-    this.canManageOtherUsersPost = value;
+  setCanManageOtherUsers(value) {
+    this.canManageOtherUsers = value;
   }
 
-  get id() {
+  getId() {
     return this.id;
   }
 
-  get name() {
+  getName() {
     return this.name;
   }
 
-  get canReadPosts() {
+  getCanReadPosts() {
     return this.canReadPosts;
   }
 
-  get canWritePosts() {
+  getCanWritePosts() {
     return this.canWritePosts;
   }
 
-  get canEdithOwnPosts() {
-    return this.canEdithOwnPosts;
+  getCanEditOwnPosts() {
+    return this.canEditOwnPosts;
   }
 
-  get canDeletePosts() {
-    return this.canDeletePosts;
+  getcanDeleteOwnPosts() {
+    return this.canDeleteOwnPosts;
   }
 
-  get canEdithOthersPost() {
-    return this.canEdithOthersPost;
+  getcanEditOthersPosts() {
+    return this.canEditOthersPosts;
   }
 
-  get canDeleteOthersPost() {
-    return this.canDeleteOthersPost;
+  getcanDeleteOthersPosts() {
+    return this.canDeleteOthersPosts;
   }
 
-  get canDeleteOthersPost() {
-    return this.canDeleteOthersPost;
+  getCanManageOtherUsers() {
+    return this.canManageOtherUsers;
   }
 }
 

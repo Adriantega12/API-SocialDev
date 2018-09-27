@@ -40,99 +40,99 @@ class User {
   }
   */
 
-  set id(value) {
+  setId(value) {
     this.id = value;
   }
 
-  set roleId(value) {
+  setRoleId(value) {
     this.roleId = value;
   }
 
-  set email(value) {
+  setEmail(value) {
     this.email = value;
   }
 
-  set password(value) {
+  setPassword(value) {
     this.password = value;
   }
 
-  set passwordSalt(value) {
+  setPasswordSalt(value) {
     this.passwordSalt = value;
   }
 
-  set passwordHash(value) {
+  setPasswordHash(value) {
     this.passwordHash = value;
   }
 
-  set githubToken(value) {
+  setGithubToken(value) {
     this.githubToken = value;
   }
 
-  set firstName(value) {
+  setFirstName(value) {
     this.firstName = value;
   }
 
-  set lastName(value) {
+  setLastName(value) {
     this.lastName = value;
   }
 
-  set age(value) {
+  setAge(value) {
     this.age = value;
   }
 
-  set level(value) {
+  setLevel(value) {
     this.level = value;
   }
 
-  set profilePic(value) {
+  setProfilePic(value) {
     this.profilePic = value;
   }
 
-  get id() {
+  getId() {
     return this.id;
   }
 
-  get roleId() {
+  getRoleId() {
     return this.roleId;
   }
 
-  get email() {
+  getEmail() {
     return this.email;
   }
 
-  get password() {
+  getPassword() {
     return this.password;
   }
 
-  get passwordSalt() {
+  getPasswordSalt() {
     return this.passwordSalt;
   }
 
-  get passwordHash() {
+  getPasswordHash() {
     return this.passwordHash;
   }
 
-  get githubToken() {
+  getGithubToken() {
     return this.githubToken;
   }
 
-  get firstName() {
+  getFirstName() {
     return this.firstName;
   }
 
-  get lastName() {
+  getLastName() {
     return this.lastName;
   }
 
-  get age() {
+  getAge() {
     return this.age;
   }
 
-  get level() {
+  getLevel() {
     return this.level;
   }
 
-  get profilePic() {
+  getProfilePic() {
     return this.profilePic;
   }
 }
