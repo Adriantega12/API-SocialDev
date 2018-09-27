@@ -4,7 +4,7 @@ class Friendship {
    * @param  {number} userOneId          Friendship one.
    * @param  {number} userTwoId          Friendship two.
    * @param  {number} lastActionId       Last action.
-   * @param  {number} date               date friendship.
+   * @param  {date} date                 Date friendship.
    * @param  {number} status             status friendship.
    * @return {Friendship}                New instance of a Friendship.
    */
