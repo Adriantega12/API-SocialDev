@@ -21,52 +21,52 @@ class Post {
     ] = args;
   }
 
-  setId(value) {
+  set id(value) {
     this.id = value;
   }
 
-  setAuthorId(value) {
+  set authorId(value) {
     this.authorId = value;
   }
 
-  setTitle(value) {
+  set title(value) {
     this.title = value;
   }
 
-  setText(value) {
+  set text(value) {
     this.text = value;
   }
 
-  setDate(value) {
+  set date(value) {
     this.date = value;
   }
 
-  setScore(value) {
+  set score(value) {
     this.score = value;
   }
 
-  getId() {
+  get id() {
     return this.id;
   }
 
-  getAuthorId() {
+  get authorId() {
     return this.authorId;
   }
 
-  getTitle() {
+  get title() {
     return this.title;
   }
 
-  getText() {
+  get text() {
     return this.text;
   }
 
-  getDate() {
+  get date() {
     return this.date;
   }
 
-  getScore() {
-    return this.score;
+  get score() {
+    return this.score
   }
 }
 

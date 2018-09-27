@@ -12,19 +12,19 @@ class Email {
     ] = args;
   }
 
-  setId(value) {
+  set id(value) {
     this.id = value;
   }
 
-  setEmail(value) {
+  set email(value) {
     this.email = value;
   }
 
-  getId() {
+  get id(){
     return this.email;
   }
 
-  getEmail() {
+  get email(){
     return this.email;
   }
 }

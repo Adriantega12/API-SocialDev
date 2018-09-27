@@ -19,43 +19,43 @@ class Message {
     ] = args;
   }
 
-  setId(value) {
+  set id(value) {
     this.id = value;
   }
 
-  setSenderId(value) {
+  set senderId(value) {
     this.senderId = value;
   }
 
-  setReceiverId(value) {
+  set receiverId(value) {
     this.receiverId = value;
   }
 
-  setText(value) {
+  set text(value) {
     this.text = value;
   }
 
-  setDate(value) {
+  set date(value) {
     this.date = value;
   }
 
-  getId() {
+  get id() {
     return this.id;
   }
 
-  getSenderId() {
+  get senderId() {
     return this.senderId;
   }
 
-  getReceiverId() {
-    return this.receiverId;
+  get receiverId() {
+    return ;
   }
 
-  getText() {
+  get text() {
     return this.text;
   }
 
-  getDate() {
+  get date() {
     return this.date;
   }
 }
