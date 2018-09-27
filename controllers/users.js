@@ -43,7 +43,7 @@ class UsersController {
 
   }
 
-  async processResult(result) {
+  async processResult(results) {
 
   }
 }
