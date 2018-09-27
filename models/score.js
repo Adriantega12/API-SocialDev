@@ -7,45 +7,16 @@ class Score {
    * @param  {date} date               Date score.
    * @return {Score}                   New instance of a Score.
    */
-  constructor(...args) {
-    [
-      this.postsId,
-      this.usersId,
-      this.score,
-      this.date,
-    ] = args;
-  }
-
-  setPostsId(value) {
-    this.postsId = value;
-  }
-
-  setUsersId(value) {
-    this.usersId = value;
-  }
-
-  setScore(value) {
-    this.score = value;
-  }
-
-  setDate(value) {
-    this.date = value;
-  }
-
-  getPostsId() {
-    return this.postsId;
-  }
-
-  getUsersId() {
-    return this.usersId;
-  }
-
-  getScore() {
-    return this.score;
-  }
-
-  getDate() {
-    return this.date;
+  constructor({
+    postsId,
+    usersId,
+    score,
+    date,
+  }) {
+    this.postsId = postsId;
+    this.usersId = usersId;
+    this.score = score;
+    this.date = date;
   }
 }
 

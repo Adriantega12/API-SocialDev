@@ -5,27 +5,12 @@ class Email {
    * @param  {number} email       Identifies of send.
    * @return {Email}              New instance of a Email.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.mail,
-    ] = args;
-  }
-
-  setId(value) {
-    this.id = value;
-  }
-
-  setEmail(value) {
-    this.email = value;
-  }
-
-  getId() {
-    return this.email;
-  }
-
-  getEmail() {
-    return this.email;
+  constructor({
+    id,
+    mail,
+  }) {
+    this.id = id;
+    this.mail = mail;
   }
 }
 

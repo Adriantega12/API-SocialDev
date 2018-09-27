@@ -9,63 +9,20 @@ class Comment {
    * @param  {bool} isEdited          Is true if the comment is edited.
    * @return {Comment}                New instance of a Comment.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.postId,
-      this.authorId,
-      this.date,
-      this.content,
-      this.isEdited,
-    ] = args;
-  }
-
-  setId(value) {
-    this.id = value;
-  }
-
-  setPostId(value) {
-    this.postId = value;
-  }
-
-  setAuthorId(value) {
-    this.authorId = value;
-  }
-
-  setDate(value) {
-    this.date = value;
-  }
-
-  setContent(value) {
-    this.content = value;
-  }
-
-  setIsEdited(value) {
-    this.isEdited = value;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getPostId() {
-    return this.postId;
-  }
-
-  getAuthorId() {
-    return this.authorId;
-  }
-
-  getDate() {
-    return this.date;
-  }
-
-  getContent() {
-    return this.content;
-  }
-
-  getIsEdited() {
-    return this.isEdited;
+  constructor({
+    id,
+    postId,
+    authorId,
+    date,
+    content,
+    isEdited,
+  }) {
+    this.id = id;
+    this.postId = postId;
+    this.authorId = authorId;
+    this.date = date;
+    this.content = content;
+    this.isEdited = isEdited;
   }
 }
 

@@ -10,63 +10,20 @@ class Post {
    * @param  {number} score        Post score.
    * @return {Post}              New instance of a Post.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.authorId,
-      this.title,
-      this.text,
-      this.date,
-      this.score,
-    ] = args;
-  }
-
-  setId(value) {
-    this.id = value;
-  }
-
-  setAuthorId(value) {
-    this.authorId = value;
-  }
-
-  setTitle(value) {
-    this.title = value;
-  }
-
-  setText(value) {
-    this.text = value;
-  }
-
-  setDate(value) {
-    this.date = value;
-  }
-
-  setScore(value) {
-    this.score = value;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getAuthorId() {
-    return this.authorId;
-  }
-
-  getTitle() {
-    return this.title;
-  }
-
-  getText() {
-    return this.text;
-  }
-
-  getDate() {
-    return this.date;
-  }
-
-  getScore() {
-    return this.score;
+  constructor({
+    id,
+    authorId,
+    title,
+    text,
+    date,
+    score,
+  }) {
+    this.id = id;
+    this.authorId = authorId;
+    this.title = title;
+    this.text = text;
+    this.date = date;
+    this.score = score;
   }
 }
 

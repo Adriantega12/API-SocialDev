@@ -12,90 +12,26 @@ class Role {
    * @param  {bool} canManageOtherUsersPost   Permission.
    * @return {Role}                           New instance of a Role.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.name,
-      this.canReadPosts,
-      this.canWritePosts,
-      this.canEditOwnPosts,
-      this.canDeleteOwnPosts,
-      this.canEditOthersPosts,
-      this.canDeleteOthersPosts,
-      this.canManageOtherUsers,
-    ] = args;
-  }
-
-  setId(value) {
-    this.id = value;
-  }
-
-  setName(value) {
-    this.name = value;
-  }
-
-  setCanReadPosts(value) {
-    this.canReadPosts = value;
-  }
-
-  setCanWritePosts(value) {
-    this.canWritePosts = value;
-  }
-
-  setCanEditOwnPosts(value) {
-    this.canEditOwnPosts = value;
-  }
-
-  setcanDeleteOwnPosts(value) {
-    this.canDeleteOwnPosts = value;
-  }
-
-  setcanEditOthersPosts(value) {
-    this.canEditOthersPosts = value;
-  }
-
-  setcanDeleteOthersPosts(value) {
-    this.canDeleteOthersPosts = value;
-  }
-
-  setCanManageOtherUsers(value) {
-    this.canManageOtherUsers = value;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getCanReadPosts() {
-    return this.canReadPosts;
-  }
-
-  getCanWritePosts() {
-    return this.canWritePosts;
-  }
-
-  getCanEditOwnPosts() {
-    return this.canEditOwnPosts;
-  }
-
-  getcanDeleteOwnPosts() {
-    return this.canDeleteOwnPosts;
-  }
-
-  getcanEditOthersPosts() {
-    return this.canEditOthersPosts;
-  }
-
-  getcanDeleteOthersPosts() {
-    return this.canDeleteOthersPosts;
-  }
-
-  getCanManageOtherUsers() {
-    return this.canManageOtherUsers;
+  constructor({
+    id,
+    name,
+    canReadPosts,
+    canWritePosts,
+    canEditOwnPosts,
+    canDeleteOwnPosts,
+    canEditOthersPosts,
+    canDeleteOthersPosts,
+    canManageOtherUsers,
+  }) {
+    this.id = id;
+    this.name = name;
+    this.canReadPosts = canReadPosts;
+    this.canWritePosts = canWritePosts;
+    this.canEditOwnPosts = canEditOwnPosts;
+    this.canDeleteOwnPosts = canDeleteOwnPosts;
+    this.canEditOthersPosts = canEditOthersPosts;
+    this.canDeleteOthersPosts = canDeleteOthersPosts;
+    this.canManageOtherUsers = canManageOtherUsers;
   }
 }
 

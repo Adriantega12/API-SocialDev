@@ -6,36 +6,14 @@ class Attachment {
    * @param  {date} data          Thing.
    * @return {Attachment}         New instance of a Attachment.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.postId,
-      this.data,
-    ] = args;
-  }
-
-  setId(value) {
-    this.id = value;
-  }
-
-  setPostId(value) {
-    this.postId = value;
-  }
-
-  setData(value) {
-    this.data = value;
-  }
-
-  getId() {
-    return this.id;
-  }
-
-  getPostId() {
-    return this.postId;
-  }
-
-  getData() {
-    return this.data;
+  constructor({
+    id,
+    postId,
+    data,
+  }) {
+    this.id = id;
+    this.postId = postId;
+    this.data = data;
   }
 }
 
