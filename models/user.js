@@ -17,123 +17,32 @@ class User {
    * @param  {blob} profilePic     User's file profile picture.
    * @return {User}                New instance of a User.
    */
-  constructor(...args) {
-    [
-      this.id,
-      this.roleId,
-      this.email,
-      this.password,
-      this.passwordSalt,
-      this.passwordHash,
-      this.githubToken,
-      this.firstName,
-      this.lastName,
-      this.age,
-      this.level,
-      this.profilePic,
-    ] = args;
-  }
-
-  /*
-  save() {
-    db.create(this);
-  }
-  */
-
-  set id(value) {
-    this.id = value;
-  }
-
-  set roleId(value) {
-    this.roleId = value;
-  }
-
-  set email(value) {
-    this.email = value;
-  }
-
-  set password(value) {
-    this.password = value;
-  }
-
-  set passwordSalt(value) {
-    this.passwordSalt = value;
-  }
-
-  set passwordHash(value) {
-    this.passwordHash = value;
-  }
-
-  set githubToken(value) {
-    this.githubToken = value;
-  }
-
-  set firstName(value) {
-    this.firstName = value;
-  }
-
-  set lastName(value) {
-    this.lastName = value;
-  }
-
-  set age(value) {
-    this.age = value;
-  }
-
-  set level(value) {
-    this.level = value;
-  }
-
-  set profilePic(value) {
-    this.profilePic = value;
-  }
-
-  get id() {
-    return this.id;
-  }
-
-  get roleId() {
-    return this.roleId;
-  }
-
-  get email() {
-    return this.email;
-  }
-
-  get password() {
-    return this.password;
-  }
-
-  get passwordSalt() {
-    return this.passwordSalt;
-  }
-
-  get passwordHash() {
-    return this.passwordHash;
-  }
-
-  get githubToken() {
-    return this.githubToken;
-  }
-
-  get firstName() {
-    return this.firstName;
-  }
-
-  get lastName() {
-    return this.lastName;
-  }
-
-  get age() {
-    return this.age;
-  }
-
-  get level() {
-    return this.level;
-  }
-
-  get profilePic() {
-    return this.profilePic;
+  constructor({
+    id,
+    roleId,
+    email,
+    password,
+    passwordSalt,
+    passwordHash,
+    githubToken,
+    firstName,
+    lastName,
+    age,
+    level,
+    profilePic,
+  }) {
+    this.id = id;
+    this.roleId = roleId;
+    this.email = email;
+    this.password = password;
+    this.passwordSalt = passwordSalt;
+    this.passwordHash = passwordHash;
+    this.githubToken = githubToken;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.level = level;
+    this.profilePic = profilePic;
   }
 }
 
