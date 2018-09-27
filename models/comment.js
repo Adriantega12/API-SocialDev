@@ -20,51 +20,51 @@ class Comment {
     ] = args;
   }
 
-  set id(value) {
+  setId(value) {
     this.id = value;
   }
 
-  set postId(value) {
+  setPostId(value) {
     this.postId = value;
   }
 
-  set authorId(value) {
+  setAuthorId(value) {
     this.authorId = value;
   }
 
-  set date(value) {
+  setDate(value) {
     this.date = value;
   }
 
-  set content(value) {
+  setContent(value) {
     this.content = value;
   }
 
-  set isEdited(value) {
+  setIsEdited(value) {
     this.isEdited = value;
   }
 
-  get id() {
+  getId() {
     return this.id;
   }
 
-  get postId() {
+  getPostId() {
     return this.postId;
   }
 
-  get authorId() {
+  getAuthorId() {
     return this.authorId;
   }
 
-  get date() {
+  getDate() {
     return this.date;
   }
 
-  get content() {
+  getContent() {
     return this.content;
   }
 
-  get isEdited() {
+  getIsEdited() {
     return this.isEdited;
   }
 }

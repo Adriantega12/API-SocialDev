@@ -16,35 +16,35 @@ class Score {
     ] = args;
   }
 
-  set postsId(value) {
+  setPostsId(value) {
     this.postsId = value;
   }
 
-  set usersId(value) {
+  setUsersId(value) {
     this.usersId = value;
   }
 
-  set score(value) {
+  setScore(value) {
     this.score = value;
   }
 
-  set date(value) {
+  setDate(value) {
     this.date = value;
   }
 
-  get postsId() {
+  getPostsId() {
     return this.postsId;
   }
 
-  get usersId() {
+  getUsersId() {
     return this.usersId;
   }
 
-  get score() {
+  getScore() {
     return this.score;
   }
 
-  get date() {
+  getDate() {
     return this.date;
   }
 }
