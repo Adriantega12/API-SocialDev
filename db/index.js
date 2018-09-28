@@ -8,7 +8,6 @@ class DB {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
     });
-
     this.con.connect();
     this.tupples = undefined;
   }
@@ -22,7 +21,6 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM ??', [table], (error, results) => {
         if (error) throw reject(error);
-
         this.tupples = results;
         resolve(this.tupples);
       });
@@ -43,7 +41,6 @@ class DB {
         if (error) {
           throw reject(error);
         }
-
         this.tupples = results;
         resolve(this.tupples);
       });
@@ -63,7 +60,6 @@ class DB {
         if (error) {
           throw reject(error);
         }
-
         resolve(results);
       });
     });
@@ -82,7 +78,6 @@ class DB {
         if (error) {
           throw reject(error);
         }
-
         resolve(results);
       });
     });
@@ -101,12 +96,10 @@ class DB {
         if (error) {
           throw reject(error);
         }
-
         resolve(results);
       });
     });
     return promise;
   }
 }
-
 module.exports = new DB();
