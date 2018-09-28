@@ -10,6 +10,7 @@ class UsersController {
     this.delete = this.delete.bind(this);
   }
 
+  // ***Needs reviewing***
   async getAll(req, res) {
     const data = await User.getAll();
 
@@ -34,6 +35,8 @@ class UsersController {
 
     if (data.length === 0) {
       res.status(404); // Not Found
+    } else {
+      res.status(200); // OK
     }
 
     res.send(data);
@@ -45,7 +48,7 @@ class UsersController {
     if (data.length === 0) {
       res.status(409); // Conflict
     } else {
-      res.status(200); // Created
+      res.status(201); // Created
     }
 
     res.send(data);
@@ -56,7 +59,15 @@ class UsersController {
   }
 
   async delete(req, res) {
+    const deleted = await User.delete(req.params.userId);
 
+    if (deleted) {
+      res.status(200); // OK
+    } else {
+      res.status(404); // Not Found
+    }
+
+    res.send();
   }
 }
 
