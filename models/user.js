@@ -59,20 +59,16 @@ class User {
     return data.length !== 0 ? new User(data[0]) : data;
   }
 
-  static async insert({
-    roleId,
-    email,
-    password,
-    passwordSalt,
-    passwordHash,
-    githubToken,
-    firstName,
-    lastName,
-    age,
-    level,
-    profilePic,
-  }) {
+  static async insert(user) {
+    let id;
+    try {
+      const response = await db.insert('users', user);
+      id = response.insertId;
+    } catch (error) {
+      return error;
+    }
 
+    return id > 0 ? new User({ id, ...user }) : [];
   }
 
   async update() {
