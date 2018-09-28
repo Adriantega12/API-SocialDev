@@ -71,11 +71,18 @@ class User {
     return id > 0 ? new User({ id, ...user }) : [];
   }
 
-  async update() {
+  async update(keyVals) {
+    let updatedRows;
+    try {
+      updatedRows = await db.update('users', keyVals, this.id).changedRows;
+    } catch (error) {
+      return error;
+    }
 
+    return updatedRows > 0;
   }
 
-  async delete() {
+  static async delete() {
 
   }
 }
