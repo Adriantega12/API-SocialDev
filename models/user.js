@@ -55,7 +55,8 @@ class User {
   }
 
   static async get(userId) {
-
+    const data = await db.get('users', '*', userId);
+    return data.length !== 0 ? new User(data[0]) : data;
   }
 
   static async insert({
