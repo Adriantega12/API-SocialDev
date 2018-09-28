@@ -1,40 +1,33 @@
-const express = require('express');
+const router = require('express').Router();
 
-const router = express.Router();
+const emailsRoutes = require('./emails');
 
 // INDEX User
 router.get('/', (req, res) => {
-	res.send('INDEX');
+  res.send('INDEX');
 });
 
 // NEW User
 router.post('/', (req, res) => {
-	res.send('NEW');
+  res.send('NEW');
 });
 
 // SHOW User
 router.get('/:userId', (req, res) => {
-	res.send('SHOW');
+  res.send('SHOW');
 });
 
 // UPDATE User
 router.put('/:userId', (req, res) => {
-	res.send('UPDATE');
+  res.send('UPDATE');
 });
 
 // DESTROY User
 router.delete('/:userId', (req, res) => {
-	res.send('DELETE');
+  res.send('DELETE');
 });
 
-// INDEX User's posts
-router.get('/users/:userId/posts', (req, res) => {
-	res.send('INDEX User\'s posts');
-});
-
-// INDEX User's comments
-router.get('/users/:userId/comments', (req, res) => {
-	res.send('INDEX User\'s comments');
-});
+// Email routes
+router.use('/:userId/emails', emailsRoutes);
 
 module.exports = router;

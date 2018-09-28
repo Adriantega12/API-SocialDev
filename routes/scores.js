@@ -1,27 +1,27 @@
 const router = require('express').Router();
 
-// INDEX Post
+// INDEX Scores
 router.get('/', (req, res) => {
   res.send('INDEX');
 });
 
-// NEW Post
+// NEW Score
 router.post('/', (req, res) => {
   res.send('NEW');
 });
 
-// SHOW Post
-router.get('/:postId', (req, res) => {
+// SHOW Score
+router.get('/:scoreId', (req, res) => {
   res.send('SHOW');
 });
 
-// UPDATE Post
-router.put('/:postId', (req, res) => {
+// UPDATE Score
+router.put('/:scoreId', (req, res) => {
   res.send('UPDATE');
 });
 
-// DESTROY Post
-router.delete('/:postId', (req, res) => {
+// DESTROY Score
+router.delete('/:scoreId', (req, res) => {
   res.send('DELETE');
 });
 
