@@ -1,11 +1,10 @@
 const router = require('express').Router();
+const { usersController } = require('../controllers');
 
 const emailsRoutes = require('./emails');
 
 // INDEX User
-router.get('/', (req, res) => {
-  res.send('INDEX');
-});
+router.get('/', usersController.getAll);
 
 // NEW User
 router.post('/', (req, res) => {
