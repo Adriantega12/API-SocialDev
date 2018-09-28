@@ -55,7 +55,21 @@ class UsersController {
   }
 
   async update(req, res) {
+    const data = await User.get(req.params.userId);
 
+    if (data.length === 0) {
+      res.status(404).send(data); // Not Found
+    }
+
+    const updated = await data.update(req.body);
+
+    if (updated) {
+      res.status(200); // OK
+    } else {
+      res.status(409); // Conflict
+    }
+
+    res.send(data);
   }
 
   async delete(req, res) {

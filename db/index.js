@@ -76,9 +76,9 @@ class DB {
    * @param  {object} obj   Model object that will update the old tupple.
    * @return {object}       Information about the update of the object.
    */
-  async update(table, obj) {
+  async update(table, obj, id) {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, obj.id], (error, results) => {
+      this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, id], (error, results) => {
         if (error) {
           throw reject(error);
         }
