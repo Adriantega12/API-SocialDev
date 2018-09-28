@@ -30,7 +30,13 @@ class UsersController {
   }
 
   async get(req, res) {
+    const data = await User.get(req.params.userId);
 
+    if (data.length === 0) {
+      res.status(404);
+    }
+
+    res.send(data);
   }
 
   async insert(req, res) {
