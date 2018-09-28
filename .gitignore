@@ -1,4 +1,3 @@
 node_modules/*
-.editorconfig
 .env
 package-lock.json
