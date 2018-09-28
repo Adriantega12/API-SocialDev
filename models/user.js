@@ -43,18 +43,15 @@ class User {
     this.age = age;
     this.level = level;
     this.profilePic = profilePic;
-
-    /*
-    this.getAll = this.getAll.bind(this);
-    this.get = this.get.bind(this);
-    this.insert = this.insert.bind(this);
-    this.update = this.update.bind(this);
-    this.delete = this.delete.bind(this);
-    */
   }
 
   static async getAll() {
-
+    const data = await db.getAll('users');
+    const response = [];
+    data.forEach((row) => {
+      response.push(new User(row));
+    });
+    return response;
   }
 
   static async get(userId) {
