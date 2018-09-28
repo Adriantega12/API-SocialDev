@@ -1,4 +1,4 @@
-// const db = require('./db');
+const db = require('../db');
 
 class User {
   /**
@@ -43,6 +43,46 @@ class User {
     this.age = age;
     this.level = level;
     this.profilePic = profilePic;
+
+    /*
+    this.getAll = this.getAll.bind(this);
+    this.get = this.get.bind(this);
+    this.insert = this.insert.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
+    */
+  }
+
+  static async getAll() {
+
+  }
+
+  static async get(userId) {
+
+  }
+
+  static async insert({
+    roleId,
+    email,
+    password,
+    passwordSalt,
+    passwordHash,
+    githubToken,
+    firstName,
+    lastName,
+    age,
+    level,
+    profilePic,
+  }) {
+
+  }
+
+  async update() {
+
+  }
+
+  async delete() {
+
   }
 }
 
