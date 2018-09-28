@@ -33,14 +33,22 @@ class UsersController {
     const data = await User.get(req.params.userId);
 
     if (data.length === 0) {
-      res.status(404);
+      res.status(404); // Not Found
     }
 
     res.send(data);
   }
 
   async insert(req, res) {
+    const data = await User.insert(req.body);
 
+    if (data.length === 0) {
+      res.status(409); // Conflict
+    } else {
+      res.status(200); // Created
+    }
+
+    res.send(data);
   }
 
   async update(req, res) {
