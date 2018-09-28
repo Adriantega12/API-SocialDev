@@ -74,7 +74,8 @@ class User {
   async update(keyVals) {
     let updatedRows;
     try {
-      updatedRows = await db.update('users', keyVals, this.id).changedRows;
+      const results = await db.update('users', keyVals, this.id);
+      updatedRows = results.affectedRows;
     } catch (error) {
       return error;
     }
@@ -82,8 +83,16 @@ class User {
     return updatedRows > 0;
   }
 
-  static async delete() {
+  static async delete(userId) {
+    let deletedRows;
+    try {
+      const results = await db.delete('users', userId);
+      deletedRows = results.affectedRows;
+    } catch (error) {
+      return error;
+    }
 
+    return deletedRows > 0;
   }
 }
 
