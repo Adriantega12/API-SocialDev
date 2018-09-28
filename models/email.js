@@ -1,16 +1,16 @@
 class Email {
   /**
    * Constructor for class Email.
-   * @param  {number} id          Unique value identifies a unique message.
-   * @param  {number} email       Identifies of send.
-   * @return {Email}              New instance of a Email.
+   * @param  {number} id    Unique value, identifies a unique email.
+   * @param  {string} email Email string that represents a real email.
+   * @return {Email}        New instance of an Email.
    */
   constructor({
     id,
-    mail,
+    email,
   }) {
     this.id = id;
-    this.mail = mail;
+    this.email = email;
   }
 }
 

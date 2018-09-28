@@ -1,16 +1,16 @@
 class Role {
   /**
    * Constructor for class Role.
-   * @param  {number} id                      Identifies of Role.
-   * @param  {string} name                    name of Role.
-   * @param  {bool} canReadPosts              .
-   * @param  {bool} canWritePosts             Permission
-   * @param  {bool} canEditOwnPosts           Permission.
-   * @param  {bool} canDeleteOwnPosts         Permission.
-   * @param  {bool} canEditOthersPosts        Permission.
-   * @param  {bool} canDeleteOthersPosts      Permission.
-   * @param  {bool} canManageOtherUsersPost   Permission.
-   * @return {Role}                           New instance of a Role.
+   * @param  {number}  id                      Unique value, identifies a unique role.
+   * @param  {string}  name                    Name that identifies a role.
+   * @param  {boolean} canReadPosts            User can read posts.
+   * @param  {boolean} canWritePosts           User can write posts.
+   * @param  {boolean} canEditOwnPosts         User can edit posts.
+   * @param  {boolean} canDeleteOwnPosts       User can delete his own posts.
+   * @param  {boolean} canEditOthersPosts      User can edit other users' posts.
+   * @param  {boolean} canDeleteOthersPosts    User can delete other users' posts.
+   * @param  {boolean} canManageOtherUsersPost User can manage other users.
+   * @return {Role}                            New instance of a Role.
    */
   constructor({
     id,

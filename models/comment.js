@@ -1,13 +1,13 @@
 class Comment {
   /**
    * Constructor for class Comment.
-   * @param  {number} id              Unique value identifies a unique comment.
-   * @param  {number} postId          Unique value identifies a unique post.
-   * @param  {number} authorId        Unique value identifies a unique author.
-   * @param  {date} date              Date creation.
-   * @param  {string} content         Content comment.
-   * @param  {bool} isEdited          Is true if the comment is edited.
-   * @return {Comment}                New instance of a Comment.
+   * @param  {number}  id        Unique value, identifies a unique comment.
+   * @param  {number}  postId    Identifier of the post the comment was posted to.
+   * @param  {number}  authorId  Identifier of the user that posted the comment.
+   * @param  {Date}    date      Date the comment was created.
+   * @param  {string}  content   Content of the comment.
+   * @param  {boolean} isEdited  Indicates if the comment was edited before.
+   * @return {Comment}           New instance of a Comment.
    */
   constructor({
     id,

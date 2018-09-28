@@ -3,7 +3,7 @@
 class User {
   /**
    * Constructor for class User.
-   * @param  {number} id           Unique value identifies a unique user.
+   * @param  {number} id           Unique value, identifies a unique user.
    * @param  {number} roleId       Indicates the permissions the user has.
    * @param  {string} email        Main email of the user.
    * @param  {string} password     Hashed password of the user.

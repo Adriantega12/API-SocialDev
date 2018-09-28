@@ -1,10 +1,10 @@
 class Attachment {
   /**
    * Constructor for class Attachment.
-   * @param  {number} id          Identifies of attachment.
-   * @param  {number} postId      Identifies of post.
-   * @param  {date} data          Thing.
-   * @return {Attachment}         New instance of a Attachment.
+   * @param  {number}     id     Identifier of attachment.
+   * @param  {number}     postId Identifier of the post the attachment was posted to.
+   * @param  {date}       data   File that the attachment uses.
+   * @return {Attachment}        New instance of an Attachment.
    */
   constructor({
     id,

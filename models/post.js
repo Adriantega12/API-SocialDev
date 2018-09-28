@@ -2,13 +2,13 @@
 class Post {
   /**
    * Constructor for class Post.
-   * @param  {number} id           Unique value identifies a unique post.
-   * @param  {number} authorId     Unique value identifies a unique user.
-   * @param  {string} title        Title of post.
-   * @param  {string} text         Body of post.
-   * @param  {date} date           Creation date.
-   * @param  {number} score        Post score.
-   * @return {Post}              New instance of a Post.
+   * @param  {number} id       Unique value, identifies a unique post.
+   * @param  {number} authorId Identifier of the user that originally wrote the post.
+   * @param  {string} title    Title of the post.
+   * @param  {string} text     Body of the post.
+   * @param  {Date} date       Creation date.
+   * @param  {number} score    Post score, average of all scores related to this post.
+   * @return {Post}            New instance of a Post.
    */
   constructor({
     id,
