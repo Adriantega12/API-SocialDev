@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 
 const router = Router();
 
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -12,9 +11,7 @@ const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
-const emailsRoutes = require('./emails');
-const attachmentsRoutes = require('./attachments');
-const rolesRoutes = require('./roles');
+const friendshipsRoutes = require('./friendships');
 const scoresRoutes = require('./scores');
 
 // Test
@@ -27,22 +24,15 @@ router.use('/users', usersRoutes);
 router.use('/posts', postsRoutes);
 
 // Comments
-router.use('/posts/:postId/comments', commentsRoutes);
+router.use('/comments', commentsRoutes);
 
 // Messages
-router.use('/users/:userId/messages', messagesRoutes);
+router.use('/messages', messagesRoutes);
 
-// Emails
-router.use('/users/:userId/emails', emailsRoutes);
+// Friendships
+router.use('/friendships', friendshipsRoutes);
 
-//Attachments
-router.use('/attachments', attachmentsRoutes);
-
-//Roles
-router.use('/roles', rolesRoutes);
-
-//Scores
+// Scores
 router.use('/scores', scoresRoutes);
-
 
 module.exports = router;

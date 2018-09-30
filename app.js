@@ -1,16 +1,9 @@
-var express = require('express'),
-	app = express();
+require('dotenv').config();
+const express = require('express');
+const router = require('./routes');
 
-// USERS
+const app = express();
 
+app.use(router);
 
-// PUBLICATIONS
-
-
-// COMMENTS
-
-
-// MESSAGES
-
-
-app.listen( 3000, () => console.log( 'Started listening on port 3000!' ) );
+app.listen(process.env.PORT, () => console.log(`Started listening on port ${process.env.PORT}!`));
