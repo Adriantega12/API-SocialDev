@@ -3,19 +3,41 @@ const db = require('../db');
 class Attachment {
   /**
    * Constructor for class Attachment.
-   * @param  {number}     id     Identifier of attachment.
-   * @param  {number}     postId Identifier of the post the attachment was posted to.
-   * @param  {date}       data   File that the attachment uses.
-   * @return {Attachment}        New instance of an Attachment.
+   * @param  {number} id          Identifies of attachment.
+   * @param  {number} postId      Identifies of post.
+   * @param  {date} data          Thing.
+   * @return {Attachment}         New instance of a Attachment.
    */
-  constructor({
-    id,
-    postId,
-    data,
-  }) {
-    this.id = id;
-    this.postId = postId;
-    this.data = data;
+  constructor(...args) {
+    [
+      this.id,
+      this.postId,
+      this.data,
+    ] = args;
+  }
+
+  set id(value) {
+    this.id = value;
+  }
+
+  set postId(value) {
+    this.postId = value;
+  }
+
+  set data(value) {
+    this.data = value;
+  }
+
+  get id() {
+    return this.id;
+  }
+
+  get postId() {
+    return this.postId;
+  }
+
+  get data() {
+    return this.data;
   }
 
   static async getAll() {
