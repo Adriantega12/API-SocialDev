@@ -28,16 +28,32 @@ class Post {
   }
 
   static async getAll() {
-    const data = await db.getAll('posts');
+    let data;
+
+    try {
+      data = await db.getAll('posts');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
+
     data.forEach((row) => {
       response.push(new Post(row));
     });
+
     return response;
   }
 
   static async get(postId) {
-    const data = await db.get('posts', '*', postId);
+    let data;
+
+    try {
+      data = await db.get('posts', '*', postId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Post(data[0]) : data;
   }
 
