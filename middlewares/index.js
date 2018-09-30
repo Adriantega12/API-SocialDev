@@ -1,3 +1,1 @@
-exports.funcionDePrueba = () => {
-  console.log('funciona');
-}
+exports.validator = require('./validator');
