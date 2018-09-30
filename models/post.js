@@ -4,7 +4,7 @@ class Post {
   /**
    * Constructor for class Post.
    * @param  {number} id       Unique value, identifies a unique post.
-   * @param  {number} authorId Identifier of the post that originally wrote the post.
+   * @param  {number} authorId Identifier of the user that originally wrote the post.
    * @param  {string} title    Title of the post.
    * @param  {string} text     Body of the post.
    * @param  {Date} date       Creation date.
