@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { usersController } = require('../controllers');
+const { validator } = require('../middleware');
 
 const emailsRoutes = require('./emails');
 
@@ -8,7 +9,22 @@ router.get('/', usersController.getAll);
 
 // NEW User
 router.post('/', (req, res, next) => {
-
+  validator.validate(req, res, next, {
+    body: {
+      id,
+      roleId,
+      email,
+      password,
+      passwordSalt,
+      passwordHash,
+      githubToken,
+      firstName,
+      lastName,
+      age,
+      level,
+      profilePic,
+    },
+  });
 }, usersController.insert);
 
 // SHOW User
