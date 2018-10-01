@@ -61,6 +61,7 @@ class User {
 
   static async insert(user) {
     let id;
+
     try {
       const response = await db.insert('users', user);
       id = response.insertId;
@@ -73,6 +74,7 @@ class User {
 
   async update(keyVals) {
     let updatedRows;
+
     try {
       const results = await db.update('users', keyVals, this.id);
       updatedRows = results.affectedRows;
@@ -85,6 +87,7 @@ class User {
 
   static async delete(userId) {
     let deletedRows;
+
     try {
       const results = await db.delete('users', userId);
       deletedRows = results.affectedRows;
