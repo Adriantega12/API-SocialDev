@@ -59,7 +59,11 @@ router.put('/:userId', (req, res, next) => {
 
 // DESTROY User
 router.delete('/:userId', (req, res, next) => {
-
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
 }, usersController.delete);
 
 // Email routes
