@@ -37,7 +37,14 @@ class Role {
   }
 
   static async getAll() {
-    const data = await db.getAll('roles');
+    let data;
+
+    try {
+      data = await db.getAll('roles');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Role(row));
@@ -46,7 +53,14 @@ class Role {
   }
 
   static async get(roleId) {
-    const data = await db.get('roles', '*', roleId);
+    let data;
+
+    try {
+      data = await db.get('roles', '*', roleId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Role(data[0]) : data;
   }
 
