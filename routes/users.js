@@ -11,18 +11,17 @@ router.get('/', usersController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      id,
-      roleId,
-      email,
-      password,
-      passwordSalt,
-      passwordHash,
-      githubToken,
-      firstName,
-      lastName,
-      age,
-      level,
-      profilePic,
+      roleId: 'required integer',
+      email: 'required email',
+      password: 'required specialalphanum',
+      passwordSalt: 'required specialalphanum',
+      passwordHash: 'required word',
+      githubToken: 'specialalphanum',
+      firstName: 'word',
+      lastName: 'word',
+      age: 'integer',
+      level: 'integer',
+      profilePic: '',
     },
   });
 }, usersController.insert);
