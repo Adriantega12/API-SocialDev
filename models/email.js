@@ -3,15 +3,18 @@ const db = require('../db');
 class Email {
   /**
    * Constructor for class Email.
-   * @param  {number} id    Unique value, identifies a unique email.
-   * @param  {string} email Email string that represents a real email.
-   * @return {Email}        New instance of an Email.
+   * @param  {number} id     Unique value, identifies a unique email.
+   * @param  {number} userId Identifier of the owner of the email.
+   * @param  {string} email  Email string that represents a real email.
+   * @return {Email}         New instance of an Email.
    */
   constructor({
     id,
+    userId,
     email,
   }) {
     this.id = id;
+    this.userId = userId;
     this.email = email;
   }
 
