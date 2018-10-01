@@ -19,7 +19,14 @@ class Attachment {
   }
 
   static async getAll() {
-    const data = await db.getAll('attachments');
+    let data;
+
+    try {
+      data = await db.getAll('attachments');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Attachment(row));
@@ -28,7 +35,14 @@ class Attachment {
   }
 
   static async get(attachmentId) {
-    const data = await db.get('attachments', '*', attachmentId);
+    let data;
+
+    try {
+      data = await db.get('attachments', '*', attachmentId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Attachment(data[0]) : data;
   }
 
