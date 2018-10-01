@@ -28,7 +28,14 @@ class Friendship {
   }
 
   static async getAll() {
-    const data = await db.getAll('friendships');
+    let data;
+
+    try {
+      data = await db.getAll('friendships');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Friendship(row));
@@ -37,20 +44,27 @@ class Friendship {
   }
 
   static async get(friendshipId) {
-    const data = await db.get('friendships', '*', friendshipId);
+    let data;
+
+    try {
+      data = await db.get('friendships', '*', friendshipId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Friendship(data[0]) : data;
   }
 
-  static async insert(user) {
+  static async insert(friendship) {
     let id;
     try {
-      const response = await db.insert('friendships', user);
+      const response = await db.insert('friendships', friendship);
       id = response.insertId;
     } catch (error) {
       return error;
     }
 
-    return id > 0 ? new Friendship({ id, ...user }) : [];
+    return id > 0 ? new Friendship({ id, ...friendship }) : [];
   }
 
   async update(keyVals) {
