@@ -37,7 +37,24 @@ router.get('/:userId', (req, res, next) => {
 
 // UPDATE User
 router.put('/:userId', (req, res, next) => {
-
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+    body: {
+      roleId: 'integer',
+      email: 'email',
+      password: 'specialalphanum',
+      passwordSalt: 'specialalphanum',
+      passwordHash: 'word',
+      githubToken: 'specialalphanum',
+      firstName: 'word',
+      lastName: 'word',
+      age: 'integer',
+      level: 'integer',
+      profilePic: 'blob',
+    },
+  });
 }, usersController.update);
 
 // DESTROY User
