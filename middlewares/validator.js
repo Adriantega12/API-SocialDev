@@ -22,6 +22,10 @@ class Validator {
     return typeof data === 'boolean';
   }
 
+  static date(data) {
+    return !Number.isNaN(Date.parse(data));
+  }
+
   static require(data) {
     return data !== undefined && data !== null && data.length;
   }
