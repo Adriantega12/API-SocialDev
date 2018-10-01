@@ -15,8 +15,12 @@ class Validator {
     return Validator.regex.email.test(data);
   }
 
+  static specialalphanum(data) {
+    return Validator.regex.specialalphanum.test(data);
+  }
+
   static integer(data) {
-    return Number.isInteger(data);
+    return Number.isInteger(Number(data));
   }
 
   static boolean(data) {
@@ -27,8 +31,12 @@ class Validator {
     return !Number.isNaN(Date.parse(data));
   }
 
-  static require(data) {
-    return data !== undefined && data !== null && data.length;
+  static blob(data) {
+    return true;
+  }
+
+  static required(data) {
+    return data !== undefined && data !== null && (data.length || Validator.integer(data));
   }
 
   static validate(req, res, next, rules) {
@@ -41,7 +49,7 @@ class Validator {
     for (let part in rules) { // part = body, params
       for (let field in rules[part]) { // field = body { attrib }
         let validators = rules[part][field].split(' '); // validator = body { attrib: 'validator' }
-        validators.forEach((f) => { // validator = [ 'required', 'word' ]
+        validators.forEach((f) => { // validators = [ 'required', 'word' ]
           if (!Validator[f](req[part][field] || '')) { //
             if (Array.isArray(error.details[field])) {
               error.details[field].push(`The field ${field} should be a valid ${f}`);
@@ -52,6 +60,7 @@ class Validator {
         });
       }
     }
+    console.log(error.details);
     Object.keys(error.details).length ? next(error) : next();
   }
 }

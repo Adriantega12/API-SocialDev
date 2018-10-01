@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { usersController } = require('../controllers');
-const { validator } = require('../middleware');
+const { validator } = require('../middlewares');
 
 const emailsRoutes = require('./emails');
 
@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
       lastName: 'word',
       age: 'integer',
       level: 'integer',
-      profilePic: '',
+      profilePic: 'blob',
     },
   });
 }, usersController.insert);
