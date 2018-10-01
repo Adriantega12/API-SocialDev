@@ -46,16 +46,32 @@ class User {
   }
 
   static async getAll() {
-    const data = await db.getAll('users');
+    let data;
+
+    try {
+      data = await db.getAll('users');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
+
     data.forEach((row) => {
       response.push(new User(row));
     });
+
     return response;
   }
 
   static async get(userId) {
-    const data = await db.get('users', '*', userId);
+    let data;
+
+    try {
+      data = await db.get('users', '*', userId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new User(data[0]) : data;
   }
 
