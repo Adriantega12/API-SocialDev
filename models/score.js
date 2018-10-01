@@ -25,7 +25,14 @@ class Score {
   }
 
   static async getAll() {
-    const data = await db.getAll('scores');
+    let data;
+
+    try {
+      data = await db.getAll('scores');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Score(row));
@@ -34,7 +41,14 @@ class Score {
   }
 
   static async get(scoreId) {
-    const data = await db.get('scores', '*', scoreId);
+    let data;
+
+    try {
+      data = await db.get('scores', '*', scoreId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Score(data[0]) : data;
   }
 
