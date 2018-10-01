@@ -1,3 +1,5 @@
+const db = require('../db');
+
 class Friendship {
   /**
    * Constructor for class Friendship.
@@ -23,6 +25,70 @@ class Friendship {
     this.lastActionId = lastActionId;
     this.date = date;
     this.status = status;
+  }
+
+  static async getAll() {
+    let data;
+
+    try {
+      data = await db.getAll('friendships');
+    } catch (error) {
+      return error;
+    }
+
+    const response = [];
+    data.forEach((row) => {
+      response.push(new Friendship(row));
+    });
+    return response;
+  }
+
+  static async get(friendshipId) {
+    let data;
+
+    try {
+      data = await db.get('friendships', '*', friendshipId);
+    } catch (error) {
+      return error;
+    }
+
+    return data.length !== 0 ? new Friendship(data[0]) : data;
+  }
+
+  static async insert(friendship) {
+    let id;
+    try {
+      const response = await db.insert('friendships', friendship);
+      id = response.insertId;
+    } catch (error) {
+      return error;
+    }
+
+    return id > 0 ? new Friendship({ id, ...friendship }) : [];
+  }
+
+  async update(keyVals) {
+    let updatedRows;
+    try {
+      const results = await db.update('friendships', keyVals, this.id);
+      updatedRows = results.affectedRows;
+    } catch (error) {
+      return error;
+    }
+
+    return updatedRows > 0;
+  }
+
+  static async delete(friendshipId) {
+    let deletedRows;
+    try {
+      const results = await db.delete('friendships', friendshipId);
+      deletedRows = results.affectedRows;
+    } catch (error) {
+      return error;
+    }
+
+    return deletedRows > 0;
   }
 }
 

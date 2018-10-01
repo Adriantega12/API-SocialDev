@@ -1,3 +1,5 @@
+const db = require('../db');
+
 class Role {
   /**
    * Constructor for class Role.
@@ -32,6 +34,70 @@ class Role {
     this.canEditOthersPosts = canEditOthersPosts;
     this.canDeleteOthersPosts = canDeleteOthersPosts;
     this.canManageOtherUsers = canManageOtherUsers;
+  }
+
+  static async getAll() {
+    let data;
+
+    try {
+      data = await db.getAll('roles');
+    } catch (error) {
+      return error;
+    }
+
+    const response = [];
+    data.forEach((row) => {
+      response.push(new Role(row));
+    });
+    return response;
+  }
+
+  static async get(roleId) {
+    let data;
+
+    try {
+      data = await db.get('roles', '*', roleId);
+    } catch (error) {
+      return error;
+    }
+
+    return data.length !== 0 ? new Role(data[0]) : data;
+  }
+
+  static async insert(role) {
+    let id;
+    try {
+      const response = await db.insert('roles', role);
+      id = response.insertId;
+    } catch (error) {
+      return error;
+    }
+
+    return id > 0 ? new Role({ id, ...role }) : [];
+  }
+
+  async update(keyVals) {
+    let updatedRows;
+    try {
+      const results = await db.update('roles', keyVals, this.id);
+      updatedRows = results.affectedRows;
+    } catch (error) {
+      return error;
+    }
+
+    return updatedRows > 0;
+  }
+
+  static async delete(roleId) {
+    let deletedRows;
+    try {
+      const results = await db.delete('roles', roleId);
+      deletedRows = results.affectedRows;
+    } catch (error) {
+      return error;
+    }
+
+    return deletedRows > 0;
   }
 }
 
