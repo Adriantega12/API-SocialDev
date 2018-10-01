@@ -28,7 +28,11 @@ router.post('/', (req, res, next) => {
 
 // SHOW User
 router.get('/:userId', (req, res, next) => {
-
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
 }, usersController.get);
 
 // UPDATE User
