@@ -16,7 +16,14 @@ class Email {
   }
 
   static async getAll() {
-    const data = await db.getAll('emails');
+    let data;
+
+    try {
+      data = await db.getAll('emails');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Email(row));
@@ -25,7 +32,14 @@ class Email {
   }
 
   static async get(emailId) {
-    const data = await db.get('emails', '*', emailId);
+    let data;
+
+    try {
+      data = await db.get('emails', '*', emailId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Email(data[0]) : data;
   }
 
