@@ -18,6 +18,10 @@ class Validator {
     return Number.isInteger(data);
   }
 
+  static boolean(data) {
+    return typeof data === 'boolean';
+  }
+
   static require(data) {
     return data !== undefined && data !== null && data.length;
   }
