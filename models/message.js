@@ -25,7 +25,14 @@ class Message {
   }
 
   static async getAll() {
-    const data = await db.getAll('messages');
+    let data;
+
+    try {
+      data = await db.getAll('messages');
+    } catch (error) {
+      return error;
+    }
+
     const response = [];
     data.forEach((row) => {
       response.push(new Message(row));
@@ -34,7 +41,14 @@ class Message {
   }
 
   static async get(messageId) {
-    const data = await db.get('messages', '*', messageId);
+    let data;
+
+    try {
+      data = await db.get('messages', '*', messageId);
+    } catch (error) {
+      return error;
+    }
+
     return data.length !== 0 ? new Message(data[0]) : data;
   }
 
