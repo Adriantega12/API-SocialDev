@@ -30,7 +30,7 @@ class PostsController {
   }
 
   async get(req, res) {
-    const data = await Post.get(req.params.id);
+    const data = await Post.get(req.params.postId);
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -54,7 +54,7 @@ class PostsController {
   }
 
   async update(req, res) {
-    const data = await Post.get(req.params.id);
+    const data = await Post.get(req.params.postId);
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
@@ -72,7 +72,7 @@ class PostsController {
   }
 
   async delete(req, res) {
-    const deleted = await Post.delete(req.params.id);
+    const deleted = await Post.delete(req.params.postId);
 
     if (deleted) {
       res.status(200); // OK
