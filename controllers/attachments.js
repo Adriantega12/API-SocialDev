@@ -10,7 +10,7 @@ class AttachmentsController {
     this.delete = this.delete.bind(this);
   }
 
-  async getAll(req, res, error) {
+  async getAll(req, res, next) {
     let data;
 
     try {
@@ -35,7 +35,7 @@ class AttachmentsController {
     res.send(json);
   }
 
-  async get(req, res, error) {
+  async get(req, res, next) {
     let data;
 
     try {
@@ -53,7 +53,7 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async insert(req, res, error) {
+  async insert(req, res, next) {
     let data;
 
     try {
@@ -71,7 +71,7 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async update(req, res, error) {
+  async update(req, res, next) {
     let data;
 
     try {
@@ -96,7 +96,7 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async delete(req, res, error) {
+  async delete(req, res, next) {
     let deleted;
 
     try {
