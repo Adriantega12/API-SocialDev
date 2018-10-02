@@ -85,6 +85,7 @@ class MessagesController {
     }
 
     const updated = await data.update(req.body);
+    data = new Message(req.body);
 
     if (updated) {
       res.status(200); // OK

@@ -1,28 +1,49 @@
 const router = require('express').Router();
+const { attachmentsController } = require('../controllers');
+const { validator } = require('../middlewares');
 
 // INDEX Attachments
-router.get('/', (req, res) => {
-  res.send('INDEX');
-});
+router.get('/', attachmentsController.getAll);
 
 // NEW Attachment
-router.post('/', (req, res) => {
-  res.send('NEW');
-});
+router.post('/', (req, res, next) => {
+  validator.validate(req, res, next, {
+    body: {
+      postId: 'required integer',
+      data: 'required blob',
+    },
+  });
+}, attachmentsController.insert);
 
 // SHOW Attachment
-router.get('/:attachmentId', (req, res) => {
-  res.send('SHOW');
-});
+router.get('/:attachmentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      attachmentId: 'integer',
+    },
+  });
+}, attachmentsController.get);
 
 // UPDATE Attachment
-router.put('/:attachmentId', (req, res) => {
-  res.send('UPDATE');
-});
+router.put('/:attachmentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      attachmentId: 'integer',
+    },
+    body: {
+      postId: 'integer',
+      data: 'blob',
+    },
+  });
+}, attachmentsController.update);
 
-// DESTROY Attachment
-router.delete('/:attachmentId', (req, res) => {
-  res.send('DELETE');
-});
+// DELETE Attachment
+router.delete('/:attachmentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      attachmentId: 'integer',
+    },
+  });
+}, attachmentsController.delete);
 
 module.exports = router;
