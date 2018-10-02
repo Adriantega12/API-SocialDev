@@ -10,9 +10,14 @@ class AttachmentsController {
     this.delete = this.delete.bind(this);
   }
 
-  // ***Needs reviewing***
-  async getAll(req, res) {
-    const data = await Attachment.getAll();
+  async getAll(req, res, error) {
+    let data;
+
+    try {
+      data = await Attachment.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -30,8 +35,14 @@ class AttachmentsController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await Attachment.get(req.params.attachmentId);
+  async get(req, res, error) {
+    let data;
+
+    try {
+      data = await Attachment.get(req.params.attachmentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -42,8 +53,14 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await Attachment.insert(req.body);
+  async insert(req, res, error) {
+    let data;
+
+    try {
+      data = await Attachment.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -54,14 +71,21 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await Attachment.get(req.params.attachmentId);
+  async update(req, res, error) {
+    let data;
+
+    try {
+      data = await Attachment.get(req.params.attachmentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
     }
 
     const updated = await data.update(req.body);
+    data = new Attachment(req.body);
 
     if (updated) {
       res.status(200); // OK
@@ -72,8 +96,14 @@ class AttachmentsController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await Attachment.delete(req.params.attachmentId);
+  async delete(req, res, error) {
+    let deleted;
+
+    try {
+      deleted = await Attachment.delete(req.params.attachmentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK
