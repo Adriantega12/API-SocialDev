@@ -15,7 +15,7 @@ for (var i = 0; i < 100; i++) {
       passwordSalt: String.valueOf(i),
       passwordHash: 'SHA2',
       githubToken: String.valueOf(i),
-      firstName: String.valueOf(i),
+      firstName: 'user ' + String.valueOf(i),
       lastName: String.valueOf(i),
       age: 20,
       level: 1,
@@ -83,5 +83,18 @@ for (var i = 0; i < 100; i++) {
       postId: i,
       data: null,
 
+  });
+}
+
+for (var i = 0; i < 100; i++) {
+  Role.insert({
+      name: 'name' + String.valueOf(i),
+      canReadPosts: true,
+      canWritePosts: true,
+      canEditOwnPosts: true,
+      canDeleteOwnPosts: false,
+      canEditOthersPosts: false,
+      canDeleteOthersPosts: false,
+      canManageOtherUsersPost: false,
   });
 }
