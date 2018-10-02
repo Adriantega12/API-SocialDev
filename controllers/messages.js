@@ -10,9 +10,14 @@ class MessagesController {
     this.delete = this.delete.bind(this);
   }
 
-  // ***Needs reviewing***
-  async getAll(req, res) {
-    const data = await Message.getAll();
+  async getAll(req, res, next) {
+    let data;
+
+    try {
+      data = await Message.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -30,8 +35,14 @@ class MessagesController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await Message.get(req.params.messageId);
+  async get(req, res, next) {
+    let data;
+
+    try {
+      data = await Message.get(req.params.messageId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -42,8 +53,14 @@ class MessagesController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await Message.insert(req.body);
+  async insert(req, res, next) {
+    let data;
+
+    try {
+      data = await Message.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -54,8 +71,14 @@ class MessagesController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await Message.get(req.params.messageId);
+  async update(req, res, next) {
+    let data;
+
+    try {
+      data = await Message.get(req.params.messageId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
@@ -72,8 +95,14 @@ class MessagesController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await Message.delete(req.params.messageId);
+  async delete(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Message.delete(req.params.messageId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK

@@ -9,7 +9,6 @@ router.get('/', commentsController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      id: 'required integer',
       postId: 'required integer',
       authorId: 'required integer',
       date: 'required date',
@@ -35,7 +34,6 @@ router.put('/:commentId', (req, res, next) => {
       commentId: 'integer',
     },
     body: {
-      id: 'integer',
       postId: 'integer',
       authorId: 'integer',
       date: 'date',
