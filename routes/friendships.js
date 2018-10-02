@@ -1,28 +1,55 @@
 const router = require('express').Router();
+const { friendshipsController } = require('../controllers');
+const { validator } = require('../middlewares');
 
 // INDEX Friendships
-router.get('/', (req, res) => {
-  res.send('INDEX');
-});
+router.get('/', friendshipsController.getAll);
 
 // NEW Friendship
-router.post('/', (req, res) => {
-  res.send('NEW');
-});
+router.post('/', (req, res, next) => {
+  validator.validate(req, res, next, {
+    body: {
+      userOneId: 'required integer',
+      userTwoId: 'required integer',
+      lastActionId: 'required integer',
+      date: 'required date',
+      status: 'required integer',
+    },
+  });
+}, friendshipsController.insert);
 
 // SHOW Friendship
-router.get('/:friendId', (req, res) => {
-  res.send('SHOW');
-});
+router.get('/:friendshipId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      friendshipId: 'integer',
+    },
+  });
+}, friendshipsController.get);
 
 // UPDATE Friendship
-router.put('/:friendId', (req, res) => {
-  res.send('UPDATE');
-});
+router.put('/:friendshipId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      friendshipId: 'integer',
+    },
+    body: {
+      userOneId: 'required integer',
+      userTwoId: 'required integer',
+      lastActionId: 'required integer',
+      date: 'required date',
+      status: 'required integer',
+    },
+  });
+}, friendshipsController.update);
 
 // DESTROY Friendship
-router.delete('/:friendId', (req, res) => {
-  res.send('DELETE');
-});
+router.delete('/:friendshipId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      friendshipId: 'integer',
+    },
+  });
+}, friendshipsController.delete);
 
 module.exports = router;
