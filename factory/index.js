@@ -5,6 +5,7 @@ exports.Message = require('./message');
 exports.Score = require('./score');
 exports.Email = require('./email');
 exports.Friendship = require('./friendship');
+exports.Attachment = require('./attachment');
 
 for (var i = 0; i < 100; i++) {
   User.insert({
@@ -78,7 +79,7 @@ for (var i = 0; i < 100; i++) {
 }
 
 for (var i = 0; i < 100; i++) {
-  Friendship.insert({
+  Attachment.insert({
       postId: i,
       data: null,
 
