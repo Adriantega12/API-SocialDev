@@ -4,7 +4,8 @@
   "description": "Web API for the SocialDev project.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -14,9 +15,6 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Darktega/API-SocialDev/issues"
-  },
-  "scripts": {
-    "start": "node app.js"
   },
   "homepage": "https://github.com/Darktega/API-SocialDev#readme",
   "dependencies": {
