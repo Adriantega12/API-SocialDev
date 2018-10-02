@@ -1,28 +1,57 @@
 const router = require('express').Router();
+const { commentsController } = require('../controllers');
+const { validator } = require('../middlewares');
 
 // INDEX Comment
-router.get('/', (req, res) => {
-  res.send('INDEX');
-});
+router.get('/', commentsController.getAll);
 
 // NEW Comment
-router.post('/', (req, res) => {
-  res.send('NEW');
-});
+router.post('/', (req, res, next) => {
+  validator.validate(req, res, next, {
+    body: {
+      id: 'required integer',
+      postId: 'required integer',
+      authorId: 'required integer',
+      date: 'required date',
+      content: 'required word',
+      isEdited: 'boolean',
+    },
+  });
+}, commentsController.insert);
 
 // SHOW Comment
-router.get('/:commentId', (req, res) => {
-  res.send('SHOW');
-});
+router.get('/:commentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      commentId: 'integer',
+    },
+  });
+}, commentsController.get);
 
 // UPDATE Comment
-router.put('/:commentId', (req, res) => {
-  res.send('UPDATE');
-});
+router.put('/:commentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      commentId: 'integer',
+    },
+    body: {
+      id: 'integer',
+      postId: 'integer',
+      authorId: 'integer',
+      date: 'date',
+      content: 'word',
+      isEdited: 'boolean',
+    },
+  });
+}, commentsController.update);
 
 // DESTROY Comment
-router.delete('/:commentId', (req, res) => {
-  res.send('DELETE');
-});
+router.delete('/:commentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      commentId: 'integer',
+    },
+  });
+}, commentsController.delete);
 
 module.exports = router;

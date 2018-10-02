@@ -10,9 +10,14 @@ class CommentsController {
     this.delete = this.delete.bind(this);
   }
 
-  // ***Needs reviewing***
-  async getAll(req, res) {
-    const data = await Comment.getAll();
+  async getAll(req, res, next) {
+    let data;
+
+    try {
+      data = await Comment.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -30,8 +35,14 @@ class CommentsController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await Comment.get(req.params.commentId);
+  async get(req, res, next) {
+    let data;
+
+    try {
+      data = await Comment.get(req.params.commentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -42,8 +53,14 @@ class CommentsController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await Comment.insert(req.body);
+  async insert(req, res, next) {
+    let data;
+
+    try {
+      data = await Comment.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -54,8 +71,14 @@ class CommentsController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await Comment.get(req.params.commentId);
+  async update(req, res, next) {
+    let data;
+
+    try {
+      data = await Comment.get(req.params.commentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
@@ -72,8 +95,14 @@ class CommentsController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await Comment.delete(req.params.commentId);
+  async delete(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Comment.delete(req.params.commentId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK
