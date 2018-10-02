@@ -10,8 +10,14 @@ class PostsController {
     this.delete = this.delete.bind(this);
   }
 
-  async getAll(req, res) {
-    const data = await Post.getAll();
+  async getAll(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -29,8 +35,14 @@ class PostsController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await Post.get(req.params.postId);
+  async get(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.get(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -41,8 +53,14 @@ class PostsController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await Post.insert(req.body);
+  async insert(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -53,8 +71,14 @@ class PostsController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await Post.get(req.params.postId);
+  async update(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.get(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
@@ -71,8 +95,14 @@ class PostsController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await Post.delete(req.params.postId);
+  async delete(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Post.delete(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK

@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
       email: 'required email',
       password: 'required specialalphanum',
       passwordSalt: 'required specialalphanum',
-      passwordHash: 'required word',
+      passwordHash: 'required specialalphanum',
       githubToken: 'specialalphanum',
       firstName: 'word',
       lastName: 'word',
