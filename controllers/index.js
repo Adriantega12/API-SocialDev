@@ -4,6 +4,7 @@ const commentsController = require('./comments');
 const messagesController = require('./messages');
 const emailsController = require('./emails');
 const friendshipsController = require('./friendships');
+const scoresController = require('./scores');
 
 module.exports = {
   usersController,
@@ -12,4 +13,5 @@ module.exports = {
   messagesController,
   emailsController,
   friendshipsController,
+  scoreController,
 };
