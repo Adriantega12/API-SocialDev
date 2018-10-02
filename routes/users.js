@@ -46,7 +46,7 @@ router.put('/:userId', (req, res, next) => {
       email: 'email',
       password: 'specialalphanum',
       passwordSalt: 'specialalphanum',
-      passwordHash: 'word',
+      passwordHash: 'specialalphanum',
       githubToken: 'specialalphanum',
       firstName: 'word',
       lastName: 'word',
