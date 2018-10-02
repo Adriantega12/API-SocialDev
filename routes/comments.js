@@ -1,28 +1,20 @@
 const router = require('express').Router();
+const { commentsController } = require('../controllers');
+const { validator } = require('../middlewares');
 
 // INDEX Comment
-router.get('/', (req, res) => {
-  res.send('INDEX');
-});
+router.get('/', commentsController.getAll);
 
 // NEW Comment
-router.post('/', (req, res) => {
-  res.send('NEW');
-});
+router.post('/', commentsController.insert);
 
 // SHOW Comment
-router.get('/:commentId', (req, res) => {
-  res.send('SHOW');
-});
+router.get('/:commentId', commentsController.get);
 
 // UPDATE Comment
-router.put('/:commentId', (req, res) => {
-  res.send('UPDATE');
-});
+router.put('/:commentId', commentsController.update);
 
 // DESTROY Comment
-router.delete('/:commentId', (req, res) => {
-  res.send('DELETE');
-});
+router.delete('/:commentId', commentsController.delete);
 
 module.exports = router;

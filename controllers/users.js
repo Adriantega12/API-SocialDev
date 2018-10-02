@@ -11,8 +11,14 @@ class UsersController {
   }
 
   // ***Needs reviewing***
-  async getAll(req, res) {
-    const data = await User.getAll();
+  async getAll(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -30,8 +36,14 @@ class UsersController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await User.get(req.params.userId);
+  async get(req, res, next) {
+    let data;
+
+    try {
+      data = await User.get(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -42,8 +54,14 @@ class UsersController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await User.insert(req.body);
+  async insert(req, res, next) {
+    let data;
+
+    try {
+      data = await User.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -54,8 +72,14 @@ class UsersController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await User.get(req.params.userId);
+  async update(req, res, next) {
+    let data;
+
+    try {
+      data = await User.get(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
@@ -72,8 +96,14 @@ class UsersController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await User.delete(req.params.userId);
+  async delete(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await User.delete(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK
