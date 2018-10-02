@@ -10,9 +10,14 @@ class EmailsController {
     this.delete = this.delete.bind(this);
   }
 
-  // ***Needs reviewing***
-  async getAll(req, res) {
-    const data = await Email.getAll();
+  async getAll(req, res, next) {
+    let data;
+
+    try {
+      data = await Email.getAll();
+    } catch (error) {
+      next(error);
+    }
 
     const json = {
       data: data,
@@ -30,8 +35,14 @@ class EmailsController {
     res.send(json);
   }
 
-  async get(req, res) {
-    const data = await Email.get(req.params.emailId);
+  async get(req, res, next) {
+    let data;
+
+    try {
+      data = await Email.get(req.params.emailId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404); // Not Found
@@ -42,8 +53,14 @@ class EmailsController {
     res.send(data);
   }
 
-  async insert(req, res) {
-    const data = await Email.insert(req.body);
+  async insert(req, res, next) {
+    let data;
+
+    try {
+      data = await Email.insert(req.body);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(409); // Conflict
@@ -54,14 +71,21 @@ class EmailsController {
     res.send(data);
   }
 
-  async update(req, res) {
-    const data = await Email.get(req.params.emailId);
+  async update(req, res, next) {
+    let data;
+
+    try {
+      data = await Email.get(req.params.emailId);
+    } catch (error) {
+      next(error);
+    }
 
     if (data.length === 0) {
       res.status(404).send(data); // Not Found
     }
 
     const updated = await data.update(req.body);
+    data = new Email(req.body);
 
     if (updated) {
       res.status(200); // OK
@@ -72,8 +96,14 @@ class EmailsController {
     res.send(data);
   }
 
-  async delete(req, res) {
-    const deleted = await Email.delete(req.params.emailId);
+  async delete(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Email.delete(req.params.emailId);
+    } catch (error) {
+      next(error);
+    }
 
     if (deleted) {
       res.status(200); // OK
