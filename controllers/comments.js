@@ -85,6 +85,7 @@ class CommentsController {
     }
 
     const updated = await data.update(req.body);
+    data = new Comment(req.body);
 
     if (updated) {
       res.status(200); // OK

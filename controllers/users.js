@@ -86,6 +86,7 @@ class UsersController {
     }
 
     const updated = await data.update(req.body);
+    data = new User(req.body);
 
     if (updated) {
       res.status(200); // OK

@@ -85,6 +85,7 @@ class PostsController {
     }
 
     const updated = await data.update(req.body);
+    data = new Post(req.body);
 
     if (updated) {
       res.status(200); // OK
