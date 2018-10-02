@@ -6,6 +6,7 @@ const emailsController = require('./emails');
 const friendshipsController = require('./friendships');
 const scoresController = require('./scores');
 const attachmentsController = require('./attachments');
+const rolesController = require('./roles');
 
 module.exports = {
   usersController,
@@ -16,4 +17,5 @@ module.exports = {
   friendshipsController,
   scoresController,
   attachmentsController,
+  rolesController,
 };
