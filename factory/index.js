@@ -6,6 +6,7 @@ exports.Score = require('./score');
 exports.Email = require('./email');
 exports.Friendship = require('./friendship');
 exports.Attachment = require('./attachment');
+exports.Role = require('./role');
 
 for (var i = 0; i < 100; i++) {
   User.insert({
