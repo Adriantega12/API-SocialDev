@@ -45,7 +45,11 @@ router.put('/:postId', (req, res, next) => {
 
 // DESTROY Post
 router.delete('/:postId', (req, res, next) => {
-
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
 }, postsController.delete);
 
 module.exports = router;
