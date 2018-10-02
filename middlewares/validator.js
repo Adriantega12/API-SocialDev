@@ -24,7 +24,7 @@ class Validator {
   }
 
   static boolean(data) {
-    return typeof data === 'boolean';
+    return typeof Boolean(data) === 'boolean';
   }
 
   static date(data) {
@@ -60,6 +60,7 @@ class Validator {
         });
       }
     }
+    console.log(error.details);
     Object.keys(error.details).length ? next(error) : next();
   }
 }
