@@ -1,9 +1,11 @@
 const usersController = require('./users');
 const postsController = require('./posts');
-const postsController = require('./comments');
+const commentsController = require('./comments');
+const messagesController = require('./messages');
 
 module.exports = {
   usersController,
   postsController,
   commentsController,
+  messagesController,
 };
