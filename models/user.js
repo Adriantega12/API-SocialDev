@@ -82,12 +82,12 @@ class User {
 
     try {
       data = await db.get('users', '*', userId);
-      //posts = await db.getByUserId();
+      posts = await db.getByUserId('posts', 'id', 'authorId', userId);
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new User(data[0]) : data;
+    return data.length !== 0 ? new User({ ...data[0], posts}) : data;
   }
 
   static async insert(user) {
