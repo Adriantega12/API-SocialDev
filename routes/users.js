@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { usersController } = require('../controllers');
 const { validator } = require('../middlewares');
 
-const emailsRoutes = require('./emails');
+// const emailsRoutes = require('./emails');
 
 // INDEX User
 router.get('/', usersController.getAll);
@@ -67,6 +67,6 @@ router.delete('/:userId', (req, res, next) => {
 }, usersController.delete);
 
 // Email routes
-router.use('/:userId/emails', emailsRoutes);
+// router.use('/:userId/emails', emailsRoutes);
 
 module.exports = router;

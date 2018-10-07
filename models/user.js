@@ -14,7 +14,7 @@ class User {
    * @param  {string} lastName     User's last name.
    * @param  {number} age          User's age.
    * @param  {number} level        User's level for the gamefication of SocialDev.
-   * @param  {blob} profilePic     User's file profile picture.
+   * @param  {string} profilePic   User's route to profilePic.
    * @return {User}                New instance of a User.
    */
   constructor({
@@ -30,6 +30,10 @@ class User {
     age,
     level,
     profilePic,
+    posts,
+    friends,
+    emails,
+    messages,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -43,6 +47,10 @@ class User {
     this.age = age;
     this.level = level;
     this.profilePic = profilePic;
+    this.posts = posts;
+    this.friends = friends;
+    this.emails = emails;
+    this.messages = messages;
   }
 
   static async getAll() {
@@ -51,7 +59,7 @@ class User {
     try {
       data = await db.getAll('users');
     } catch (error) {
-      return error;
+      throw error;
     }
 
     const response = [];
@@ -69,7 +77,7 @@ class User {
     try {
       data = await db.get('users', '*', userId);
     } catch (error) {
-      return error;
+      throw error;
     }
 
     return data.length !== 0 ? new User(data[0]) : data;
@@ -82,7 +90,7 @@ class User {
       const response = await db.insert('users', user);
       id = response.insertId;
     } catch (error) {
-      return error;
+      throw error;
     }
 
     return id > 0 ? new User({ id, ...user }) : [];
@@ -95,7 +103,7 @@ class User {
       const results = await db.update('users', keyVals, this.id);
       updatedRows = results.affectedRows;
     } catch (error) {
-      return error;
+      throw error;
     }
 
     return updatedRows > 0;
@@ -108,7 +116,7 @@ class User {
       const results = await db.delete('users', userId);
       deletedRows = results.affectedRows;
     } catch (error) {
-      return error;
+      throw error;
     }
 
     return deletedRows > 0;
