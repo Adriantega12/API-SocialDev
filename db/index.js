@@ -26,7 +26,7 @@ class DB {
           return reject(this.processError(error));
         }
         this.tupples = results;
-        resolve(this.tupples);
+        return resolve(this.tupples);
       });
     });
     return promise;
@@ -46,7 +46,7 @@ class DB {
           return reject(this.processError(error));
         }
         this.tupples = results;
-        resolve(this.tupples);
+        return resolve(this.tupples);
       });
     });
     return promise;
@@ -59,7 +59,7 @@ class DB {
           return reject(this.processError(error));
         }
         this.tupples = results;
-        resolve(this.tupples);
+        return resolve(this.tupples);
       });
     });
     return promise;
@@ -77,7 +77,7 @@ class DB {
         if (error) {
           return reject(this.processError(error));
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
@@ -96,7 +96,7 @@ class DB {
           let err = this.processError(error);
           throw reject(err);
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
@@ -114,7 +114,7 @@ class DB {
         if (error) {
           return reject(this.processError(error));
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
