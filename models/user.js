@@ -15,6 +15,12 @@ class User {
    * @param  {number} age          User's age.
    * @param  {number} level        User's level for the gamefication of SocialDev.
    * @param  {string} profilePic   User's route to profilePic.
+   * @param  {[type]} emails       [description]
+   * @param  {[type]} comments     [description]
+   * @param  {[type]} posts        [description]
+   * @param  {[type]} friends      [description]
+   * @param  {[type]} messages     [description]
+   * @param  {[type]}              [description]
    * @return {User}                New instance of a User.
    */
   constructor({
@@ -83,11 +89,11 @@ class User {
 
     try {
       data = await db.get('users', '*', userId);
-      emails = await db.getByUserId('emails', '*', 'userId', userId);
-      posts = await db.getByUserId('posts', '*', 'authorId', userId);
-      comments = await db.getByUserId('comments', '*', 'authorId', userId );
+      emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
+      posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId );
       friends = await db.getFriends(userId);
-      messages = await db.getByUserId('messages', '*', 'senderId', userId);
+      messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
     } catch (error) {
       throw error;
     }

@@ -52,9 +52,9 @@ class DB {
     return promise;
   }
 
-  async getByUserId(table, columns, userAttrib, id) {
+  async getObjectByForeignId(table, columns, idAttribName, id) {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, userAttrib, id], (error, results) => {
+      this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
         if (error) {
           return reject(this.processError(error));
         }
