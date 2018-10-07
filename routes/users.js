@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
       lastName: 'word',
       age: 'integer',
       level: 'integer',
-      profilePic: 'blob',
+      profilePic: 'specialalphanum',
     },
   });
 }, usersController.insert);

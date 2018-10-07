@@ -30,11 +30,11 @@ class User {
     age,
     level,
     profilePic,
+    emails,
+    comments,
     posts,
     friends,
-    emails,
     messages,
-    roles,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -48,11 +48,11 @@ class User {
     this.age = age;
     this.level = level;
     this.profilePic = profilePic;
-    this.posts = posts;
-    this.friends = friends;
     this.emails = emails;
+    this.posts = posts;
+    this.comments = comments;
+    this.friends = friends;
     this.messages = messages;
-    this.roles = roles;
   }
 
   static async getAll() {
@@ -75,19 +75,24 @@ class User {
 
   static async get(userId) {
     let data;
-    let posts;
-    let friends;
     let emails;
+    let posts;
+    let comments;
+    let friends;
     let messages;
 
     try {
       data = await db.get('users', '*', userId);
-      posts = await db.getByUserId('posts', 'id', 'authorId', userId);
+      emails = await db.getByUserId('emails', '*', 'userId', userId);
+      posts = await db.getByUserId('posts', '*', 'authorId', userId);
+      comments = await db.getByUserId('comments', '*', 'authorId', userId );
+      friends = await db.getFriends(userId);
+      messages = await db.getByUserId('messages', '*', 'senderId', userId);
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new User({ ...data[0], posts}) : data;
+    return data.length !== 0 ? new User({ ...data[0], emails, posts, comments, friends, messages}) : data;
   }
 
   static async insert(user) {
@@ -100,13 +105,14 @@ class User {
       throw error;
     }
 
-    let posts = [];
-    let friends = [];
     let emails = [];
+    let posts = [];
+    let comments = [];
+    let friends = [];
     let messages = [];
     let roles = [];
 
-    return id > 0 ? new User({ id, ...user, posts, friends, emails, messages, roles }) : [];
+    return id > 0 ? new User({ id, ...user, emails, posts, comments, friends, messages, roles }) : [];
   }
 
   async update(keyVals) {
