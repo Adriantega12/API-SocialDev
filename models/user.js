@@ -34,6 +34,7 @@ class User {
     friends,
     emails,
     messages,
+    roles,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -51,6 +52,7 @@ class User {
     this.friends = friends;
     this.emails = emails;
     this.messages = messages;
+    this.roles = roles;
   }
 
   static async getAll() {
@@ -73,9 +75,14 @@ class User {
 
   static async get(userId) {
     let data;
+    let posts;
+    let friends;
+    let emails;
+    let messages;
 
     try {
       data = await db.get('users', '*', userId);
+      //posts = await db.getByUserId();
     } catch (error) {
       throw error;
     }
@@ -93,7 +100,13 @@ class User {
       throw error;
     }
 
-    return id > 0 ? new User({ id, ...user }) : [];
+    let posts = [];
+    let friends = [];
+    let emails = [];
+    let messages = [];
+    let roles = [];
+
+    return id > 0 ? new User({ id, ...user, posts, friends, emails, messages, roles }) : [];
   }
 
   async update(keyVals) {

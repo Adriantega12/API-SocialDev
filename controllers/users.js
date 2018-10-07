@@ -10,7 +10,6 @@ class UsersController {
     this.delete = this.delete.bind(this);
   }
 
-  // ***Needs reviewing***
   async getAll(req, res, next) {
     let data;
 
