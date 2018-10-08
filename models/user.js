@@ -92,7 +92,8 @@ class User {
       emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
       comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId );
-      friends = await db.getFriends(userId);
+      //friends = await db.getFriends(userId);
+      friends = await this.getFriendlist(userId);
       messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
     } catch (error) {
       throw error;
@@ -151,7 +152,7 @@ class User {
     let data;
 
     try {
-      data = await db.getFriends(userId);
+      data = await this.getFriendlist(userId);
     } catch (error) {
       throw error;
     }
@@ -176,6 +177,55 @@ class User {
     }
 
     return id > 0 ? friendship : [];
+  }
+
+  static async getFriendlist(userId) {
+    let data;
+
+    try {
+      data = await db.getFriends(userId);
+    } catch (error) {
+      throw error;
+    }
+
+    let friends = [];
+    data.forEach((friendship) => {
+      let friend = {};
+      for (let key in friendship) {
+        if (key === 'userOneId' || key === 'userTwoId') {
+          //friend.friendId = friendship[key] !== userId ? friendship['userOneId'] : friendship['userTwoId'];
+          friend.friendId = friendship[key] !== userId ? friendship[key] : friend.friendId;
+        } else {
+          friend[key] = friendship[key];
+        }
+      }
+      friends.push(friend);
+    });
+
+    return friends;
+  }
+
+  async updateFriendship(friendId) {
+
+  }
+
+  static async getFeed(userId) {
+    let friendList = [];
+    let friendPosts = [];
+    let posts = [];
+
+    try {
+      friendList = await this.getFriendlist(userId);
+      const myFriendsPostsPromises = friendList.map(async (friend) => {
+        friendPosts = await db.getObjectByForeignId('posts', '*', 'authorId', friend.friendId);
+        posts.push(...friendPosts);
+      });
+      await Promise.all(myFriendsPostsPromises);
+    } catch (error) {
+      throw error;
+    }
+
+    return posts;
   }
 }
 

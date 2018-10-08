@@ -79,6 +79,20 @@ class DB {
     return promise;
   }
 
+  async getFrienship(userOne, userTwo) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM friendships WHERE userOneId = ? AND userTwoId = ?', [userOne, userTwo],
+        (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
   /**
    * Database method to insert or create a tupple from a model object.
    * @param  {string} table Name of the table to insert on.

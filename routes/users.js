@@ -89,4 +89,26 @@ router.post('/:userId/friendships/:friendId', (req, res, next) => {
   });
 }, usersController.addFriend);
 
+// UPDATE Friendship
+/*router.put('/:userId/friendships/:friendId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+      friendId: 'integer',
+    },
+    body: {
+      status: 'required integer',
+    },
+  });
+}, usersController.updateFriendship);*/
+
+// User feed
+router.get('/:userId/feed', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.getFeed);
+
 module.exports = router;

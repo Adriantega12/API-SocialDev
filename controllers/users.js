@@ -143,7 +143,6 @@ class UsersController {
   async addFriend(req, res, next) {
     let data;
 
-    // console.log(new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '));
     const json = {
       userOneId: req.params.userId,
       userTwoId: req.params.friendId,
@@ -157,6 +156,57 @@ class UsersController {
     } catch (error) {
       next(error);
     }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  /*
+  async updateFriendship(req, res, next) {
+    let data;
+
+    try {
+      data = await User.get(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(404).send(data); // Not Found
+    }
+
+    const updated = await data.update(req.body);
+
+    if (updated) {
+      res.status(200); // OK
+    } else {
+      res.status(409); // Conflict
+    }
+
+    res.send(data);
+  }
+  */
+
+  async getFeed(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getFeed(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
 
     if (data.length === 0) {
       res.status(204); // No content
