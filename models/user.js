@@ -146,6 +146,37 @@ class User {
 
     return deletedRows > 0;
   }
+
+  static async getFriends(userId) {
+    let data;
+
+    try {
+      data = await db.getFriends(userId);
+    } catch (error) {
+      throw error;
+    }
+
+    const response = [];
+
+    data.forEach((row) => {
+      response.push(row);
+    });
+
+    return response;
+  }
+
+  static async addFriend(friendship) {
+    let id;
+
+    try {
+      const response = await db.insert('friendships', friendship);
+      id = response.insertId;
+    } catch (error) {
+      throw error;
+    }
+
+    return id > 0 ? friendship : [];
+  }
 }
 
 module.exports = User;

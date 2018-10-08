@@ -69,4 +69,24 @@ router.delete('/:userId', (req, res, next) => {
 // Email routes
 // router.use('/:userId/emails', emailsRoutes);
 
+// Friendships
+// INDEX Friendship
+router.get('/:userId/friendships', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.getFriends);
+
+// NEW Friendship
+router.post('/:userId/friendships/:friendId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+      friendId: 'integer',
+    },
+  });
+}, usersController.addFriend);
+
 module.exports = router;

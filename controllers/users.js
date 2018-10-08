@@ -113,6 +113,59 @@ class UsersController {
 
     res.send();
   }
+
+  // Friendships
+  async getFriends(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getFriends(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async addFriend(req, res, next) {
+    let data;
+
+    // console.log(new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '));
+    const json = {
+      userOneId: req.params.userId,
+      userTwoId: req.params.friendId,
+      lastActionId: req.params.userId,
+      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      status: 1,
+    };
+
+    try {
+      data = await User.addFriend(json);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
 }
 
 module.exports = new UsersController();
