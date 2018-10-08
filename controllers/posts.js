@@ -22,8 +22,8 @@ class PostsController {
     const json = {
       data: data,
       total_count: data.length,
-      per_page: req.body.per_page,
-      page: req.body.page,
+      per_page: req.params.per_page,
+      page: req.params.page,
     };
 
     if (data.length === 0) {
