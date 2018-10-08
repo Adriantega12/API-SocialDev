@@ -58,6 +58,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('INSERT INTO ?? SET ?', [table, obj], (error, results) => {
         if (error) {
+          console.log(error);
           throw reject(error);
         }
         resolve(results);

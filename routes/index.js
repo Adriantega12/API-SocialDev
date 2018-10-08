@@ -15,6 +15,7 @@ const friendshipsRoutes = require('./friendships');
 const scoresRoutes = require('./scores');
 const rolesRoutes = require('./roles');
 const attachmentsRoutes = require('./attachments');
+const populate = require('./populate');
 
 // Test
 router.get('/', (req, res) => { res.send('Principal'); });
@@ -42,5 +43,8 @@ router.use('/roles', rolesRoutes);
 
 // Attachments
 router.use('/attachments', attachmentsRoutes);
+
+// Populate
+router.use('/populate', populateRoutes);
 
 module.exports = router;
