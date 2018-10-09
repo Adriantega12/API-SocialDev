@@ -74,7 +74,7 @@ adjunto.
 
 
 2. EMAILS: 
-   ---
+--- ---
 Ver todos los correos electrónicos, validar un nuevo correo electrónico, mostrar un correo electrónico, actualizar un correo electrónico y eliminar un correo electrónico.
 
 | Nombre | Path | Verbo | Descripción |
@@ -87,7 +87,7 @@ Ver todos los correos electrónicos, validar un nuevo correo electrónico, mostr
 
 
 3. FRIENDSHIPS:
-   ---
+--- ---
 Ver todos tus amigos, agregar a un nuevo amigo, mostrar un amigo, actualizar y eliminar un amigo.
 
 | Nombre | Path | Verbo | Descripción |
@@ -99,7 +99,7 @@ Ver todos tus amigos, agregar a un nuevo amigo, mostrar un amigo, actualizar y e
 | Destroy friendship | /users/{id}/friendship/{friendshipId} | DELETE | Eliminar una amistad de un usuario | 
 
 4. SCORES: 
-   ---
+--- ---
 Ver todas las puntuaciones, iniciar una nueva puntuación, mostrar una puntuación, actualizar y eliminar una calificación.
 
 | Nombre | Path | Verbo | Descripción |
@@ -112,7 +112,7 @@ Ver todas las puntuaciones, iniciar una nueva puntuación, mostrar una puntuaci�
 
 
 5. ROLES: 
-   ---
+--- ---
 Ver todos los roles disponibles, crear un nuevo rol, mostrar cierto rol, actualizar un rol y eliminar un rol.
 
 | Nombre | Path | Verbo | Descripción |
@@ -125,7 +125,7 @@ Ver todos los roles disponibles, crear un nuevo rol, mostrar cierto rol, actuali
 
 
 6. COMMENTS: 
-   ---
+--- ---
 Mostrar todos los comentarios, crear un nuevo comentario,  mostrar un comentario, actualizar un comentario y eliminar un comentario.
 
 | Nombre | Path | Verbo | Descripción |
@@ -138,7 +138,7 @@ Mostrar todos los comentarios, crear un nuevo comentario,  mostrar un comentario
 
 
 7. MESSAGES: 
-   ---
+--- ---
 Mostrar todos los mensajes, crear un nuevo mensaje, mostrar un mensaje, actualizar un mensaje y eliminar un mensaje.
 
 | Nombre | Path | Verbo | Descripción |
@@ -151,7 +151,7 @@ Mostrar todos los mensajes, crear un nuevo mensaje, mostrar un mensaje, actualiz
 
 
 8. USERS: 
-   ---
+--- ---
 Ver todos los usuarios, crear un nuevo usuario, mostrar un usuario, actualizar la información de un usuario y eliminar un usuario.
 
 | Nombre | Path | Verbo | Descripción |
@@ -165,7 +165,7 @@ Ver todos los usuarios, crear un nuevo usuario, mostrar un usuario, actualizar l
 
 
 9. POSTS: 
-   ---
+--- ---
 Mostrar todas las publicaciones, crear un nueva publicación, mostrar una publicación, actualizar un publicación y eliminar una publicación.
 
 | Nombre | Path | Verbo | Descripción |
