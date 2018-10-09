@@ -8,6 +8,10 @@ class UsersController {
     this.insert = this.insert.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
+
+    this.getFriends = this.getFriends.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+    this.getFeed = this.getFeed.bind(this);
   }
 
   async getAll(req, res, next) {

@@ -8,6 +8,11 @@ class PostsController {
     this.insert = this.insert.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
+
+    this.getAttachments = this.getAttachments.bind(this);
+    this.addAttachments = this.addAttachments.bind(this);
+    this.deleteAttachments = this.deleteAttachments.bind(this);
+
   }
 
   async getAll(req, res, next) {
@@ -101,6 +106,73 @@ class PostsController {
 
     try {
       deleted = await Post.delete(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
+
+    if (deleted) {
+      res.status(200); // OK
+    } else {
+      res.status(404); // Not Found
+    }
+
+    res.send();
+  }
+
+  // Attachments
+  async getAttachments(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.getAttachments(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async addAttachment(req, res, next) {
+    let data;
+
+    const json = {
+      postId: req.params.postId,
+      data: req.params.data,
+    };
+
+    try {
+      data = await Post.addAttachment(json);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async deleteAttachment(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Post.deleteAtachment(req.params.AttachmentId);
     } catch (error) {
       next(error);
     }
