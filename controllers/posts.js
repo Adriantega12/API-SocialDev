@@ -220,7 +220,7 @@ class PostsController {
     let data;
 
     const json = {
-      postId: req.params.postId,
+      postsId: req.params.postId,
       userId: req.body.userId,
       score: req.body.score,
       date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),

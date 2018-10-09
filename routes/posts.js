@@ -96,6 +96,10 @@ router.post('/:postId/scores', (req, res, next) => {
     params: {
       postId: 'integer',
     },
+    body: {
+      userId: 'required integer',
+      score: 'required integer',
+    },
   });
 }, postsController.addScore);
 

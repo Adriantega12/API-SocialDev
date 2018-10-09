@@ -91,8 +91,13 @@ class CommentsController {
       res.status(404).send(data); // Not Found
     }
 
-    const updated = await data.update(req.body);
-    data = new Comment(req.body);
+    const comment = {
+      ...req.body,
+      isEdited: true,
+    };
+
+    const updated = await data.update(comment);
+    data = new Comment(data);
 
     if (updated) {
       res.status(200); // OK
