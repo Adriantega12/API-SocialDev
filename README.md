@@ -59,15 +59,24 @@ RUTAS
 Las rutas serán nuestros endpoints que nos permitirán la gestión de las peticiones (a través de métodos) de HTTP para indicar las
 acciones que realizarán y retornar el código de estado de respuesta según sea el caso.
 Las rutas creadas son:
-1. Attachments
-2. Emails
-3. Friendships
-4. Scores
-5. Roles
-6. Comments
-7. Messages
-8. Users
-9. Posts
+1. ATTACHMENTS: Ver todos los archivos adjuntos, agregar un archivo adjunto, actualizar un archivo adjunto y eliminar un archivo
+adjunto.
+
+2. EMAILS: Ver todos los correos electrónicos, validar un nuevo correo electrónico, mostrar un correo electrónico, actualizar un correo electrónico y eliminar un correo electrónico,
+
+3. FRIENDSHIPS: Ver todos tus amigos, agregar a un nuevo amigo, mostrar un amigo, actualizar y eliminar un amigo.
+
+4. SCORES: Ver todas las puntuaciones, iniciar una nueva puntuación, mostrar una puntuación, actualizar y eliminar una calificación.
+
+5. ROLES: Ver todos los roles disponibles, crear un nuevo rol, mostrar cierto rol, actualizar un rol y eliminar un rol.
+
+6. COMMENTS: Mostrar todos los comentarios, crear un nuevo comentario,  mostrar un comentario, actualizar un comentario y eliminar un comentario.
+
+7. MESSAGES: Mostrar todos los mensajes, crear un nuevo mensaje, mostrar un mensaje, actualizar un mensaje y eliminar un mensaje.
+
+8. USERS: Ver todos los usuarios, crear un nuevo usuario, mostrar un usuario, actualizar la información de un usuario y eliminar un usuario.
+
+9. POSTS: Mostrar todas las publicaciones, crear un nueva publicación, mostrar una publicación, actualizar un publicación y eliminar una publicación.
 
 
 
