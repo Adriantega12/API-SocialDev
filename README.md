@@ -1,4 +1,4 @@
-A P I  S O C I A L  D E V
+API  SocialDev
 ==========================
 
 
