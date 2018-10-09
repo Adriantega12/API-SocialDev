@@ -19,7 +19,6 @@ router.post('/', (req, res, next) => {
 }, commentsController.insert);
 
 // SHOW Comment
-//posts/:postId/commentId
 router.get('posts/:postId/comments/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {

@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
 }, messagesController.insert);
 
 // SHOW Message
-router.get('/:messageId', (req, res, next) => {
+router.get('users/:userId/messages/messageId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       messageId: 'integer',
@@ -28,7 +28,7 @@ router.get('/:messageId', (req, res, next) => {
 }, messagesController.get);
 
 // UPDATE Message
-router.put('/:messageId', (req, res, next) => {
+router.put('users/:userId/messages/messageId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       messageId: 'integer',
@@ -43,7 +43,7 @@ router.put('/:messageId', (req, res, next) => {
 }, messagesController.update);
 
 // DESTROY Message
-router.delete('/:messageId', (req, res, next) => {
+router.delete('users/:userId/messages/messageId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       messageId: 'integer',
