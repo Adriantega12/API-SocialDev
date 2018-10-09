@@ -112,7 +112,7 @@ class Post {
   static async getAttachments(postId) {
     let data;
     try {
-      data = await db.getObjectByForeignId(postId);
+      data = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
     } catch (error) {
       throw error;
     }
@@ -142,6 +142,49 @@ class Post {
 
     try {
       const results = await db.insert('attachments', attachmentId);
+      deletedRows = results.affectedRows;
+    } catch (error) {
+      throw error;
+    }
+
+    return deletedRows > 0;
+  }
+
+  // SCORES
+
+  static async getScores(postId) {
+    let data;
+    try {
+      data = await db.getObjectByForeignId('scores', '*', 'postId', postId);
+    } catch (error) {
+      throw error;
+    }
+    const response = [];
+
+    data.forEach((row) => {
+      response.push(row);
+    });
+
+    return response;
+  }
+
+  static async addScore(score) {
+    let id;
+
+    try {
+      const response = await db.insert('scores', score);
+      id = response.insertId;
+    } catch (error) {
+      throw error;
+    }
+    return id > 0 ? score : [];
+  }
+
+  static async deleteScore(scoreId) {
+    let deletedRows;
+
+    try {
+      const results = await db.insert('attachments', scoreId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;

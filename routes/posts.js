@@ -81,6 +81,34 @@ router.delete('/:postId/attachments/:attachmentId', (req, res, next) => {
   });
 }, postsController.deleteAttachment);
 
+// INDEX score
+router.get('/:postId/scores', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.getScores);
+
+// NEW score
+router.post('/:postId/scores', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.addScore);
+
+// Delete score
+router.delete('/:postId/scores/:scoreId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+      scoreId: 'integer',
+    },
+  });
+}, postsController.deleteScore);
+
 router.use('/:postId/comments', commentsRoutes);
 
 

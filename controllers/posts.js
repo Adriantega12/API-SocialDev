@@ -13,6 +13,10 @@ class PostsController {
     this.addAttachment = this.addAttachment.bind(this);
     this.deleteAttachment = this.deleteAttachment.bind(this);
 
+    this.getScores = this.getScores.bind(this);
+    this.addScore = this.addScore.bind(this);
+    this.deleteScore = this.deleteScore.bind(this);
+
   }
 
   async getAll(req, res, next) {
@@ -172,7 +176,76 @@ class PostsController {
     let deleted;
 
     try {
-      deleted = await Post.deleteAtachment(req.params.AttachmentId);
+      deleted = await Post.deleteAtachment(req.params.attachmentId);
+    } catch (error) {
+      next(error);
+    }
+
+    if (deleted) {
+      res.status(200); // OK
+    } else {
+      res.status(404); // Not Found
+    }
+
+    res.send();
+  }
+
+  // Scores
+  async getScores(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.getScores(req.params.postId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async addScore(req, res, next) {
+    let data;
+
+    const json = {
+      postId: req.params.postId,
+      userId: req.params.userId,
+      score: req.params.score,
+      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+    };
+
+    try {
+      data = await Post.addScore(json);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async deleteScore(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await Post.deleteScore(req.params.scoreId);
     } catch (error) {
       next(error);
     }
