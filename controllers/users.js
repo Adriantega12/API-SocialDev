@@ -8,9 +8,16 @@ class UsersController {
     this.insert = this.insert.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
+
+    this.getFriends = this.getFriends.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+    this.getFeed = this.getFeed.bind(this);
+
+    this.getEmails = this.getEmails.bind(this);
+    this.addEmail = this.addEmail.bind(this);
+    this.deleteEmail = this.deleteEmail.bind(this);
   }
 
-  // ***Needs reviewing***
   async getAll(req, res, next) {
     let data;
 
@@ -23,8 +30,8 @@ class UsersController {
     const json = {
       data: data,
       total_count: data.length,
-      per_page: req.body.per_page,
-      page: req.body.page,
+      per_page: req.params.per_page,
+      page: req.params.page,
     };
 
     if (data.length === 0) {
@@ -102,6 +109,152 @@ class UsersController {
 
     try {
       deleted = await User.delete(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    if (deleted) {
+      res.status(200); // OK
+    } else {
+      res.status(404); // Not Found
+    }
+
+    res.send();
+  }
+
+  // Friendships
+  async getFriends(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getFriends(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async addFriend(req, res, next) {
+    let data;
+
+    const json = {
+      userOneId: req.params.userId,
+      userTwoId: req.params.friendId,
+      lastActionId: req.params.userId,
+      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      status: 1,
+    };
+
+    try {
+      data = await User.addFriend(json);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async getFeed(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getFeed(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+//EMAIL
+
+  async getEmails(req, res, next) {
+    let data;
+
+    try {
+      data = await User.getEmails(req.params.userId);
+    } catch (error) {
+      next(error);
+    }
+
+    const json = {
+      data: data,
+      total_count: data.length,
+      per_page: req.params.per_page,
+      page: req.params.page,
+    };
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async addEmail(req, res, next) {
+    let data;
+
+    const json = {
+      userId: req.params.userId,
+
+      email: req.body.email,
+    };
+
+    try {
+      data = await User.addEmail(json);
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(json);
+  }
+
+  async deleteEmail(req, res, next) {
+    let deleted;
+
+    try {
+      deleted = await User.deleteEmail(req.body.email);
     } catch (error) {
       next(error);
     }

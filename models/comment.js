@@ -27,11 +27,11 @@ class Comment {
     this.isEdited = isEdited;
   }
 
-  static async getAll() {
+  static async getAll(postId) {
     let data;
 
     try {
-      data = await db.getAll('comments');
+      data = await db.getObjectByForeignId('comments', '*', 'postId', postId);
     } catch (error) {
       return error;
     }
