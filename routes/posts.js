@@ -111,5 +111,4 @@ router.delete('/:postId/scores/:scoreId', (req, res, next) => {
 
 router.use('/:postId/comments', commentsRoutes);
 
-
 module.exports = router;

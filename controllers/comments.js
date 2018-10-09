@@ -56,8 +56,15 @@ class CommentsController {
   async insert(req, res, next) {
     let data;
 
+    const comment = {
+      postId: req.params.postId,
+      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      isEdited: false,
+      ...req.body,
+    };
+
     try {
-      data = await Comment.insert(req.body);
+      data = await Comment.insert(comment);
     } catch (error) {
       next(error);
     }
