@@ -8,7 +8,9 @@ class DB {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
     });
-    this.con.connect();
+    this.con.connect( (error) => {
+      if (error) throw error;
+    });
     this.tupples = undefined;
   }
 
@@ -20,9 +22,11 @@ class DB {
   async getAll(table) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM ??', [table], (error, results) => {
-        if (error) throw reject(error);
+        if (error) {
+          return reject(this.processError(error));
+        }
         this.tupples = results;
-        resolve(this.tupples);
+        return resolve(this.tupples);
       });
     });
     return promise;
@@ -39,10 +43,51 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
         if (error) {
-          throw reject(error);
+          return reject(this.processError(error));
         }
         this.tupples = results;
-        resolve(this.tupples);
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  async getObjectByForeignId(table, columns, idAttribName, id) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  async getFriends(userId) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
+        (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  async getFrienship(userOne, userTwo) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM friendships WHERE userOneId = ? AND userTwoId = ?', [userOne, userTwo],
+        (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
       });
     });
     return promise;
@@ -58,9 +103,9 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('INSERT INTO ?? SET ?', [table, obj], (error, results) => {
         if (error) {
-          throw reject(error);
+          return reject(this.processError(error));
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
@@ -76,9 +121,10 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, id], (error, results) => {
         if (error) {
-          throw reject(error);
+          let err = this.processError(error);
+          throw reject(err);
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
@@ -94,12 +140,52 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE id = ?', [table, id], (error, results) => {
         if (error) {
-          throw reject(error);
+          return reject(this.processError(error));
         }
-        resolve(results);
+        return resolve(results);
       });
     });
     return promise;
   }
+
+  async deleteEmail(table, emailName) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('DELETE FROM ?? WHERE email = ?', [table, emailName], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        return resolve(results);
+      });
+    });
+    return promise;
+  }
+
+  processError(err) {
+    const error = {};
+
+    switch (err.code) {
+      case 'ER_DUP_ENTRY':
+        let data = this.getDataFromErrorMsg(err.sqlMessage);
+        error['duplicated'] = {
+          message: `The ${data.field} ${data.data} already exists on the system`,
+          field: data.field,
+          sql: err.sql,
+        };
+        break;
+      default:
+
+    }
+
+    return error;
+  }
+
+  getDataFromErrorMsg(message) {
+    let data = unescape(message).match(/'([^']+)'/g)
+    return {
+      field: data[1].slice(1,-1),
+      data: data[0].slice(1,-1),
+    }
+  }
+
 }
 module.exports = new DB();

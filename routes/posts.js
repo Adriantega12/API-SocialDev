@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
 const { validator } = require('../middlewares');
 
@@ -51,5 +52,67 @@ router.delete('/:postId', (req, res, next) => {
     },
   });
 }, postsController.delete);
+
+// INDEX Attachment
+router.get('/:postId/attachments', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.getAttachments);
+
+// NEW Attachment
+router.post('/:postId/attachments', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.addAttachment);
+
+// Delete Attachment
+router.delete('/:postId/attachments/:attachmentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+      attachmentId: 'integer',
+    },
+  });
+}, postsController.deleteAttachment);
+
+// INDEX score
+router.get('/:postId/scores', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.getScores);
+
+// NEW score
+router.post('/:postId/scores', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+    body: {
+      userId: 'required integer',
+      score: 'required integer',
+    },
+  });
+}, postsController.addScore);
+
+// DELETE score
+router.delete('/:postId/scores/:scoreId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+      scoreId: 'integer',
+    },
+  });
+}, postsController.deleteScore);
+
+router.use('/:postId/comments', commentsRoutes);
 
 module.exports = router;

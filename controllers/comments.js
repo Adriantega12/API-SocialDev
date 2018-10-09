@@ -14,7 +14,7 @@ class CommentsController {
     let data;
 
     try {
-      data = await Comment.getAll();
+      data = await Comment.getAll(req.params.postId);
     } catch (error) {
       next(error);
     }
@@ -22,8 +22,8 @@ class CommentsController {
     const json = {
       data: data,
       total_count: data.length,
-      per_page: req.body.per_page,
-      page: req.body.page,
+      per_page: req.params.per_page,
+      page: req.params.page,
     };
 
     if (data.length === 0) {
@@ -56,8 +56,15 @@ class CommentsController {
   async insert(req, res, next) {
     let data;
 
+    const comment = {
+      postId: req.params.postId,
+      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      isEdited: false,
+      ...req.body,
+    };
+
     try {
-      data = await Comment.insert(req.body);
+      data = await Comment.insert(comment);
     } catch (error) {
       next(error);
     }
@@ -84,8 +91,13 @@ class CommentsController {
       res.status(404).send(data); // Not Found
     }
 
-    const updated = await data.update(req.body);
-    data = new Comment(req.body);
+    const comment = {
+      ...req.body,
+      isEdited: true,
+    };
+
+    const updated = await data.update(comment);
+    data = new Comment(data);
 
     if (updated) {
       res.status(200); // OK

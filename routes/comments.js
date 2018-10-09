@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router({ mergeParams: true });
 const { commentsController } = require('../controllers');
 const { validator } = require('../middlewares');
 
@@ -9,11 +9,8 @@ router.get('/', commentsController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      postId: 'required integer',
       authorId: 'required integer',
-      date: 'required date',
       content: 'required word',
-      isEdited: 'boolean',
     },
   });
 }, commentsController.insert);
@@ -34,11 +31,7 @@ router.put('/:commentId', (req, res, next) => {
       commentId: 'integer',
     },
     body: {
-      postId: 'integer',
-      authorId: 'integer',
-      date: 'date',
       content: 'word',
-      isEdited: 'boolean',
     },
   });
 }, commentsController.update);
