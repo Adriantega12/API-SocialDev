@@ -14,7 +14,7 @@ class CommentsController {
     let data;
 
     try {
-      data = await Comment.getAll();
+      data = await Comment.getAll(req.params.postId);
     } catch (error) {
       next(error);
     }
