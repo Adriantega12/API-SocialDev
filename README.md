@@ -59,6 +59,7 @@ RUTAS
 Las rutas serán nuestros endpoints que nos permitirán la gestión de las peticiones (a través de métodos) de HTTP para indicar las
 acciones que realizarán y retornar el código de estado de respuesta según sea el caso.
 Las rutas creadas son:
+
 1- ATTACHMENTS: 
    ---
 Ver todos los archivos adjuntos, agregar un archivo adjunto, actualizar un archivo adjunto y eliminar un archivo
