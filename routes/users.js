@@ -89,19 +89,6 @@ router.post('/:userId/friendships/:friendId', (req, res, next) => {
   });
 }, usersController.addFriend);
 
-// UPDATE Friendship
-/*router.put('/:userId/friendships/:friendId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-      friendId: 'integer',
-    },
-    body: {
-      status: 'required integer',
-    },
-  });
-}, usersController.updateFriendship);*/
-
 // User feed
 router.get('/:userId/feed', (req, res, next) => {
   validator.validate(req, res, next, {
@@ -130,11 +117,13 @@ router.post('/:userId/emails', (req, res, next) => {
 }, usersController.addEmail);
 
 // DELETE email
-router.delete('/:userId/emails/:emailName', (req, res, next) => {
+router.delete('/:userId/emails', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       userId: 'integer',
-      emailName: 'email',
+    },
+    body: {
+      email: 'email',
     },
   });
 }, usersController.deleteEmail);

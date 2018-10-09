@@ -112,14 +112,23 @@ class User {
       throw error;
     }
 
-    let emails = [];
-    let posts = [];
-    let comments = [];
-    let friends = [];
-    let messages = [];
-    let roles = [];
+    const emails = [];
+    const posts = [];
+    const comments = [];
+    const friends = [];
+    const messages = [];
+    const roles = [];
 
-    return id > 0 ? new User({ id, ...user, emails, posts, comments, friends, messages, roles }) : [];
+    return id > 0 ? new User({
+      id,
+      ...user,
+      emails,
+      posts,
+      comments,
+      friends,
+      messages,
+      roles,
+    }) : [];
   }
 
   async update(keyVals) {
@@ -188,12 +197,11 @@ class User {
       throw error;
     }
 
-    let friends = [];
+    const friends = [];
     data.forEach((friendship) => {
-      let friend = {};
-      for (let key in friendship) {
+      const friend = {};
+      for (const key in friendship) {
         if (key === 'userOneId' || key === 'userTwoId') {
-          //friend.friendId = friendship[key] !== userId ? friendship['userOneId'] : friendship['userTwoId'];
           friend.friendId = friendship[key] !== userId ? friendship[key] : friend.friendId;
         } else {
           friend[key] = friendship[key];
@@ -205,14 +213,10 @@ class User {
     return friends;
   }
 
-  async updateFriendship(friendId) {
-
-  }
-
   static async getFeed(userId) {
     let friendList = [];
     let friendPosts = [];
-    let posts = [];
+    const posts = [];
 
     try {
       friendList = await this.getFriendlist(userId);
@@ -229,10 +233,10 @@ class User {
   }
 
   // EMAIL
-  static async getEmail(userId) {
+  static async getEmails(userId) {
     let data;
     try {
-      data = await db.getObjectByForeignId('email', '*', 'userId', userId);
+      data = await db.getObjectByForeignId('emails', '*', 'userId', userId);
     } catch (error) {
       throw error;
     }
@@ -269,7 +273,6 @@ class User {
 
     return deletedRows > 0;
   }
-
 }
 
 module.exports = User;

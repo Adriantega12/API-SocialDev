@@ -174,32 +174,6 @@ class UsersController {
     res.send(json);
   }
 
-  /*
-  async updateFriendship(req, res, next) {
-    let data;
-
-    try {
-      data = await User.get(req.params.userId);
-    } catch (error) {
-      next(error);
-    }
-
-    if (data.length === 0) {
-      res.status(404).send(data); // Not Found
-    }
-
-    const updated = await data.update(req.body);
-
-    if (updated) {
-      res.status(200); // OK
-    } else {
-      res.status(409); // Conflict
-    }
-
-    res.send(data);
-  }
-  */
-
   async getFeed(req, res, next) {
     let data;
 
@@ -256,8 +230,9 @@ class UsersController {
     let data;
 
     const json = {
-      userId: req.params.postId,
-      emailId: req.body.userId,
+      userId: req.params.userId,
+
+      email: req.body.email,
     };
 
     try {
@@ -279,7 +254,7 @@ class UsersController {
     let deleted;
 
     try {
-      deleted = await User.deleteEmail(req.params.emailName);
+      deleted = await User.deleteEmail(req.body.email);
     } catch (error) {
       next(error);
     }
