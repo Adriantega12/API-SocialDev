@@ -48,11 +48,10 @@ class UsersController {
 
     try {
       data = await User.get(req.params.userId);
+      console.log(data);
     } catch (error) {
       next(error);
     }
-
-    console.log(data);
 
     if (data.length === 0) {
       res.status(404); // Not Found

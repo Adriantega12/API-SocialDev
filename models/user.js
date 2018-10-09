@@ -80,7 +80,7 @@ class User {
   }
 
   static async get(userId) {
-    let data;
+    let data = [];
     let emails;
     let posts;
     let comments;
@@ -91,15 +91,21 @@ class User {
       data = await db.get('users', '*', userId);
       emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
-      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId );
-      //friends = await db.getFriends(userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
       friends = await this.getFriendlist(userId);
       messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new User({ ...data[0], emails, posts, comments, friends, messages}) : data;
+    return data.length !== 0 ? new User({
+      ...data[0],
+      emails,
+      posts,
+      comments,
+      friends,
+      messages,
+    }) : [];
   }
 
   static async insert(user) {
