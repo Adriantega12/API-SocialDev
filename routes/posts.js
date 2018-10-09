@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
 const { validator } = require('../middlewares');
 
@@ -79,6 +80,8 @@ router.delete('/:postId/attachments/:attachmentId', (req, res, next) => {
     },
   });
 }, postsController.deleteAttachment);
+
+router.use('/:postId/comments', commentsRoutes);
 
 
 module.exports = router;

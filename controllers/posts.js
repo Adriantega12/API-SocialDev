@@ -10,8 +10,8 @@ class PostsController {
     this.delete = this.delete.bind(this);
 
     this.getAttachments = this.getAttachments.bind(this);
-    this.addAttachments = this.addAttachments.bind(this);
-    this.deleteAttachments = this.deleteAttachments.bind(this);
+    this.addAttachment = this.addAttachment.bind(this);
+    this.deleteAttachment = this.deleteAttachment.bind(this);
 
   }
 
