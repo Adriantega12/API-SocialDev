@@ -44,8 +44,7 @@ class UsersController {
   }
 
   async get(req, res, next) {
-    let data;
-    console.log(req.params);
+    let data = [];
 
     try {
       data = await User.get(req.params.userId);
