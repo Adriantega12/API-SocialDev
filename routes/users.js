@@ -89,7 +89,7 @@ router.post('/:userId/friendships/:friendId', (req, res, next) => {
   });
 }, usersController.addFriend);
 
-// User feed
+// User Feed
 router.get('/:userId/feed', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
