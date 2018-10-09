@@ -109,7 +109,6 @@ class Post {
     return deletedRows > 0;
   }
 
-
   static async getAttachments(postId) {
     let data;
     try {
@@ -142,7 +141,7 @@ class Post {
     let deletedRows;
 
     try {
-      const response = await db.insert('attachments', attachmentId);
+      const results = await db.insert('attachments', attachmentId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;
