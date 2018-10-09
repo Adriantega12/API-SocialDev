@@ -19,7 +19,8 @@ router.post('/', (req, res, next) => {
 }, commentsController.insert);
 
 // SHOW Comment
-router.get('/:commentId', (req, res, next) => {
+//posts/:postId/commentId
+router.get('posts/:postId/comments/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       commentId: 'integer',
@@ -28,7 +29,7 @@ router.get('/:commentId', (req, res, next) => {
 }, commentsController.get);
 
 // UPDATE Comment
-router.put('/:commentId', (req, res, next) => {
+router.put('posts/:postId/comments/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       commentId: 'integer',
@@ -44,7 +45,7 @@ router.put('/:commentId', (req, res, next) => {
 }, commentsController.update);
 
 // DESTROY Comment
-router.delete('/:commentId', (req, res, next) => {
+router.delete('posts/:postId/comments/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       commentId: 'integer',
