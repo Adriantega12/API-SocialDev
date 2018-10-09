@@ -52,4 +52,33 @@ router.delete('/:postId', (req, res, next) => {
   });
 }, postsController.delete);
 
+// INDEX Attachment
+router.get('/:postId/attachments', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.getAttachments);
+
+// NEW Attachment
+router.post('/:postId/attachments', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+    },
+  });
+}, postsController.addAttachment);
+
+// Delete Attachment
+router.delete('/:postId/attachments/:attachmentId', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      postId: 'integer',
+      attachmentId: 'integer',
+    },
+  });
+}, postsController.deleteAttachment);
+
+
 module.exports = router;
