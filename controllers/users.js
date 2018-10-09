@@ -52,6 +52,8 @@ class UsersController {
       next(error);
     }
 
+    console.log(data);
+
     if (data.length === 0) {
       res.status(404); // Not Found
     } else {
