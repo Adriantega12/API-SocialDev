@@ -151,11 +151,10 @@ class Post {
   }
 
   // SCORES
-
   static async getScores(postId) {
     let data;
     try {
-      data = await db.getObjectByForeignId('scores', '*', 'postId', postId);
+      data = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
     } catch (error) {
       throw error;
     }
@@ -184,7 +183,7 @@ class Post {
     let deletedRows;
 
     try {
-      const results = await db.delete('attachments', scoreId);
+      const results = await db.delete('scores', scoreId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;
