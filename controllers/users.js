@@ -45,10 +45,10 @@ class UsersController {
 
   async get(req, res, next) {
     let data;
+    console.log(req.params);
 
     try {
       data = await User.get(req.params.userId);
-      console.log(data);
     } catch (error) {
       next(error);
     }
