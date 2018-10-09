@@ -59,7 +59,9 @@ RUTAS
 Las rutas serán nuestros endpoints que nos permitirán la gestión de las peticiones (a través de métodos) de HTTP para indicar las
 acciones que realizarán y retornar el código de estado de respuesta según sea el caso.
 Las rutas creadas son:
-1. ATTACHMENTS: Ver todos los archivos adjuntos, agregar un archivo adjunto, actualizar un archivo adjunto y eliminar un archivo
+1. ATTACHMENTS: 
+--------------
+Ver todos los archivos adjuntos, agregar un archivo adjunto, actualizar un archivo adjunto y eliminar un archivo
 adjunto.
 
 | Nombre | Path | Verbo | Descripción |
@@ -71,7 +73,9 @@ adjunto.
 | Destroy attachment | /attachments/{attachmentId} | DELETE | Eliminar un archivo adjunto | 
 
 
-2. EMAILS: Ver todos los correos electrónicos, validar un nuevo correo electrónico, mostrar un correo electrónico, actualizar un correo electrónico y eliminar un correo electrónico.
+2. EMAILS: 
+--------------
+Ver todos los correos electrónicos, validar un nuevo correo electrónico, mostrar un correo electrónico, actualizar un correo electrónico y eliminar un correo electrónico.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -82,7 +86,9 @@ adjunto.
 | Destroy email | /users/{id}/emails/{emailId} | DELETE | Eliminar un correo electrónico de un usuario | 
 
 
-3. FRIENDSHIPS: Ver todos tus amigos, agregar a un nuevo amigo, mostrar un amigo, actualizar y eliminar un amigo.
+3. FRIENDSHIPS:
+--------------
+Ver todos tus amigos, agregar a un nuevo amigo, mostrar un amigo, actualizar y eliminar un amigo.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -92,7 +98,9 @@ adjunto.
 | Update friendship | /users/{id}/friendship/{friendshipId} | PUT | Actualizar una amistad de un usuario | 
 | Destroy friendship | /users/{id}/friendship/{friendshipId} | DELETE | Eliminar una amistad de un usuario | 
 
-4. SCORES: Ver todas las puntuaciones, iniciar una nueva puntuación, mostrar una puntuación, actualizar y eliminar una calificación.
+4. SCORES: 
+--------------
+Ver todas las puntuaciones, iniciar una nueva puntuación, mostrar una puntuación, actualizar y eliminar una calificación.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -103,7 +111,9 @@ adjunto.
 | Destroy score | /scores/{scoreId}  | DELETE | Eliminar un puntaje con un código específico | 
 
 
-5. ROLES: Ver todos los roles disponibles, crear un nuevo rol, mostrar cierto rol, actualizar un rol y eliminar un rol.
+5. ROLES: 
+--------------
+Ver todos los roles disponibles, crear un nuevo rol, mostrar cierto rol, actualizar un rol y eliminar un rol.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -114,7 +124,9 @@ adjunto.
 | Destroy | /roles/{roleId} | DELETE | Eliminar un rol | 
 
 
-6. COMMENTS: Mostrar todos los comentarios, crear un nuevo comentario,  mostrar un comentario, actualizar un comentario y eliminar un comentario.
+6. COMMENTS: 
+--------------
+Mostrar todos los comentarios, crear un nuevo comentario,  mostrar un comentario, actualizar un comentario y eliminar un comentario.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -125,7 +137,9 @@ adjunto.
 | Destroy comment | /comments/{commentId} | DELETE | Eliminar un comentario | 
 
 
-7. MESSAGES: Mostrar todos los mensajes, crear un nuevo mensaje, mostrar un mensaje, actualizar un mensaje y eliminar un mensaje.
+7. MESSAGES: 
+--------------
+Mostrar todos los mensajes, crear un nuevo mensaje, mostrar un mensaje, actualizar un mensaje y eliminar un mensaje.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -136,7 +150,9 @@ adjunto.
 | Destroy message | /messages/{messageId} | DELETE | Eliminar un mensaje | 
 
 
-8. USERS: Ver todos los usuarios, crear un nuevo usuario, mostrar un usuario, actualizar la información de un usuario y eliminar un usuario.
+8. USERS: 
+--------------
+Ver todos los usuarios, crear un nuevo usuario, mostrar un usuario, actualizar la información de un usuario y eliminar un usuario.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
@@ -148,7 +164,9 @@ adjunto.
 
 
 
-9. POSTS: Mostrar todas las publicaciones, crear un nueva publicación, mostrar una publicación, actualizar un publicación y eliminar una publicación.
+9. POSTS: 
+--------------
+Mostrar todas las publicaciones, crear un nueva publicación, mostrar una publicación, actualizar un publicación y eliminar una publicación.
 
 | Nombre | Path | Verbo | Descripción |
 |---|---|---|---|
