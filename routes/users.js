@@ -111,4 +111,32 @@ router.get('/:userId/feed', (req, res, next) => {
   });
 }, usersController.getFeed);
 
+// INDEX emails
+router.get('/:userId/emails', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.getEmails);
+
+// NEW email
+router.post('/:userId/emails', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.addEmail);
+
+// DELETE email
+router.delete('/:userId/emails/:emailName', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+      emailName: 'email',
+    },
+  });
+}, usersController.deleteEmail);
+
 module.exports = router;

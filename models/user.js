@@ -227,6 +227,49 @@ class User {
 
     return posts;
   }
+
+  // EMAIL
+  static async getEmail(userId) {
+    let data;
+    try {
+      data = await db.getObjectByForeignId('email', '*', 'userId', userId);
+    } catch (error) {
+      throw error;
+    }
+    const response = [];
+
+    data.forEach((row) => {
+      response.push(row);
+    });
+
+    return response;
+  }
+
+  static async addEmail(email) {
+    let id;
+
+    try {
+      const response = await db.insert('emails', email);
+      id = response.insertId;
+    } catch (error) {
+      throw error;
+    }
+    return id > 0 ? email : [];
+  }
+
+  static async deleteEmail(emailName) {
+    let deletedRows;
+
+    try {
+      const results = await db.deleteEmail('emails', emailName);
+      deletedRows = results.affectedRows;
+    } catch (error) {
+      throw error;
+    }
+
+    return deletedRows > 0;
+  }
+
 }
 
 module.exports = User;

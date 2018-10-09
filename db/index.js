@@ -148,6 +148,18 @@ class DB {
     return promise;
   }
 
+  async deleteEmail(table, emailName) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('DELETE FROM ?? WHERE email = ?', [table, emailName], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        return resolve(results);
+      });
+    });
+    return promise;
+  }
+
   processError(err) {
     const error = {};
 

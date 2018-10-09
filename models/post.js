@@ -184,7 +184,7 @@ class Post {
     let deletedRows;
 
     try {
-      const results = await db.insert('attachments', scoreId);
+      const results = await db.delete('attachments', scoreId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;
