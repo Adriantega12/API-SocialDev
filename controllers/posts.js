@@ -154,7 +154,7 @@ class PostsController {
 
     const json = {
       postId: req.params.postId,
-      data: req.params.data,
+      data: req.body.data,
     };
 
     try {
@@ -221,8 +221,8 @@ class PostsController {
 
     const json = {
       postId: req.params.postId,
-      userId: req.params.userId,
-      score: req.params.score,
+      userId: req.body.userId,
+      score: req.body.score,
       date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
     };
 

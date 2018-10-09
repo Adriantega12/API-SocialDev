@@ -99,7 +99,7 @@ router.post('/:postId/scores', (req, res, next) => {
   });
 }, postsController.addScore);
 
-// Delete score
+// DELETE score
 router.delete('/:postId/scores/:scoreId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
