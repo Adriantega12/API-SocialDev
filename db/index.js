@@ -173,7 +173,6 @@ class DB {
         };
         break;
       default:
-
     }
 
     return error;
@@ -186,6 +185,7 @@ class DB {
       data: data[0].slice(1,-1),
     }
   }
+
 
 }
 module.exports = new DB();
