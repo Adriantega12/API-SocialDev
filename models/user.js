@@ -7,8 +7,6 @@ class User {
    * @param  {number} roleId       Indicates the permissions the user has.
    * @param  {string} email        Main email of the user.
    * @param  {string} password     Hashed password of the user.
-   * @param  {string} passwordSalt Salt added to the original password to make the hash.
-   * @param  {string} passwordHash Hash used to create the user password.
    * @param  {string} githubToken  Token to login with Github.
    * @param  {string} firstName    User's first name.
    * @param  {string} lastName     User's last name.
@@ -28,8 +26,6 @@ class User {
     roleId,
     email,
     password,
-    passwordSalt,
-    passwordHash,
     githubToken,
     firstName,
     lastName,
@@ -46,8 +42,6 @@ class User {
     this.roleId = roleId;
     this.email = email;
     this.password = password;
-    this.passwordSalt = passwordSalt;
-    this.passwordHash = passwordHash;
     this.githubToken = githubToken;
     this.firstName = firstName;
     this.lastName = lastName;
