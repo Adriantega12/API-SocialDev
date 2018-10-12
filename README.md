@@ -7,10 +7,24 @@ API  SocialDev
   1. [Meta](#11-meta)
   2. [Alcance](#12-alcance)
 2. [Descripción general](#2-descripción-general)
-  1. [Perspectiva de _SocialDev_][#21perspectiva-de-socialdev]
-  2. [Funcionalidad de _SocialDev_][#22funcionalidad-de-socialdev]
-  3. [Características de los usuarios][#23características-de-los-usuarios]
-  4. [Restricciones][#24restricciones]
+  1. [Perspectiva de _SocialDev_](#21perspectiva-de-socialdev)
+  2. [Funcionalidad de _SocialDev_](#22funcionalidad-de-socialdev)
+  3. [Características de los usuarios](#23características-de-los-usuarios)
+  4. [Restricciones](#24restricciones)
+3. [Requisitos](#3requisitos)
+  1. [Controladores](#31controladores)
+  2. [Datos](#32datos)
+  3. [Middlewares](#33middlewares)
+  4. [Modelos](#34modelos)
+  5. [Rutas](#35rutas)
+    1. [Attachments](#351attachments)
+    2. [Emails](#352emails)
+    3. [Friendships](#353friendships)
+    4. [Scores](#354scores)
+    5. [Comments](#355comments)
+    6. [Messages](#356messages)
+    7. [Users](#357users)
+    8. [Posts](#358posts)
 
 
 ##  1. Introducción
