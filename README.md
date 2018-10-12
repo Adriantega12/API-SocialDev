@@ -182,16 +182,45 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 | Update post | /posts/{postId} | PUT | Actualizar una publicación |
 | Destroy post | /posts/{postId} | DELETE | Eliminar una publicación |
 
-## Autores
+
+## 4. INSTALACIÓN
+
+#### A. Instalar GIT
+
+_$ sudo apt-get install git-core_
+
+
+#### B. Instalar NVM
+
+_$ curl https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash_
+
+
+#### C. Instalar Node
+
+_$ nvm install node_
+
+
+#### D. Clonar proyecto
+
+_$ git clone https://github.com/Darktega/API-SocialDev.git_
+
+
+
+### 4.1 URL de App
+
+URL: https://socialdev-218019.appspot.com/
+
+
+
+###  4.2 Colección de Postman utilizada para hacer pruebas
+
+Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
+
+
+
+## 5. Autores
 
 - Diego Frías Acosta: _diego142_
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
 
-## URL de App
-
-URL: https://socialdev-218019.appspot.com/
-
-## Colección de Postman utilizada para hacer pruebas
-
-Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
