@@ -40,7 +40,7 @@ Cuando se ha realizado una publicación, se tendrá la opción de poder comparti
 Los mensajes serán aquellos recados de texto que enviará una persona a otro. Como ya se ha mencionado, los usuarios con cuenta tendrán la opción de enviar mensajes a otros usuarios que estén en su lista de contactos y así poder comunicarse con ellos en cualquier momento.
 
 
-### 2.1. Perspectiva de SocialDev_
+### 2.1. Perspectiva de _SocialDev_
 
 **¿Por qué _SocialDev_ es distinto a otras redes sociales?**
 
