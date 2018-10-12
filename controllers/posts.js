@@ -1,4 +1,5 @@
 const { Post } = require('../models');
+const { datetime } = require('../middlewares');
 
 class PostsController {
   constructor() {
@@ -48,7 +49,7 @@ class PostsController {
     let data;
 
     try {
-      data = await Post.get(req.params.postId);
+      data = await Post.get(Number(req.params.postId));
     } catch (error) {
       next(error);
     }
@@ -65,8 +66,13 @@ class PostsController {
   async insert(req, res, next) {
     let data;
 
+    const post = {
+      ...req.body,
+      date: datetime.toMySQLFromJS(Date.now()),
+    };
+
     try {
-      data = await Post.insert(req.body);
+      data = await Post.insert(post);
     } catch (error) {
       next(error);
     }
@@ -84,7 +90,7 @@ class PostsController {
     let data;
 
     try {
-      data = await Post.get(req.params.postId);
+      data = await Post.get(Number(req.params.postId));
     } catch (error) {
       next(error);
     }
@@ -109,7 +115,7 @@ class PostsController {
     let deleted;
 
     try {
-      deleted = await Post.delete(req.params.postId);
+      deleted = await Post.delete(Number(req.params.postId));
     } catch (error) {
       next(error);
     }
@@ -128,7 +134,7 @@ class PostsController {
     let data;
 
     try {
-      data = await Post.getAttachments(req.params.postId);
+      data = await Post.getAttachments(Number(req.params.postId));
     } catch (error) {
       next(error);
     }
@@ -152,13 +158,13 @@ class PostsController {
   async addAttachment(req, res, next) {
     let data;
 
-    const json = {
+    const attachment = {
       postId: req.params.postId,
       data: req.body.data,
     };
 
     try {
-      data = await Post.addAttachment(json);
+      data = await Post.addAttachment(attachment);
     } catch (error) {
       next(error);
     }
@@ -169,14 +175,14 @@ class PostsController {
       res.status(200); // OK
     }
 
-    res.send(json);
+    res.send(attachment);
   }
 
   async deleteAttachment(req, res, next) {
     let deleted;
 
     try {
-      deleted = await Post.deleteAtachment(req.params.attachmentId);
+      deleted = await Post.deleteAtachment(Number(req.params.attachmentId));
     } catch (error) {
       next(error);
     }
@@ -195,7 +201,7 @@ class PostsController {
     let data;
 
     try {
-      data = await Post.getScores(req.params.postId);
+      data = await Post.getScores(Number(req.params.postId));
     } catch (error) {
       next(error);
     }
@@ -219,15 +225,15 @@ class PostsController {
   async addScore(req, res, next) {
     let data;
 
-    const json = {
+    const score = {
       postsId: req.params.postId,
       userId: req.body.userId,
       score: req.body.score,
-      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      date: datetime.toMySQLFromJS(Date.now()),
     };
 
     try {
-      data = await Post.addScore(json);
+      data = await Post.addScore(score);
     } catch (error) {
       next(error);
     }
@@ -238,14 +244,14 @@ class PostsController {
       res.status(200); // OK
     }
 
-    res.send(json);
+    res.send(score);
   }
 
   async deleteScore(req, res, next) {
     let deleted;
 
     try {
-      deleted = await Post.deleteScore(req.params.scoreId);
+      deleted = await Post.deleteScore(Number(req.params.scoreId));
     } catch (error) {
       next(error);
     }

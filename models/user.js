@@ -85,15 +85,21 @@ class User {
       data = await db.get('users', '*', userId);
       emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
-      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId );
-      //friends = await db.getFriends(userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
       friends = await this.getFriendlist(userId);
       messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new User({ ...data[0], emails, posts, comments, friends, messages}) : data;
+    return data.length !== 0 ? new User({
+      ...data[0],
+      emails,
+      posts,
+      comments,
+      friends,
+      messages,
+    }) : data;
   }
 
   static async insert(user) {
@@ -113,17 +119,17 @@ class User {
     const messages = [];
     const roles = [];
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       return id > 0 ? resolve(new User({
-          id,
-          ...user,
-          emails,
-          posts,
-          comments,
-          friends,
-          messages,
-          roles,
-        })) : reject([]);
+        id,
+        ...user,
+        emails,
+        posts,
+        comments,
+        friends,
+        messages,
+        roles,
+      })) : reject([]);
     });
   }
 
@@ -198,7 +204,9 @@ class User {
       const friend = {};
       for (const key in friendship) {
         if (key === 'userOneId' || key === 'userTwoId') {
-          friend.friendId = friendship[key] !== userId ? friendship[key] : friend.friendId;
+          if (friendship[key] !== userId) {
+            friend.friendId = friendship[key];
+          }
         } else {
           friend[key] = friendship[key];
         }
@@ -228,7 +236,7 @@ class User {
     return posts;
   }
 
-  // EMAIL
+  // Email
   static async getEmails(userId) {
     let data;
     try {

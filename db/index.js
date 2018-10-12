@@ -75,12 +75,12 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
         (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
+          if (error) {
+            return reject(this.processError(error));
+          }
+          this.tupples = results;
+          return resolve(this.tupples);
+        });
     });
     return promise;
   }
@@ -89,12 +89,12 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? AND userTwoId = ?', [userOne, userTwo],
         (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
+          if (error) {
+            return reject(this.processError(error));
+          }
+          this.tupples = results;
+          return resolve(this.tupples);
+        });
     });
     return promise;
   }

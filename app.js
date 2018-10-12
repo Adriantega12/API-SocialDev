@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(router);
 
+// Cargar errorHandler
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => console.log(`Started listening on port ${process.env.PORT}!`));

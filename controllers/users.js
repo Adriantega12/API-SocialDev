@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { datetime } = require('../middlewares');
 
 class UsersController {
   constructor() {
@@ -47,7 +48,7 @@ class UsersController {
     let data;
 
     try {
-      data = await User.get(req.params.userId);
+      data = await User.get(Number(req.params.userId));
     } catch (error) {
       return next(error);
     }
@@ -83,7 +84,7 @@ class UsersController {
     let data;
 
     try {
-      data = await User.get(req.params.userId);
+      data = await User.get(Number(req.params.userId));
     } catch (error) {
       return next(error);
     }
@@ -108,7 +109,7 @@ class UsersController {
     let deleted;
 
     try {
-      deleted = await User.delete(req.params.userId);
+      deleted = await User.delete(Number(req.params.userId));
     } catch (error) {
       return next(error);
     }
@@ -127,7 +128,7 @@ class UsersController {
     let data;
 
     try {
-      data = await User.getFriends(req.params.userId);
+      data = await User.getFriends(Number(req.params.userId));
     } catch (error) {
       return next(error);
     }
@@ -149,18 +150,20 @@ class UsersController {
   }
 
   async addFriend(req, res, next) {
+
+
     let data;
 
-    const json = {
+    const friendship = {
       userOneId: req.params.userId,
       userTwoId: req.params.friendId,
       lastActionId: req.params.userId,
-      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      date: datetime.toMySQLFromJS(Date.now()),
       status: 1,
     };
 
     try {
-      data = await User.addFriend(json);
+      data = await User.addFriend(friendship);
     } catch (error) {
       next(error);
     }
@@ -171,14 +174,14 @@ class UsersController {
       res.status(200); // OK
     }
 
-    res.send(json);
+    res.send(friendship);
   }
 
   async getFeed(req, res, next) {
     let data;
 
     try {
-      data = await User.getFeed(req.params.userId);
+      data = await User.getFeed(Number(req.params.userId));
     } catch (error) {
       next(error);
     }
@@ -199,13 +202,12 @@ class UsersController {
     res.send(json);
   }
 
-//EMAIL
-
+  // Email
   async getEmails(req, res, next) {
     let data;
 
     try {
-      data = await User.getEmails(req.params.userId);
+      data = await User.getEmails(Number(req.params.userId));
     } catch (error) {
       next(error);
     }

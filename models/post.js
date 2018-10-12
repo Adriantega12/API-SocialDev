@@ -66,7 +66,12 @@ class Post {
       throw error;
     }
 
-    return data.length !== 0 ? new Post({ ...data[0], attachments, comments, scores }) : data;
+    return data.length !== 0 ? new Post({
+      ...data[0],
+      attachments,
+      comments,
+      scores,
+    }) : data;
   }
 
   static async insert(post) {
@@ -78,11 +83,17 @@ class Post {
       throw error;
     }
 
-    let attachments = [];
-    let comments = [];
-    let scores = [];
+    const attachments = [];
+    const comments = [];
+    const scores = [];
 
-    return id > 0 ? new Post({ id, ...post, attachments, comments, scores }) : [];
+    return id > 0 ? new Post({
+      id,
+      ...post,
+      attachments,
+      comments,
+      scores,
+    }) : [];
   }
 
   async update(keyVals) {
@@ -150,7 +161,7 @@ class Post {
     return deletedRows > 0;
   }
 
-  // SCORES
+  // Scores
   static async getScores(postId) {
     let data;
     try {
