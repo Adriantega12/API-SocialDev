@@ -34,9 +34,11 @@ class Message {
     }
 
     const response = [];
+
     data.forEach((row) => {
       response.push(new Message(row));
     });
+
     return response;
   }
 

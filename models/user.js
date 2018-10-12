@@ -1,4 +1,5 @@
 const db = require('../db');
+const Message = require('./message');
 
 class User {
   /**
@@ -36,7 +37,8 @@ class User {
     comments,
     posts,
     friends,
-    messages,
+    sentMessages,
+    receivedMessages,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -52,7 +54,8 @@ class User {
     this.posts = posts;
     this.comments = comments;
     this.friends = friends;
-    this.messages = messages;
+    this.sentMessages = sentMessages;
+    this.receivedMessages = receivedMessages;
   }
 
   static async getAll() {
@@ -79,17 +82,17 @@ class User {
     let posts;
     let comments;
     let friends;
-    let messages;
+    let sentMessages;
+    let receivedMessages;
 
     try {
       data = await db.get('users', '*', userId);
-      emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map((email) => {
-        return email.email;
-      });
+      emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
       comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
       friends = await this.getFriendlist(userId);
-      messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
+      sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
+      receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
     } catch (error) {
       throw error;
     }
@@ -100,7 +103,8 @@ class User {
       posts,
       comments,
       friends,
-      messages,
+      sentMessages,
+      receivedMessages,
     }) : data;
   }
 
@@ -118,7 +122,8 @@ class User {
     const posts = [];
     const comments = [];
     const friends = [];
-    const messages = [];
+    const sentMessages = [];
+    const receivedMessages = [];
     const roles = [];
 
     return new Promise((resolve, reject) => {
@@ -129,7 +134,8 @@ class User {
         posts,
         comments,
         friends,
-        messages,
+        sentMessages,
+        receivedMessages,
         roles,
       })) : reject([]);
     });
