@@ -2,64 +2,51 @@ API  SocialDev
 ==========================
 
 ##  1. Introducción
-
 _SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel. 
 
 
 ### 1.1. Meta
-
 Al ser una red social para desarrolladores de software, el contenido en su gran mayoría será de programación y así todos los usuarios podrán compartir desde sus experiencias personales hasta contenido divertido relacionado al tema, lo cual permitirá que los usuarios puedan conectarse de manera virtual con personas interesadas en el mismo ámbito.
 
 ### 1.2. Alcance
-
-Este proyecto consiste en poder conetar de manera virtual a diversos usuarios interesados en la programación, es decir, se centra en el compartimiento de conteido textual o multimedia quepermite que los usuarios aprendan sobre distintos temas orientados al desarrollo de software; Para ello se necesita:
-* La creación correcta de una base datos para que no exista ningúmn tipo de redundancia.
-* Elección de un buen servidor para que el sistema pueda estar disponible en cualquier plataforma.
-* Dispoinibilidad en diversos navegadores WEB como Chrome, Mozilla Firefox, Safari, Microsoft Edge e Interet Explorer.
-
-### 1.3. Definiciones
-
-
-### 1.4. Referencias
-* _Unknown. (2005). MDN. 2018, de MDN web docs Sitio web: https://developer.mozilla.org/es/_
+Este proyecto pretende poder comunicar a diversos usuarios interesados en la programación por medio de esta plataforma que se conocerá como _SocialDev_. El objetivo es que los usuarios que formen parte de la comunidad, puedan compartir contenido, ya sean publicaciones de texto o contenido multimedia, para comunicar sus ideas, anécdotas, aprendizajes y cualquier otro material que pueda impulsar el desarrollo de la comunidad.
 
 ## 2. Descripción general
-
 La aplicación WEB cuenta con cuatro entidades esenciales para el funcionamiento básico de la plataforma.
 
 #### 1. Usuarios
 Los usuarios serán capaces de ver las publicaciones (tengan cuenta o no), sin embargo, al crear una cuenta con su correo electrónico y su información básica (contraseña, nombre completo, edad, foto de perfil) podrán crear sus propias publicaciones, comentar publicaciones, agregar a otros usuarios como amigos y enviarles mensajes.
 
 #### 2. Publicaciones
-Las publicaciones serán creadas por un usuario a través de una cuenta en la que podrán compartir contenido multimedia o simplemente texto y así poder crear un tema de discusión en la red social o simplemente mostrar algo interesante.
+Las publicaciones serán creadas por un usuario utilizando una cuenta en la que podrán compartir contenido multimedia o simplemente texto y así poder crear un tema de discusión en la red social o simplemente mostrar algo interesante.
 
   #### 3. Comentarios
 Cuando se ha realizado una publicación, se tendrá la opción de poder compartir tu opinión mediante un comentario de texto lo que permite a los usuarios interactuar entre ellos y hacer más agradable y práctico el uso de la red social.
 
 #### 4. Mensajes
-Los mensajes serán aquellos recados de texto que enviará una persona a otro. Como ya se ha mencionado, los usuarios con cuenta tendrán la opción de enviar mensajes a otros usuarios que estén en su lista de contactos y así poder comunicarse con ellos en cualquier momento.
-
+Poder enviar mensajes permitirá la comunicación directa entre dos usuarios registrados distintos para poder hablar de forma privada. 
 
 ### 2.1. Perspectiva de _SocialDev_
 
 **¿Por qué _SocialDev_ es distinto a otras redes sociales?**
-
-Antes que nada, debemos entender qué es una calificación en _SocialDev_. Esta básicamente son los puntos otorgados por otro usuario en una publicación que hayas realizado; Según sea el agrado del usuario amigo, será la calificación añadida, es decir, si a tu amigo le gustó tu publicación podrá una buena calificación, lo cual haría que subieras de nivel y, como es de esperarse, entre más alto tu nivel, es mayor tu popularidad en la red social y así existe un incentivo para todos los usuarios de la plataforma.
+Antes que nada, se debe entender qué es una calificación en _SocialDev_. Ésta básicamente son los puntos otorgados por un usuario a otro usuario que realizó una publicación. Según sea el agrado del usuario, será la calificación añadida, es decir, si a un usuario le gustó una publicación, éste tendrá mayor probabilidad de otorgrar una buena calificación, lo cuál ayudaría al usuario autor de la publicación a subir de nivel. Como es de esperarse, entre más alto el nivel del usuario, es mayor su prestigio. Esto funcionará como una forma de moderar el contenido que se publica en la red social y así quedarse con contenido de calidad que aporte lo mejor a otros usuarios.
 
 
 ### 2.2. Funcionalidad de _SocialDev_
 
-_SocialDev_ busca conectar a programadores que sean desde principiantes hasta veteranos para ayudarlos a crecer en canto a conocimientos de la programación tal cual como diversas áreas.
+_SocialDev_ busca conectar a programadores que vayan de los rangos de principiante a experto para ayudarse a crecer mutuamente en conocimientos relacionados al desarrollo de software.
 
 ### 2.3. Características de los usuarios
 Actualmente se encuentran definidos dos tipos de usuarios, que son:
 * Super usuario
 * Usuario común
 
-**Super usuario**
+**Super usuario
+
 También conocido como _root_ es el nombre convencional de la cuenta de usuario que posee todos los derechos en todos los modos (monousuario o multiusuario). Es la cuenta de administrador. El usuario root puede hacer muchas cosas que un usuario común no puede, tales como crear nuevos roles, acceder a todas las funciones, entre otras.
 
-**Usuario común**
+**Usuario común
+
 Serán aquellas personas que deseen usar la aplicación WEB con las funciones básicas que serán compatir, buscar, agregar como amigo, comentar, reaccionar y enviar mensajes, por mencionar algunas. Este usuario únicamente podrá realizar acciones bajo su propia cuenta, a diferencia del superusuario que puede acceder a todo.
 
 
