@@ -2,7 +2,7 @@ API  SocialDev
 ==========================
 
 ##  1. Introducción
-_SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel. 
+_SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel.
 
 
 ### 1.1. Meta
@@ -24,7 +24,7 @@ Las publicaciones serán creadas por un usuario utilizando una cuenta en la que 
 Cuando se ha realizado una publicación, se tendrá la opción de poder compartir tu opinión mediante un comentario de texto lo que permite a los usuarios interactuar entre ellos y hacer más agradable y práctico el uso de la red social.
 
 #### 4. Mensajes
-Poder enviar mensajes permitirá la comunicación directa entre dos usuarios registrados distintos para poder hablar de forma privada. 
+Poder enviar mensajes permitirá la comunicación directa entre dos usuarios registrados distintos para poder hablar de forma privada.
 
 ### 2.1. Perspectiva de _SocialDev_
 
@@ -183,44 +183,43 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 | Destroy post | /posts/{postId} | DELETE | Eliminar una publicación |
 
 
-## 4. INSTALACIÓN
+## 4. Instalación
 
-#### A. Instalar GIT
+### 4.1 Dependencias
 
-_$ sudo apt-get install git-core_
+- Git
 
+  `sudo apt-get install git-core`
 
-#### B. Instalar NVM
+- Node
 
-_$ curl https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash_
+  Generalmente para instalar Node, el método preferido es utilizar un manejador de versiones de Node llamado NVM. La forma más directa de instalar NVM es corriendo el siguiente comando:
 
+  `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash`
 
-#### C. Instalar Node
+  O bien:
 
-_$ nvm install node_
+  `wget -q0- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash`
+
+  Para más detalles sobre la instalación de cómo instalar NVM, visitar el [repositorio de NVM][NVMRepo] oficial.
 
 
 #### D. Clonar proyecto
 
-_$ git clone https://github.com/Darktega/API-SocialDev.git_
+`git clone https://github.com/Darktega/API-SocialDev.git`
 
-
-
-### 4.1 URL de App
+## 5. URL de App en vivo
 
 URL: https://socialdev-218019.appspot.com/
 
-
-
-###  4.2 Colección de Postman utilizada para hacer pruebas
+##  6. Colección de Postman utilizada para hacer pruebas
 
 Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 
-
-
-## 5. Autores
+## 7. Autores
 
 - Diego Frías Acosta: _diego142_
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
 
+[NVMRepo] https://github.com/creationix/nvm#installation
