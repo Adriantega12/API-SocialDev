@@ -222,4 +222,4 @@ Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
 
-[NVMRepo] https://github.com/creationix/nvm#installation
+[NVMRepo]: https://github.com/creationix/nvm#installation
