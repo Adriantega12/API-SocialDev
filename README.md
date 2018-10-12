@@ -196,6 +196,18 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 | Update post | /posts/{postId} | PUT | Actualizar una publicación |
 | Destroy post | /posts/{postId} | DELETE | Eliminar una publicación |
 
+
+
+## 4. Instalacion
+Para utilizar la aplicacion _Social Dev_ en tu computador es neceario tener instalado _node_ por favor siga los siguientes pasos:
+**1.** Necesaario instalar **NVM** es un bash script que nos permite tener diferentes versiones de node.js instaladas.
+**2.** Una ves que tengamos instalado **NVM** ejecutemos en la terminal el siguiente comando: _nvm install node_ con esto instalaremos _node_ en nuestro computador
+**3.** 
+
+
+
+
+
 Autores
 =======
 - Diego Frías Acosta: _diego142_
