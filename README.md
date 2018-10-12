@@ -29,6 +29,7 @@ Poder enviar mensajes permitirá la comunicación directa entre dos usuarios reg
 ### 2.1. Perspectiva de _SocialDev_
 
 **¿Por qué _SocialDev_ es distinto a otras redes sociales?**
+
 Antes que nada, se debe entender qué es una calificación en _SocialDev_. Ésta básicamente son los puntos otorgados por un usuario a otro usuario que realizó una publicación. Según sea el agrado del usuario, será la calificación añadida, es decir, si a un usuario le gustó una publicación, éste tendrá mayor probabilidad de otorgrar una buena calificación, lo cuál ayudaría al usuario autor de la publicación a subir de nivel. Como es de esperarse, entre más alto el nivel del usuario, es mayor su prestigio. Esto funcionará como una forma de moderar el contenido que se publica en la red social y así quedarse con contenido de calidad que aporte lo mejor a otros usuarios.
 
 
@@ -38,14 +39,12 @@ _SocialDev_ busca conectar a programadores que vayan de los rangos de principian
 
 ### 2.3. Características de los usuarios
 Actualmente se encuentran definidos dos tipos de usuarios, que son:
-* Super usuario
-* Usuario común
 
-**Super usuario
+* *Super usuario*
 
 También conocido como _root_ es el nombre convencional de la cuenta de usuario que posee todos los derechos en todos los modos (monousuario o multiusuario). Es la cuenta de administrador. El usuario root puede hacer muchas cosas que un usuario común no puede, tales como crear nuevos roles, acceder a todas las funciones, entre otras.
 
-**Usuario común
+* *Usuario común*
 
 Serán aquellas personas que deseen usar la aplicación WEB con las funciones básicas que serán compatir, buscar, agregar como amigo, comentar, reaccionar y enviar mensajes, por mencionar algunas. Este usuario únicamente podrá realizar acciones bajo su propia cuenta, a diferencia del superusuario que puede acceder a todo.
 
@@ -83,10 +82,10 @@ El middleware es la parte del programa que nos ayudará a a controlar el flujo d
 
 Los modelos son, básicamente, los esqueletos de nuestras entidades, tales como usuario o publicaciones. Estas nos indicarán qué deben llevar como parte de sus atributos, a su vez, nos ayudan con operaciones para acceder a la base de datos.
 Los modelos creados son:
-**1.** Comments
-**2.** Messages
-**3.** Users
-**4.** Posts
+1. Comments
+2. Messages
+3. Users
+4. Posts
 
 
 ### 3.5. Rutas
@@ -211,9 +210,12 @@ _$ git clone https://github.com/Darktega/API-SocialDev.git_
 
 URL: https://socialdev-218019.appspot.com/
 
+
 ###  4.2 Colección de Postman utilizada para hacer pruebas
-=======
+
 Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
+
+
 
 
 ## 5. Autores
@@ -221,4 +223,5 @@ Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 - Diego Frías Acosta: _diego142_
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
+
 
