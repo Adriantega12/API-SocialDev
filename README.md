@@ -2,7 +2,7 @@ API  SocialDev
 ==========================
 
 ##  1. Introducción
-_SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel. 
+_SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel.
 
 
 ### 1.1. Meta
@@ -24,7 +24,7 @@ Las publicaciones serán creadas por un usuario utilizando una cuenta en la que 
 Cuando se ha realizado una publicación, se tendrá la opción de poder compartir tu opinión mediante un comentario de texto lo que permite a los usuarios interactuar entre ellos y hacer más agradable y práctico el uso de la red social.
 
 #### 4. Mensajes
-Poder enviar mensajes permitirá la comunicación directa entre dos usuarios registrados distintos para poder hablar de forma privada. 
+Poder enviar mensajes permitirá la comunicación directa entre dos usuarios registrados distintos para poder hablar de forma privada.
 
 ### 2.1. Perspectiva de _SocialDev_
 
@@ -40,11 +40,11 @@ _SocialDev_ busca conectar a programadores que vayan de los rangos de principian
 ### 2.3. Características de los usuarios
 Actualmente se encuentran definidos dos tipos de usuarios, que son:
 
-* *Super usuario*
+* **Super usuario**
 
 También conocido como _root_ es el nombre convencional de la cuenta de usuario que posee todos los derechos en todos los modos (monousuario o multiusuario). Es la cuenta de administrador. El usuario root puede hacer muchas cosas que un usuario común no puede, tales como crear nuevos roles, acceder a todas las funciones, entre otras.
 
-* *Usuario común*
+* **Usuario común**
 
 Serán aquellas personas que deseen usar la aplicación WEB con las funciones básicas que serán compatir, buscar, agregar como amigo, comentar, reaccionar y enviar mensajes, por mencionar algunas. Este usuario únicamente podrá realizar acciones bajo su propia cuenta, a diferencia del superusuario que puede acceder a todo.
 
@@ -62,11 +62,14 @@ El sistema contará con algunas restricciones, tales como:
 
 Un controlador nos permite mediante código la manipulación de nuestras entidades y así lograr "controlar" (como ya su nombre lo  dice) los datos de la aplicación. Además, estos nos permitirá la interacción con los "middlewares" y que así este se puede agregar a todas las entidades.
 Los controladores creados son:
-**1.** Comments
-**2.** Messages
-**3.** Users
-**4.** Posts
 
+**1.** Comments
+
+**2.** Messages
+
+**3.** Users
+
+**4.** Posts
 
 ### 3.2. Base de Datos
 
@@ -183,44 +186,98 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 | Destroy post | /posts/{postId} | DELETE | Eliminar una publicación |
 
 
-## 4. INSTALACIÓN
+## 4. Instalación
 
-#### A. Instalar GIT
+### 4.1. Dependencias
 
-_$ sudo apt-get install git-core_
+- **Git**
+
+  Para poder descargar el proyecto, y en caso de querer trabajar con él y todas las ramas y archivos presentes en este proyecto, será necesario instalar Git.
+
+  `sudo apt-get install git-core`
+
+- **Node**
+
+  Node es el programa utilizado para correr el servidor de forma local.
+
+  Generalmente, para instalar Node, el método preferido es utilizar un manejador de versiones de Node llamado NVM. La forma más directa de instalar NVM es corriendo el siguiente comando:
+
+  `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash`
+
+  O bien:
+
+  `wget -q0- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash`
+
+  Para más detalles sobre la instalación de cómo instalar NVM, visitar el [repositorio de NVM][NVMRepo] oficial.
+
+  Posteriormente, Node podrá ser instalado con el siguiente comando:
+
+  `nvm install node`
+
+  _Nota: Si desea instalar Node de una forma distinta, en la documentación oficial de [NodeJS][NodeGuide] se entra más en detalle todavía sobre el funcionamiento de Node y las opciones que hay para instalarlo._
+
+- **MySQL**
+
+  El manejador de base de datos implementado en este proyecto es MySQL, por lo que para correrlo de forma local es necesario tenerlo instalado sobre la computadora local. Para esto se sugiere seguir la [guía oficial de MySQL][MySQLGuide] para instalar y configurar adecuadamente.
 
 
-#### B. Instalar NVM
+### 4.2. Descargar el repositorio a tu máquina local
 
-_$ curl https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash_
+Para descargar el repositorio a tu local se corre el siguiente comando desde la terminal:
 
+`git clone https://github.com/Darktega/API-SocialDev.git`
 
-#### C. Instalar Node
+### 4.3. Configuración
 
-_$ nvm install node_
+#### 4.3.1. NPM (Más dependencias)
 
+Para correr la aplicación es necesario correr el comando `npm install` que se encargará de descargar, instalar y manejar las versiones de todas las dependencias instaladas y que son necesarias para poder correr el proyecto de forma efectiva. Estas dependencias están especificadas en el archivo `package.json`.
 
-#### D. Clonar proyecto
+### 4.3.2. Base de datos
 
-_$ git clone https://github.com/Darktega/API-SocialDev.git_
+Es necesario crear una base de datos de forma local, por lo que se recomienda hacer las configuraciones que se crean necesarias para poder trabajar de la forma que más sea pertinente para el usuario que usará la base de datos. La forma en la que se generará será utlizando el [script generador][DBCreate] que se anexa en la wiki del proyecto.
 
+Una vez que se tenga el script generador en la máquina local, sólo es necesario correr el siguiente comando:
 
+`mysql -u [nombre_de_usuario] -p < [nombre_de_archivo].sql`
 
-### 4.1 URL de App
+A lo que la terminal pedirá la contraseña para el usuario correspondiente. De ser esta correcta, el script habrá generado una base de datos de nombre _SocialDev_ lista para utilizarse con la aplicación.
+
+### 4.3.3. Variables de entorno
+
+Entre las dependencias instaladas se encuentra una llamada `dotenv` utilizada para manejar variables de entorno. En el repositorio se colocó un archivo llamado `.sample-env` donde se muestra una plantilla de cómo configurar un archivo `.env` para poder correr nuestra aplicación. Se crea un archivo con dicho nombre y procedemos a llenar la información de la forma correspondiente:
+
+| Variable | Ejemplo | Descripción |
+| - | - | - |
+| PORT | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
+| DB_USER | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
+| DB_PASS | `123456` | Contraseña del usuario mencionado anteriormente. |
+| DB_NAME | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
+| DB_HOST | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
+
+### 4.3.4. Correr servidor
+
+Habiendo realizado todas las configuraciones necesarias, el servidor puede ser corrido con el comando `node app.js`.
+
+### 4.3.5. Debuggear aplicación
+
+TO-DO.
+
+## 5. URL de app en vivo
 
 URL: https://socialdev-218019.appspot.com/
 
-
-
-###  4.2 Colección de Postman utilizada para hacer pruebas
+##  6. Colección de Postman utilizada para hacer pruebas
 
 Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 
-
-
-## 5. Autores
+## 7. Autores
 
 - Diego Frías Acosta: _diego142_
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
 
+[NVMRepo]: https://github.com/creationix/nvm#installation
+[NodeGuide]: https://blog.teamtreehouse.com/install-node-js-npm-linux
+[MySQLGuide]: https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+[DBCreate]: https://github.com/Darktega/API-SocialDev/wiki/Database-CREATE-Script
