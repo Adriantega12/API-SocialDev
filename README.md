@@ -38,14 +38,12 @@ _SocialDev_ busca conectar a programadores que vayan de los rangos de principian
 
 ### 2.3. Características de los usuarios
 Actualmente se encuentran definidos dos tipos de usuarios, que son:
-* Super usuario
-* Usuario común
 
-**Super usuario
+* *Super usuario*
 
 También conocido como _root_ es el nombre convencional de la cuenta de usuario que posee todos los derechos en todos los modos (monousuario o multiusuario). Es la cuenta de administrador. El usuario root puede hacer muchas cosas que un usuario común no puede, tales como crear nuevos roles, acceder a todas las funciones, entre otras.
 
-**Usuario común
+* *Usuario común*
 
 Serán aquellas personas que deseen usar la aplicación WEB con las funciones básicas que serán compatir, buscar, agregar como amigo, comentar, reaccionar y enviar mensajes, por mencionar algunas. Este usuario únicamente podrá realizar acciones bajo su propia cuenta, a diferencia del superusuario que puede acceder a todo.
 
@@ -83,10 +81,10 @@ El middleware es la parte del programa que nos ayudará a a controlar el flujo d
 
 Los modelos son, básicamente, los esqueletos de nuestras entidades, tales como usuario o publicaciones. Estas nos indicarán qué deben llevar como parte de sus atributos, a su vez, nos ayudan con operaciones para acceder a la base de datos.
 Los modelos creados son:
-**1.** Comments
-**2.** Messages
-**3.** Users
-**4.** Posts
+1. Comments
+2. Messages
+3. Users
+4. Posts
 
 
 ### 3.5. Rutas
@@ -183,16 +181,16 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 | Update post | /posts/{postId} | PUT | Actualizar una publicación |
 | Destroy post | /posts/{postId} | DELETE | Eliminar una publicación |
 
-Autores
-=======
+## Autores
+
 - Diego Frías Acosta: _diego142_
 - Laura Marcela Hernández Bitar: _MarceFromMars_
 - Adrián Octavio Terrazas García: _Darktega_
 
-URL de App
-=======
+## URL de App
+
 URL: https://socialdev-218019.appspot.com/
 
-Colección de Postman utilizada para hacer pruebas
-=======
+## Colección de Postman utilizada para hacer pruebas
+
 Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
