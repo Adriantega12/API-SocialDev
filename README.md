@@ -187,13 +187,17 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 
 ### 4.1 Dependencias
 
-- Git
+- *Git*
+
+  Para poder descargar el proyecto, y en caso de querer trabajar con él y todas las ramas y archivos presentes en este proyecto, será necesario instalar Git.
 
   `sudo apt-get install git-core`
 
-- Node
+- *Node*
 
-  Generalmente para instalar Node, el método preferido es utilizar un manejador de versiones de Node llamado NVM. La forma más directa de instalar NVM es corriendo el siguiente comando:
+  Node es el programa utilizado para correr el servidor de forma local.
+
+  Generalmente, para instalar Node, el método preferido es utilizar un manejador de versiones de Node llamado NVM. La forma más directa de instalar NVM es corriendo el siguiente comando:
 
   `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash`
 
@@ -203,12 +207,22 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 
   Para más detalles sobre la instalación de cómo instalar NVM, visitar el [repositorio de NVM][NVMRepo] oficial.
 
+  Posteriormente, Node podrá ser instalado con el siguiente comando:
+
+  `nvm install node`
+
+  _Nota: Si desea instalar Node de una forma distinta, en la documentación oficial de [NodeJS][NodeGuide] se entra más en detalle todavía sobre el funcionamiento de Node y las opciones que hay para instalarlo._
+
+- *MySQL*
+
+  El manejador de base de datos implementado en este proyecto es MySQL, por lo que para correrlo de forma local es necesario tenerlo instalado sobre la computadora local. Para esto se sugiere seguir la [guía oficial de MySQL][MySQLGuide] para instalar y configurar adecuadamente.
+
 
 #### D. Clonar proyecto
 
 `git clone https://github.com/Darktega/API-SocialDev.git`
 
-## 5. URL de App en vivo
+## 5. URL de app en vivo
 
 URL: https://socialdev-218019.appspot.com/
 
@@ -223,3 +237,5 @@ Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 - Adrián Octavio Terrazas García: _Darktega_
 
 [NVMRepo]: https://github.com/creationix/nvm#installation
+[NodeGuide]: https://blog.teamtreehouse.com/install-node-js-npm-linux
+[MySQLGuide]: https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
