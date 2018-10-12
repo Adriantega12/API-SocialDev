@@ -1,6 +1,14 @@
 API  SocialDev
 ==========================
 
+# Tabla de contenidos
+
+1. [Introducción](#introducción)
+  1.1. [Meta](#meta)
+  1.2. [Alcance](#alcance)
+2. [Descripción general](#descripción-general)
+  2.1. [Perspectiva de _SocialDev_][#perspectiva-de-socialdev]
+
 ##  1. Introducción
 _SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel.
 
@@ -249,19 +257,25 @@ Entre las dependencias instaladas se encuentra una llamada `dotenv` utilizada pa
 
 | Variable | Ejemplo | Descripción |
 | - | - | - |
-| PORT | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
-| DB_USER | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
-| DB_PASS | `123456` | Contraseña del usuario mencionado anteriormente. |
-| DB_NAME | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
-| DB_HOST | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
+| `PORT` | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
+| `DB_USER` | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
+| `DB_PASS` | `123456` | Contraseña del usuario mencionado anteriormente. |
+| `DB_NAME` | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
+| `DB_HOST` | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
 
-### 4.3.4. Correr servidor
+### 4.3.4. Correr aplicación
 
 Habiendo realizado todas las configuraciones necesarias, el servidor puede ser corrido con el comando `node app.js`.
 
 ### 4.3.5. Debuggear aplicación
 
-TO-DO.
+Para debuggear la aplicación, es posible utilizar el comando siguiente:
+
+`node --inspect app.js`
+
+Esto activará el modo de debuggeo de la aplicación. La aplicación puede ser debuggeada desde Chrome como con cualquier otro debugger accediento a la ruta `chrome://inspect` desde este mismo navegador, y procediendo a elegir la opción `Open dedicated DevTools for Node`.
+
+_Nota: Para Firefox, es posible debuggear utilizando el paquete `node-firefox` de NPM que se puede instalar con `npm install node-firefox --save-dev`._
 
 ## 5. URL de app en vivo
 
