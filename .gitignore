@@ -1,3 +1,4 @@
 node_modules/*
 .env
 package-lock.json
+cloud_sql_proxy

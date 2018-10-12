@@ -2,16 +2,22 @@ const mysql = require('mysql');
 
 class DB {
   constructor() {
-    this.con = mysql.createConnection({
-      host: process.env.DB_HOST,
+    const config = {
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-    });
+    }
+    if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production') {
+      config.socketPath = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`;
+    } else {
+      config.host = process.env.DB_HOST;
+    }
+
+    this.con = mysql.createConnection(config);
     this.con.connect( (error) => {
       if (error) throw error;
     });
-    this.tupples = undefined;
+    this.tupples = [];
   }
 
   /**
