@@ -24,7 +24,7 @@ class UsersController {
     try {
       data = await User.getAll();
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
@@ -49,7 +49,7 @@ class UsersController {
     try {
       data = await User.get(req.params.userId);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -67,7 +67,7 @@ class UsersController {
     try {
       data = await User.insert(req.body);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -85,7 +85,7 @@ class UsersController {
     try {
       data = await User.get(req.params.userId);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -110,7 +110,7 @@ class UsersController {
     try {
       deleted = await User.delete(req.params.userId);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (deleted) {
@@ -129,7 +129,7 @@ class UsersController {
     try {
       data = await User.getFriends(req.params.userId);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
