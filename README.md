@@ -40,11 +40,11 @@ _SocialDev_ busca conectar a programadores que vayan de los rangos de principian
 ### 2.3. Características de los usuarios
 Actualmente se encuentran definidos dos tipos de usuarios, que son:
 
-* *Super usuario*
+* **Super usuario**
 
 También conocido como _root_ es el nombre convencional de la cuenta de usuario que posee todos los derechos en todos los modos (monousuario o multiusuario). Es la cuenta de administrador. El usuario root puede hacer muchas cosas que un usuario común no puede, tales como crear nuevos roles, acceder a todas las funciones, entre otras.
 
-* *Usuario común*
+* **Usuario común**
 
 Serán aquellas personas que deseen usar la aplicación WEB con las funciones básicas que serán compatir, buscar, agregar como amigo, comentar, reaccionar y enviar mensajes, por mencionar algunas. Este usuario únicamente podrá realizar acciones bajo su propia cuenta, a diferencia del superusuario que puede acceder a todo.
 
@@ -62,11 +62,14 @@ El sistema contará con algunas restricciones, tales como:
 
 Un controlador nos permite mediante código la manipulación de nuestras entidades y así lograr "controlar" (como ya su nombre lo  dice) los datos de la aplicación. Además, estos nos permitirá la interacción con los "middlewares" y que así este se puede agregar a todas las entidades.
 Los controladores creados son:
-**1.** Comments
-**2.** Messages
-**3.** Users
-**4.** Posts
 
+**1.** Comments
+
+**2.** Messages
+
+**3.** Users
+
+**4.** Posts
 
 ### 3.2. Base de Datos
 
@@ -185,15 +188,15 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 
 ## 4. Instalación
 
-### 4.1 Dependencias
+### 4.1. Dependencias
 
-- *Git*
+- **Git**
 
   Para poder descargar el proyecto, y en caso de querer trabajar con él y todas las ramas y archivos presentes en este proyecto, será necesario instalar Git.
 
   `sudo apt-get install git-core`
 
-- *Node*
+- **Node**
 
   Node es el programa utilizado para correr el servidor de forma local.
 
@@ -213,14 +216,31 @@ Mostrar todas las publicaciones, crear un nueva publicación, mostrar una public
 
   _Nota: Si desea instalar Node de una forma distinta, en la documentación oficial de [NodeJS][NodeGuide] se entra más en detalle todavía sobre el funcionamiento de Node y las opciones que hay para instalarlo._
 
-- *MySQL*
+- **MySQL**
 
   El manejador de base de datos implementado en este proyecto es MySQL, por lo que para correrlo de forma local es necesario tenerlo instalado sobre la computadora local. Para esto se sugiere seguir la [guía oficial de MySQL][MySQLGuide] para instalar y configurar adecuadamente.
 
 
-#### D. Clonar proyecto
+### 4.2. Descargar el repositorio a tu máquina local
+
+Para descargar el repositorio a tu local se corre el siguiente comando desde la terminal:
 
 `git clone https://github.com/Darktega/API-SocialDev.git`
+
+### 4.3. Configuración
+
+#### 4.3.1. NPM (Más dependencias)
+
+Para correr la aplicación es necesario correr el comando `npm install` que se encargará de descargar, instalar y manejar las versiones de todas las dependencias instaladas y que son necesarias para poder correr el proyecto de forma efectiva. Estas dependencias están especificadas en el archivo `package.json`.
+
+### 4.3.2. Base de datos
+
+Es necesario crear una base de datos de forma local, por lo que se recomienda hacer las configuraciones que se crean necesarias para poder trabajar de la forma que más sea pertinente para el usuario que usará la base de datos. La forma en la que se generará será utlizando el [script generador][DBCreate] que se anexa en la wiki del proyecto.
+
+Una vez que se tenga el script generador en la máquina local, sólo es necesario correr el siguiente comando:
+
+`mysql -u [nombre_de_usuario] -p < [nombre_de_archivo].sql`
+
 
 ## 5. URL de app en vivo
 
@@ -239,3 +259,4 @@ Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
 [NVMRepo]: https://github.com/creationix/nvm#installation
 [NodeGuide]: https://blog.teamtreehouse.com/install-node-js-npm-linux
 [MySQLGuide]: https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+[DBCreate]: https://github.com/Darktega/API-SocialDev/wiki/Database-CREATE-Script
