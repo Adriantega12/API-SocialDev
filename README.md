@@ -25,6 +25,19 @@ API  SocialDev
         6. [Messages](#356-messages)
         7. [Users](#357-users)
         8. [Posts](#358-posts)
+4. [Instalación](#4)
+    1. [Dependencias](#41-dependencias)
+    2. [Descargar el repositorio a tu máquina local](#42-descargar-el-repositorio-a-tu-máquina-local)
+    3. [Configuración](#43-configuración)
+        1. [NPM (Más dependencias)](#431-npm-más-dependencias)
+        2. [Base de datos](#432-base-de-datos)
+        3. [Variables de entorno](#433-variables-de-entorno)
+        4. [Correr aplicación](#434-correr-aplicación)
+        5. [Debuggear aplicación](#435-debuggear-aplicación)
+5. [URL de app en vivo](#5-url-de-app-en-vivo)
+6. [Colección de Postman utilizada para hacer pruebas](#6-colección-de-postman-utilizada-para-hacer-pruebas)
+7. [Autores](#7-autores)
+
 
 
 ##  1. Introducción
