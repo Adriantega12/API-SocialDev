@@ -29,6 +29,7 @@ Poder enviar mensajes permitirá la comunicación directa entre dos usuarios reg
 ### 2.1. Perspectiva de _SocialDev_
 
 **¿Por qué _SocialDev_ es distinto a otras redes sociales?**
+
 Antes que nada, se debe entender qué es una calificación en _SocialDev_. Ésta básicamente son los puntos otorgados por un usuario a otro usuario que realizó una publicación. Según sea el agrado del usuario, será la calificación añadida, es decir, si a un usuario le gustó una publicación, éste tendrá mayor probabilidad de otorgrar una buena calificación, lo cuál ayudaría al usuario autor de la publicación a subir de nivel. Como es de esperarse, entre más alto el nivel del usuario, es mayor su prestigio. Esto funcionará como una forma de moderar el contenido que se publica en la red social y así quedarse con contenido de calidad que aporte lo mejor a otros usuarios.
 
 
