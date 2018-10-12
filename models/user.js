@@ -83,7 +83,9 @@ class User {
 
     try {
       data = await db.get('users', '*', userId);
-      emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
+      emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map((email) => {
+        return email.email;
+      });
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
       comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
       friends = await this.getFriendlist(userId);
@@ -262,7 +264,7 @@ class User {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? email : [];
+    return id > 0 ? { email } : [];
   }
 
   static async deleteEmail(emailName) {

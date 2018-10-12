@@ -17,7 +17,6 @@ class PostsController {
     this.getScores = this.getScores.bind(this);
     this.addScore = this.addScore.bind(this);
     this.deleteScore = this.deleteScore.bind(this);
-
   }
 
   async getAll(req, res, next) {
@@ -160,7 +159,7 @@ class PostsController {
 
     const attachment = {
       postId: req.params.postId,
-      data: req.body.data,
+      ...req.body,
     };
 
     try {
@@ -175,7 +174,7 @@ class PostsController {
       res.status(200); // OK
     }
 
-    res.send(attachment);
+    res.send(data);
   }
 
   async deleteAttachment(req, res, next) {
@@ -226,7 +225,7 @@ class PostsController {
     let data;
 
     const score = {
-      postsId: req.params.postId,
+      postsId: Number(req.params.postId),
       userId: req.body.userId,
       score: req.body.score,
       date: datetime.toMySQLFromJS(Date.now()),
@@ -244,7 +243,7 @@ class PostsController {
       res.status(200); // OK
     }
 
-    res.send(score);
+    res.send(data);
   }
 
   async deleteScore(req, res, next) {

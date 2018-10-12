@@ -150,8 +150,6 @@ class UsersController {
   }
 
   async addFriend(req, res, next) {
-
-
     let data;
 
     const friendship = {
@@ -169,9 +167,9 @@ class UsersController {
     }
 
     if (data.length === 0) {
-      res.status(204); // No content
+      res.status(409); // Conflict
     } else {
-      res.status(200); // OK
+      res.status(201); // Created
     }
 
     res.send(friendship);
@@ -231,25 +229,24 @@ class UsersController {
   async addEmail(req, res, next) {
     let data;
 
-    const json = {
+    const email = {
       userId: req.params.userId,
-
       email: req.body.email,
     };
 
     try {
-      data = await User.addEmail(json);
+      data = await User.addEmail(email);
     } catch (error) {
       next(error);
     }
 
-    if (data.length === 0) {
-      res.status(204); // No content
+    if (!data) {
+      res.status(409); // Conflict
     } else {
-      res.status(200); // OK
+      res.status(201); // Created
     }
 
-    res.send(json);
+    res.send(email);
   }
 
   async deleteEmail(req, res, next) {

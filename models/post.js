@@ -76,6 +76,7 @@ class Post {
 
   static async insert(post) {
     let id;
+
     try {
       const response = await db.insert('posts', post);
       id = response.insertId;
@@ -136,7 +137,7 @@ class Post {
     return response;
   }
 
-  static async addAtachment(attachment) {
+  static async addAttachment(attachment) {
     let id;
 
     try {
@@ -145,14 +146,14 @@ class Post {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? attachment : [];
+    return id > 0 ? { id, ...attachment } : [];
   }
 
   static async deleteAtachment(attachmentId) {
     let deletedRows;
 
     try {
-      const results = await db.insert('attachments', attachmentId);
+      const results = await db.delete('attachments', attachmentId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;
@@ -187,7 +188,7 @@ class Post {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? score : [];
+    return id > 0 ? { id, ...score } : [];
   }
 
   static async deleteScore(scoreId) {
