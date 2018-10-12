@@ -1,4 +1,5 @@
 const { Comment } = require('../models');
+const { datetime } = require('../middlewares');
 
 class CommentsController {
   constructor() {
@@ -39,7 +40,7 @@ class CommentsController {
     let data;
 
     try {
-      data = await Comment.get(req.params.commentId);
+      data = await Comment.get(Number(req.params.commentId));
     } catch (error) {
       next(error);
     }
@@ -57,10 +58,10 @@ class CommentsController {
     let data;
 
     const comment = {
-      postId: req.params.postId,
-      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
-      isEdited: false,
       ...req.body,
+      postId: req.params.postId,
+      date: datetime.toMySQLFromJS(Date.now()),
+      isEdited: false,
     };
 
     try {
@@ -82,7 +83,7 @@ class CommentsController {
     let data;
 
     try {
-      data = await Comment.get(req.params.commentId);
+      data = await Comment.get(Number(req.params.commentId));
     } catch (error) {
       next(error);
     }
@@ -97,7 +98,7 @@ class CommentsController {
     };
 
     const updated = await data.update(comment);
-    data = new Comment(data);
+    data = new Comment({ ...data, isEdited: true });
 
     if (updated) {
       res.status(200); // OK
@@ -112,7 +113,7 @@ class CommentsController {
     let deleted;
 
     try {
-      deleted = await Comment.delete(req.params.commentId);
+      deleted = await Comment.delete(Number(req.params.commentId));
     } catch (error) {
       next(error);
     }

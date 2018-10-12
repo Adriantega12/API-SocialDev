@@ -1,4 +1,5 @@
 const db = require('../db');
+const Message = require('./message');
 
 class User {
   /**
@@ -36,7 +37,8 @@ class User {
     comments,
     posts,
     friends,
-    messages,
+    sentMessages,
+    receivedMessages,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -52,7 +54,8 @@ class User {
     this.posts = posts;
     this.comments = comments;
     this.friends = friends;
-    this.messages = messages;
+    this.sentMessages = sentMessages;
+    this.receivedMessages = receivedMessages;
   }
 
   static async getAll() {
@@ -79,21 +82,30 @@ class User {
     let posts;
     let comments;
     let friends;
-    let messages;
+    let sentMessages;
+    let receivedMessages;
 
     try {
       data = await db.get('users', '*', userId);
-      emails = await db.getObjectByForeignId('emails', '*', 'userId', userId);
+      emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
       posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
-      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId );
-      //friends = await db.getFriends(userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
       friends = await this.getFriendlist(userId);
-      messages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
+      sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
+      receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new User({ ...data[0], emails, posts, comments, friends, messages}) : data;
+    return data.length !== 0 ? new User({
+      ...data[0],
+      emails,
+      posts,
+      comments,
+      friends,
+      sentMessages,
+      receivedMessages,
+    }) : data;
   }
 
   static async insert(user) {
@@ -110,20 +122,22 @@ class User {
     const posts = [];
     const comments = [];
     const friends = [];
-    const messages = [];
+    const sentMessages = [];
+    const receivedMessages = [];
     const roles = [];
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       return id > 0 ? resolve(new User({
-          id,
-          ...user,
-          emails,
-          posts,
-          comments,
-          friends,
-          messages,
-          roles,
-        })) : reject([]);
+        id,
+        ...user,
+        emails,
+        posts,
+        comments,
+        friends,
+        sentMessages,
+        receivedMessages,
+        roles,
+      })) : reject([]);
     });
   }
 
@@ -198,7 +212,9 @@ class User {
       const friend = {};
       for (const key in friendship) {
         if (key === 'userOneId' || key === 'userTwoId') {
-          friend.friendId = friendship[key] !== userId ? friendship[key] : friend.friendId;
+          if (friendship[key] !== userId) {
+            friend.friendId = friendship[key];
+          }
         } else {
           friend[key] = friendship[key];
         }
@@ -228,7 +244,7 @@ class User {
     return posts;
   }
 
-  // EMAIL
+  // Email
   static async getEmails(userId) {
     let data;
     try {
@@ -254,7 +270,7 @@ class User {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? email : [];
+    return id > 0 ? { email } : [];
   }
 
   static async deleteEmail(emailName) {

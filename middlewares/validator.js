@@ -60,7 +60,6 @@ class Validator {
         });
       }
     }
-    console.log(error.details);
     Object.keys(error.details).length ? next(error) : next();
   }
 }
