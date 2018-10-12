@@ -77,7 +77,7 @@ class User {
   }
 
   static async get(userId) {
-    let data;
+    let data = [];
     let emails;
     let posts;
     let comments;
