@@ -13,7 +13,6 @@ router.post('/', (req, res, next) => {
       senderId: 'required integer',
       receiverId: 'required integer',
       text: 'required word',
-      date: 'required date',
     },
   });
 }, messagesController.insert);
@@ -34,10 +33,7 @@ router.put('/:messageId', (req, res, next) => {
       messageId: 'integer',
     },
     body: {
-      senderId: 'integer',
-      receiverId: 'integer',
       text: 'word',
-      date: 'date'
     },
   });
 }, messagesController.update);

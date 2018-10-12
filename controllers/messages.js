@@ -1,4 +1,5 @@
 const { Message } = require('../models');
+const { datetime } = require('../middlewares');
 
 class MessagesController {
   constructor() {
@@ -39,7 +40,7 @@ class MessagesController {
     let data;
 
     try {
-      data = await Message.get(req.params.messageId);
+      data = await Message.get(Number(req.params.messageId));
     } catch (error) {
       next(error);
     }
@@ -56,8 +57,13 @@ class MessagesController {
   async insert(req, res, next) {
     let data;
 
+    const message = {
+      ...req.body,
+      date: datetime.toMySQLFromJS(Date.now()),
+    };
+
     try {
-      data = await Message.insert(req.body);
+      data = await Message.insert(message);
     } catch (error) {
       next(error);
     }
@@ -75,7 +81,7 @@ class MessagesController {
     let data;
 
     try {
-      data = await Message.get(req.params.messageId);
+      data = await Message.get(Number(req.params.messageId));
     } catch (error) {
       next(error);
     }
@@ -100,7 +106,7 @@ class MessagesController {
     let deleted;
 
     try {
-      deleted = await Message.delete(req.params.messageId);
+      deleted = await Message.delete(Number(req.params.messageId));
     } catch (error) {
       next(error);
     }
