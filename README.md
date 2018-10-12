@@ -3,11 +3,15 @@ API  SocialDev
 
 # Tabla de contenidos
 
-1. [Introducción](#introducción)
-  1.1. [Meta](#meta)
-  1.2. [Alcance](#alcance)
-2. [Descripción general](#descripción-general)
-  2.1. [Perspectiva de _SocialDev_][#perspectiva-de-socialdev]
+1. [Introducción](#1-introducción)
+  1. [Meta](#11-meta)
+  2. [Alcance](#12-alcance)
+2. [Descripción general](#2-descripción-general)
+  1. [Perspectiva de _SocialDev_][#21perspectiva-de-socialdev]
+  2. [Funcionalidad de _SocialDev_][#22funcionalidad-de-socialdev]
+  3. [Características de los usuarios][#23características-de-los-usuarios]
+  4. [Restricciones][#24restricciones]
+
 
 ##  1. Introducción
 _SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel.
