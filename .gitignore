@@ -1,4 +1,9 @@
 node_modules/*
 .env
 package-lock.json
+factory/*
+routes/populate.js
+GCPSocialDev.sql
+.gcloudignore
 cloud_sql_proxy
+app.yaml
