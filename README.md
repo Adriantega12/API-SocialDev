@@ -241,6 +241,27 @@ Una vez que se tenga el script generador en la máquina local, sólo es necesari
 
 `mysql -u [nombre_de_usuario] -p < [nombre_de_archivo].sql`
 
+A lo que la terminal pedirá la contraseña para el usuario correspondiente. De ser esta correcta, el script habrá generado una base de datos de nombre _SocialDev_ lista para utilizarse con la aplicación.
+
+### 4.3.3. Variables de entorno
+
+Entre las dependencias instaladas se encuentra una llamada `dotenv` utilizada para manejar variables de entorno. En el repositorio se colocó un archivo llamado `.sample-env` donde se muestra una plantilla de cómo configurar un archivo `.env` para poder correr nuestra aplicación. Se crea un archivo con dicho nombre y procedemos a llenar la información de la forma correspondiente:
+
+| Variable | Ejemplo | Descripción |
+| - | - | - |
+| PORT | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
+| DB_USER | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
+| DB_PASS | `123456` | Contraseña del usuario mencionado anteriormente. |
+| DB_NAME | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
+| DB_HOST | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
+
+### 4.3.4. Correr servidor
+
+Habiendo realizado todas las configuraciones necesarias, el servidor puede ser corrido con el comando `node app.js`.
+
+### 4.3.5. Debuggear aplicación
+
+TO-DO.
 
 ## 5. URL de app en vivo
 
