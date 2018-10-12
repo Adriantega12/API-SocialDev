@@ -13,7 +13,6 @@ router.post('/', (req, res, next) => {
       authorId: 'required integer',
       title: 'required word',
       text: 'required word',
-      date: 'required date',
       score: 'required integer',
     },
   });
@@ -38,7 +37,6 @@ router.put('/:postId', (req, res, next) => {
       authorId: 'integer',
       title: 'word',
       text: 'word',
-      date: 'date',
       score: 'integer',
     },
   });

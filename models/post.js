@@ -66,11 +66,17 @@ class Post {
       throw error;
     }
 
-    return data.length !== 0 ? new Post({ ...data[0], attachments, comments, scores }) : data;
+    return data.length !== 0 ? new Post({
+      ...data[0],
+      attachments,
+      comments,
+      scores,
+    }) : data;
   }
 
   static async insert(post) {
     let id;
+
     try {
       const response = await db.insert('posts', post);
       id = response.insertId;
@@ -78,11 +84,17 @@ class Post {
       throw error;
     }
 
-    let attachments = [];
-    let comments = [];
-    let scores = [];
+    const attachments = [];
+    const comments = [];
+    const scores = [];
 
-    return id > 0 ? new Post({ id, ...post, attachments, comments, scores }) : [];
+    return id > 0 ? new Post({
+      id,
+      ...post,
+      attachments,
+      comments,
+      scores,
+    }) : [];
   }
 
   async update(keyVals) {
@@ -125,7 +137,7 @@ class Post {
     return response;
   }
 
-  static async addAtachment(attachment) {
+  static async addAttachment(attachment) {
     let id;
 
     try {
@@ -134,14 +146,14 @@ class Post {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? attachment : [];
+    return id > 0 ? { id, ...attachment } : [];
   }
 
   static async deleteAtachment(attachmentId) {
     let deletedRows;
 
     try {
-      const results = await db.insert('attachments', attachmentId);
+      const results = await db.delete('attachments', attachmentId);
       deletedRows = results.affectedRows;
     } catch (error) {
       throw error;
@@ -150,7 +162,7 @@ class Post {
     return deletedRows > 0;
   }
 
-  // SCORES
+  // Scores
   static async getScores(postId) {
     let data;
     try {
@@ -176,7 +188,7 @@ class Post {
     } catch (error) {
       throw error;
     }
-    return id > 0 ? score : [];
+    return id > 0 ? { id, ...score } : [];
   }
 
   static async deleteScore(scoreId) {

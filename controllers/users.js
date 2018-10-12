@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { datetime } = require('../middlewares');
 
 class UsersController {
   constructor() {
@@ -24,7 +25,7 @@ class UsersController {
     try {
       data = await User.getAll();
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
@@ -47,9 +48,9 @@ class UsersController {
     let data = [];
 
     try {
-      data = await User.get(req.params.userId);
+      data = await User.get(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -67,7 +68,7 @@ class UsersController {
     try {
       data = await User.insert(req.body);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -83,9 +84,9 @@ class UsersController {
     let data;
 
     try {
-      data = await User.get(req.params.userId);
+      data = await User.get(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -108,9 +109,9 @@ class UsersController {
     let deleted;
 
     try {
-      deleted = await User.delete(req.params.userId);
+      deleted = await User.delete(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (deleted) {
@@ -127,9 +128,9 @@ class UsersController {
     let data;
 
     try {
-      data = await User.getFriends(req.params.userId);
+      data = await User.getFriends(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
@@ -151,34 +152,34 @@ class UsersController {
   async addFriend(req, res, next) {
     let data;
 
-    const json = {
+    const friendship = {
       userOneId: req.params.userId,
       userTwoId: req.params.friendId,
       lastActionId: req.params.userId,
-      date: new Date(Date.now()).toJSON().slice(0, 19).replace('T', ' '),
+      date: datetime.toMySQLFromJS(Date.now()),
       status: 1,
     };
 
     try {
-      data = await User.addFriend(json);
+      data = await User.addFriend(friendship);
     } catch (error) {
       next(error);
     }
 
     if (data.length === 0) {
-      res.status(204); // No content
+      res.status(409); // Conflict
     } else {
-      res.status(200); // OK
+      res.status(201); // Created
     }
 
-    res.send(json);
+    res.send(friendship);
   }
 
   async getFeed(req, res, next) {
     let data;
 
     try {
-      data = await User.getFeed(req.params.userId);
+      data = await User.getFeed(Number(req.params.userId));
     } catch (error) {
       next(error);
     }
@@ -199,13 +200,12 @@ class UsersController {
     res.send(json);
   }
 
-//EMAIL
-
+  // Email
   async getEmails(req, res, next) {
     let data;
 
     try {
-      data = await User.getEmails(req.params.userId);
+      data = await User.getEmails(Number(req.params.userId));
     } catch (error) {
       next(error);
     }
@@ -229,25 +229,24 @@ class UsersController {
   async addEmail(req, res, next) {
     let data;
 
-    const json = {
+    const email = {
       userId: req.params.userId,
-
       email: req.body.email,
     };
 
     try {
-      data = await User.addEmail(json);
+      data = await User.addEmail(email);
     } catch (error) {
       next(error);
     }
 
-    if (data.length === 0) {
-      res.status(204); // No content
+    if (!data) {
+      res.status(409); // Conflict
     } else {
-      res.status(200); // OK
+      res.status(201); // Created
     }
 
-    res.send(json);
+    res.send(email);
   }
 
   async deleteEmail(req, res, next) {
