@@ -1,5 +1,4 @@
 const db = require('../db');
-const Message = require('./message');
 
 class User {
   /**
@@ -189,6 +188,14 @@ class User {
     let id;
 
     try {
+      const result = await db.getFriendship(friendship.userOneId, friendship.userTwoId);
+      if (result.length > 0) {
+        const error = {
+          message: 'Friendship already exists.',
+          status: 409,
+        };
+        throw error;
+      }
       const response = await db.insert('friendships', friendship);
       id = response.insertId;
     } catch (error) {
