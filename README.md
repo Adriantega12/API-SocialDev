@@ -1,6 +1,45 @@
 API  SocialDev
 ==========================
 
+# Tabla de contenidos
+
+1. [Introducción](#1-introducción)
+    1. [Meta](#11-meta)
+    2. [Alcance](#12-alcance)
+2. [Descripción general](#2-descripción-general)
+    1. [Perspectiva de _SocialDev_](#21-perspectiva-de-socialdev)
+    2. [Funcionalidad de _SocialDev_](#22-funcionalidad-de-socialdev)
+    3. [Características de los usuarios](#23-características-de-los-usuarios)
+    4. [Restricciones](#24-restricciones)
+3. [Requisitos](#3-requisitos)
+    1. [Controladores](#31-controladores)
+    2. [Datos](#32-datos)
+    3. [Middlewares](#33-middlewares)
+    4. [Modelos](#34-modelos)
+    5. [Rutas](#35-rutas)
+        1. [Attachments](#351-attachments)
+        2. [Emails](#352-emails)
+        3. [Friendships](#353-friendships)
+        4. [Scores](#354-scores)
+        5. [Comments](#355-comments)
+        6. [Messages](#356-messages)
+        7. [Users](#357-users)
+        8. [Posts](#358-posts)
+4. [Instalación](#4)
+    1. [Dependencias](#41-dependencias)
+    2. [Descargar el repositorio a tu máquina local](#42-descargar-el-repositorio-a-tu-máquina-local)
+    3. [Configuración](#43-configuración)
+        1. [NPM (Más dependencias)](#431-npm-más-dependencias)
+        2. [Base de datos](#432-base-de-datos)
+        3. [Variables de entorno](#433-variables-de-entorno)
+        4. [Correr aplicación](#434-correr-aplicación)
+        5. [Debuggear aplicación](#435-debuggear-aplicación)
+5. [URL de app en vivo](#5-url-de-app-en-vivo)
+6. [Colección de Postman utilizada para hacer pruebas](#6-colección-de-postman-utilizada-para-hacer-pruebas)
+7. [Autores](#7-autores)
+
+
+
 ##  1. Introducción
 _SocialDev_ es una red social dirigida para programadores de cualquier nivel y personas interesadas en el desarrollo de software. Esta plataforma permitirá compartir publicaciones que pueden ser texto o imágenes, y con ello, sus amigos podrán reaccionar a cada publicación con una calificación que definirá el nivel de cada usuario, así pues, entre más calificaciones positivas exitan, más alto será su nivel.
 
@@ -249,19 +288,25 @@ Entre las dependencias instaladas se encuentra una llamada `dotenv` utilizada pa
 
 | Variable | Ejemplo | Descripción |
 | - | - | - |
-| PORT | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
-| DB_USER | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
-| DB_PASS | `123456` | Contraseña del usuario mencionado anteriormente. |
-| DB_NAME | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
-| DB_HOST | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
+| `PORT` | `3000` | Número de puerto sobre el que el servidor estará escuchando. |
+| `DB_USER` | `root` | Nombre del usuario que se utilizará para acceder y administrar a la base de datos. Es importante que este cuente con todos los permisos necesarios. (No necesariamente tiene que ser root) |
+| `DB_PASS` | `123456` | Contraseña del usuario mencionado anteriormente. |
+| `DB_NAME` | `SocialDev` | Nombre de la base de datos a utilizar. Por defecto es `SocialDev`, acorde al script generador. |
+| `DB_HOST` | `localhost` | Host de la base de datos. Si está corriendo de forma local, deberá ser localhost o bien, `127.0.0.1`. |
 
-### 4.3.4. Correr servidor
+### 4.3.4. Correr aplicación
 
 Habiendo realizado todas las configuraciones necesarias, el servidor puede ser corrido con el comando `node app.js`.
 
 ### 4.3.5. Debuggear aplicación
 
-TO-DO.
+Para debuggear la aplicación, es posible utilizar el comando siguiente:
+
+`node --inspect app.js`
+
+Esto activará el modo de debuggeo de la aplicación. La aplicación puede ser debuggeada desde Chrome como con cualquier otro debugger accediento a la ruta `chrome://inspect` desde este mismo navegador, y procediendo a elegir la opción `Open dedicated DevTools for Node`.
+
+_Nota: Para Firefox, es posible debuggear utilizando el paquete `node-firefox` de NPM que se puede instalar con `npm install node-firefox --save-dev`._
 
 ## 5. URL de app en vivo
 
