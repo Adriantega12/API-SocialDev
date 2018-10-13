@@ -29,7 +29,7 @@ class UsersController {
     }
 
     const json = {
-      data: data,
+      data,
       total_count: data.length,
       per_page: req.params.per_page,
       page: req.params.page,
@@ -134,7 +134,7 @@ class UsersController {
     }
 
     const json = {
-      data: data,
+      data,
       total_count: data.length,
       per_page: req.params.per_page,
       page: req.params.page,
@@ -163,7 +163,7 @@ class UsersController {
     try {
       data = await User.addFriend(friendship);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (data.length === 0) {
@@ -181,7 +181,7 @@ class UsersController {
     try {
       data = await User.getFeed(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
@@ -207,7 +207,7 @@ class UsersController {
     try {
       data = await User.getEmails(Number(req.params.userId));
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     const json = {
@@ -237,7 +237,7 @@ class UsersController {
     try {
       data = await User.addEmail(email);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (!data) {
@@ -255,7 +255,7 @@ class UsersController {
     try {
       deleted = await User.deleteEmail(req.body.email);
     } catch (error) {
-      next(error);
+      return next(error);
     }
 
     if (deleted) {
