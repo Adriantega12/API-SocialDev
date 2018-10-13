@@ -6,7 +6,9 @@ class DB {
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-    }
+    };
+
+    // Decide host
     if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production') {
       config.socketPath = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`;
     } else {
@@ -14,7 +16,7 @@ class DB {
     }
 
     this.con = mysql.createConnection(config);
-    this.con.connect( (error) => {
+    this.con.connect((error) => {
       if (error) throw error;
     });
     this.tupples = [];
@@ -85,9 +87,16 @@ class DB {
     return promise;
   }
 
-  async getFrienship(userOne, userTwo) {
+  /**
+   * Get an existent friendship between two users
+   * @param  {Number}     userOne User number one that belongs to the friendship
+   * @param  {Number}     userTwo User number two that belongs to the friendship
+   * @return {Friendship}         Friendship
+   */
+  async getFriendship(userOne, userTwo) {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM friendships WHERE userOneId = ? AND userTwoId = ?', [userOne, userTwo],
+      const query = 'SELECT * FROM friendships WHERE (userOneId = ? AND userTwoId = ?) OR (userOneId = ? AND userTwoId = ?)';
+      this.con.query(query, [userOne, userTwo, userTwo, userOne],
         (error, results) => {
           if (error) {
             return reject(this.processError(error));
@@ -127,8 +136,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, id], (error, results) => {
         if (error) {
-          let err = this.processError(error);
-          throw reject(err);
+          throw reject(this.processError(error));
         }
         return resolve(results);
       });
@@ -168,11 +176,12 @@ class DB {
 
   processError(err) {
     const error = {};
+    let data;
 
     switch (err.code) {
       case 'ER_DUP_ENTRY':
-        let data = this.getDataFromErrorMsg(err.sqlMessage);
-        error['duplicated'] = {
+        data = this.getDataFromErrorMsg(err.sqlMessage);
+        error.duplicated = {
           message: `The ${data.field} ${data.data} already exists on the system`,
           field: data.field,
           sql: err.sql,
@@ -185,13 +194,11 @@ class DB {
   }
 
   getDataFromErrorMsg(message) {
-    let data = unescape(message).match(/'([^']+)'/g)
+    const data = unescape(message).match(/'([^']+)'/g);
     return {
-      field: data[1].slice(1,-1),
-      data: data[0].slice(1,-1),
-    }
+      field: data[1].slice(1, -1),
+      data: data[0].slice(1, -1),
+    };
   }
-
-
 }
 module.exports = new DB();
