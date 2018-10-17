@@ -66,3 +66,5 @@ class Token {
     return new Promise(resolve => resolve(id > 0 ? { id, ...token } : []));
   }
 }
+
+module.exports = Token;

@@ -125,19 +125,17 @@ class User {
     const receivedMessages = [];
     const roles = [];
 
-    return new Promise((resolve, reject) => {
-      return id > 0 ? resolve(new User({
-        id,
-        ...user,
-        emails,
-        posts,
-        comments,
-        friends,
-        sentMessages,
-        receivedMessages,
-        roles,
-      })) : reject([]);
-    });
+    return new Promise(resolve => resolve(id > 0 ? new User({
+      id,
+      ...user,
+      emails,
+      posts,
+      comments,
+      friends,
+      sentMessages,
+      receivedMessages,
+      roles,
+    }) : []));
   }
 
   async update(keyVals) {
