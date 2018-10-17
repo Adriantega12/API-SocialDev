@@ -60,6 +60,32 @@ class DB {
     return promise;
   }
 
+  /*
+  async getGeneric(table, columns, filter) {
+    const promise = new Promise((resolve, reject) => {
+      const filterArray = [];
+      Object.entries(filter).forEach((entry) => {
+        filterArray.push(entry);
+      });
+      this.con.query('SELECT ?? FROM ?? WHERE ?', [columns, table, ], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+      this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+  */
+
   async getObjectByForeignId(table, columns, idAttribName, id) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
@@ -104,6 +130,19 @@ class DB {
           this.tupples = results;
           return resolve(this.tupples);
         });
+    });
+    return promise;
+  }
+
+  async getToken(token) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM tokens WHERE token = ? AND status = 1', [token], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
     });
     return promise;
   }
@@ -174,7 +213,7 @@ class DB {
     return promise;
   }
 
-  processError(err) {
+  static processError(err) {
     const error = {};
     let data;
 
@@ -193,7 +232,7 @@ class DB {
     return error;
   }
 
-  getDataFromErrorMsg(message) {
+  static getDataFromErrorMsg(message) {
     const data = unescape(message).match(/'([^']+)'/g);
     return {
       field: data[1].slice(1, -1),
