@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { usersController } = require('../controllers');
-const { validator } = require('../middlewares');
+const { validator, auth } = require('../middlewares');
 
 // const emailsRoutes = require('./emails');
 
@@ -8,7 +8,7 @@ const { validator } = require('../middlewares');
 router.get('/', usersController.getAll);
 
 // NEW User
-router.post('/', (req, res, next) => {
+router.post('/', [(req, res, next) => {
   validator.validate(req, res, next, {
     body: {
       roleId: 'required integer',
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
       profilePic: 'specialalphanum',
     },
   });
-}, usersController.insert);
+}, auth.register], usersController.insert);
 
 // SHOW User
 router.get('/:userId', (req, res, next) => {

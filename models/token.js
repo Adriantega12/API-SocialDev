@@ -25,7 +25,7 @@ class Token {
     this.id = id;
     this.token = token;
     this.created = created;
-    this.expires = created + duration;
+    this.expires = created.setHours(created.getHours() + duration);
     this.type = type;
     this.status = status;
     this.userId = userId;
