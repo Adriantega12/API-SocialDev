@@ -1,6 +1,8 @@
 const { Post } = require('../models');
 const { datetime } = require('../middlewares');
 
+// FIXME Todos los metodos deben estar documentados
+
 class PostsController {
   constructor() {
     // Function binding
@@ -28,6 +30,7 @@ class PostsController {
       next(error);
     }
 
+    // FIXME this is not real pagination because the db is not doing it
     const json = {
       data: data,
       total_count: data.length,
@@ -66,7 +69,8 @@ class PostsController {
     let data;
 
     const post = {
-      ...req.body,
+      ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+      // the clean up can be here or in the model.
       date: datetime.toMySQLFromJS(Date.now()),
     };
 

@@ -1,5 +1,7 @@
 const { Comment } = require('../models');
-const { datetime } = require('../middlewares');
+const { datetime } = require('../middlewares'); // FIXME if is a static class, using PascalCase
+
+// FIXME Todos los metodos deben estar documentados
 
 class CommentsController {
   constructor() {
@@ -20,6 +22,7 @@ class CommentsController {
       next(error);
     }
 
+    // FIXME this is not real pagination because the db is not doing it
     const json = {
       data: data,
       total_count: data.length,
@@ -58,7 +61,8 @@ class CommentsController {
     let data;
 
     const comment = {
-      ...req.body,
+      ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+      // the clean up can be here or in the model.
       postId: req.params.postId,
       date: datetime.toMySQLFromJS(Date.now()),
       isEdited: false,

@@ -1,6 +1,8 @@
 const { User } = require('../models');
 const { datetime } = require('../middlewares');
 
+// FIXME Todos los metodos deben estar documentados
+
 class UsersController {
   constructor() {
     // Function binding
@@ -28,6 +30,7 @@ class UsersController {
       return next(error);
     }
 
+    // FIXME this is not real pagination because the db is not doing it
     const json = {
       data,
       total_count: data.length,
@@ -66,6 +69,8 @@ class UsersController {
     let data;
 
     try {
+      // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+      // the clean up can be here or in the model.
       data = await User.insert(req.body);
     } catch (error) {
       return next(error);
@@ -93,6 +98,8 @@ class UsersController {
       res.status(404).send(data); // Not Found
     }
 
+    // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+    // the clean up can be here or in the model.
     const updated = await data.update(req.body);
     data = new User(req.body);
 
