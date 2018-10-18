@@ -31,6 +31,24 @@ class Token {
   }
 
   /**
+   * Method to know if the current token is still a valid one
+   * @return {Boolean} [description]
+   */
+  isActive() {
+    const now = new Date(Date.now());
+    const expires = new Date(this.expires);
+    const status = now < expires;
+
+    if (!this.status) {
+      db.update('tokens', {
+        status: false,
+      }, this.id);
+    }
+
+    return status;
+  }
+
+  /**
    * [get description]
    * @param  {[type]} token [description]
    * @return {[type]}       [description]
@@ -39,12 +57,12 @@ class Token {
     let data;
 
     try {
-      data = db.getToken(token);
+      data = await db.getToken(token);
     } catch (error) {
       throw error;
     }
 
-    return new Promise(resolve => resolve(data.length !== 0 ? new Token(data) : data));
+    return new Promise(resolve => resolve(data.length !== 0 ? new Token(data[0]) : data));
   }
 
   /**

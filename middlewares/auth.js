@@ -47,7 +47,29 @@ class Auth {
    * @return {[type]}        [description]
    */
   async login(req, res, next) {
+    let user;
+    let token;
 
+    try {
+      user = await User.get(req.body.userId);
+      token = await Token.get(req.body.token);
+    } catch (error) {
+      return next(error);
+    }
+
+    if (!token.isActive()) {
+      token = await Auth.generateToken(user);
+    }
+
+    res.status(303) // Redirecting: See other
+      .send({
+        data: {
+          user,
+          token,
+        },
+      });
+
+    return next();
   }
 
   async logout(req, res, next) {
