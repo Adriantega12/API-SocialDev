@@ -31,7 +31,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM ??', [table], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -51,7 +51,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -90,7 +90,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -104,7 +104,7 @@ class DB {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
         (error, results) => {
           if (error) {
-            return reject(this.processError(error));
+            return reject(DB.processError(error));
           }
           this.tupples = results;
           return resolve(this.tupples);
@@ -125,7 +125,7 @@ class DB {
       this.con.query(query, [userOne, userTwo, userTwo, userOne],
         (error, results) => {
           if (error) {
-            return reject(this.processError(error));
+            return reject(DB.processError(error));
           }
           this.tupples = results;
           return resolve(this.tupples);
@@ -138,7 +138,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM tokens WHERE token = ? AND status = 1', [token], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -157,7 +157,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('INSERT INTO ?? SET ?', [table, obj], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -175,7 +175,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, id], (error, results) => {
         if (error) {
-          throw reject(this.processError(error));
+          throw reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -193,7 +193,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE id = ?', [table, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -205,7 +205,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE email = ?', [table, emailName], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });

@@ -10,14 +10,13 @@ class Token {
    * @param  {[type]} options.type     [description]
    * @param  {[type]} options.status   [description]
    * @param  {[type]} options.userId   [description]
-   * @param  {[type]} options.         [description]
    * @return {[type]}                  [description]
    */
   constructor({
     id,
     token,
     created,
-    duration,
+    expires,
     type,
     status,
     userId,
@@ -25,7 +24,7 @@ class Token {
     this.id = id;
     this.token = token;
     this.created = created;
-    this.expires = created.setHours(created.getHours() + duration);
+    this.expires = expires;
     this.type = type;
     this.status = status;
     this.userId = userId;
@@ -57,7 +56,10 @@ class Token {
     let id;
 
     try {
-      const response = await db.insert('tokens', token);
+      const data = {
+        ...token,
+      };
+      const response = await db.insert('tokens', data);
       id = response.insertId;
     } catch (error) {
       throw error;

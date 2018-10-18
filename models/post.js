@@ -204,4 +204,5 @@ class Post {
     return deletedRows > 0;
   }
 }
+
 module.exports = Post;
