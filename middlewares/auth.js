@@ -99,10 +99,13 @@ class Auth {
         }
 
         const now = new Date(Date.now());
+        const expires = new Date(now);
+        expires.setHours(expires.getHours() + Number(process.env.SESSION_LIVES));
+
         token = await Token.insert(new Token({
           token: hash,
           created: datetime.toMySQLFromJS(now),
-          expires: datetime.toMySQLFromJS(now.setHours(now.getHours() + process.env.SESSION_LIVES)),
+          expires: datetime.toMySQLFromJS(expires),
           type: 'session',
           status: ACTIVE,
           userId: user.id,

@@ -34,16 +34,25 @@ class Token {
    * Method to know if the current token is still a valid one
    * @return {Boolean} [description]
    */
-  isActive() {
+  async isActive() {
     const now = new Date(Date.now());
     const expires = new Date(this.expires);
     const status = now < expires;
 
     if (!status) {
-      //this.token.deactivate();
+      try {
+        await this.deactivate();
+      } catch (error) {
+        throw error;
+      }
     }
 
     return status;
+  }
+
+  async deactivate() {
+    const INNACTIVE = false;
+    return this.update({ status: INNACTIVE });
   }
 
   /**
@@ -84,9 +93,18 @@ class Token {
     return new Promise(resolve => resolve(id > 0 ? { id, ...token } : []));
   }
 
-  /*static async update(token) {
+  async update(keyVals) {
+    let updatedRows;
 
-  }*/
+    try {
+      const results = await db.update('tokens', keyVals, this.id);
+      updatedRows = results.affectedRows;
+    } catch (error) {
+      throw error;
+    }
+
+    return updatedRows > 0;
+  }
 }
 
 module.exports = Token;
