@@ -10,7 +10,4 @@ router.post('/login', auth.login);
 // Logout route
 router.get('/logout', auth.logout);
 
-// Session
-router.get('/session', auth.session);
-
 module.exports = router;
