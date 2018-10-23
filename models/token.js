@@ -39,11 +39,17 @@ class Token {
     const expires = new Date(this.expires);
     const status = now < expires;
 
+    if (status) {
+      this.token.deactivate();
+    }
+
+    /*
     if (!this.status) {
       db.update('tokens', {
         status: false,
       }, this.id);
     }
+    */
 
     return status;
   }
@@ -85,6 +91,10 @@ class Token {
 
     return new Promise(resolve => resolve(id > 0 ? { id, ...token } : []));
   }
+
+  /*static async update(token) {
+
+  }*/
 }
 
 module.exports = Token;

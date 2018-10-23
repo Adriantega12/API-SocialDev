@@ -17,7 +17,7 @@ class Auth {
    * @return {[type]}        [description]
    */
   async register(req, res, next) {
-    let user;
+    /*let user;
     let token;
 
     try {
@@ -29,14 +29,13 @@ class Auth {
     }
 
 
-    res.send({
+    res.status(201).send({
       data: {
         user,
-        token,
       },
-    }).status(201);
+    });
 
-    return next();
+    return next();*/
   }
 
   /**
@@ -47,7 +46,7 @@ class Auth {
    * @return {[type]}        [description]
    */
   async login(req, res, next) {
-    let user;
+    /*let user;
     let token;
 
     try {
@@ -57,17 +56,42 @@ class Auth {
       return next(error);
     }
 
-    if (!token.isActive()) {
+    if (token && !token.isActive()) {
       token = await Auth.generateToken(user);
     }
 
+    req.session = {
+      token,
+      user,
+    };
+
+    console.log(req);
+
     res.status(303) // Redirecting: See other
-      .send({
-        data: {
-          user,
+      .send('Succesfully authenticated.');
+
+    return next();*/
+
+    let user;
+    let token;
+
+    try {
+      // User wasn't logged in previously
+      user = await User.getByEmail(req.body.email);
+      if (user.length === 0) {
+        res.status(404); // Not Found, user doesn't exists.
+      } else if (req.body.password === user.password) {
+        token = await Auth.generateToken(user);
+        req.session = {
           token,
-        },
-      });
+        };
+        res.status(303); // Redirecting
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+    res.send('Succesfully authenticated.');
 
     return next();
   }
@@ -86,14 +110,12 @@ class Auth {
           return reject(error);
         }
 
-        const currentDate = new Date(Date.now());
+        const now = new Date(Date.now());
         token = await Token.insert(new Token({
           token: hash,
-          created: datetime.toMySQLFromJS(currentDate),
-          expires: datetime.toMySQLFromJS(
-            currentDate.setHours(currentDate.getHours() + process.env.SESSION_LIVES)
-          ),
-          type: 'temp',
+          created: datetime.toMySQLFromJS(now),
+          expires: datetime.toMySQLFromJS(now.setHours(now.getHours() + process.env.SESSION_LIVES)),
+          type: 'session',
           status: ACTIVE,
           userId: user.id,
         }));

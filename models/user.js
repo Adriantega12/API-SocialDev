@@ -107,6 +107,20 @@ class User {
     }) : data;
   }
 
+  static async getByEmail(email) {
+    let data = [];
+
+    try {
+      data = await db.getObjectByForeignId('users', '*', 'email', email);
+    } catch (error) {
+      throw error;
+    }
+
+    return data.length !== 0 ? new User({
+      ...data[0],
+    }) : data;
+  }
+
   static async insert(user) {
     let id;
 
