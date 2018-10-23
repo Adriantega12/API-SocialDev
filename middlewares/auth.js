@@ -8,6 +8,7 @@ class Auth {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.session = this.session.bind(this);
+    this.haveSession = this.haveSession.bind(this);
   }
 
   /**
@@ -23,7 +24,7 @@ class Auth {
 
     try {
       user = await User.insert(req.body);
-      token = await Auth.generateToken(user);
+      token = await Auth.generateToken(user, 'session');
       console.log(token);
     } catch (error) {
       return next(error);
@@ -67,7 +68,7 @@ class Auth {
           res.status(404); // Not Found, user doesn't exists.
         } else if (req.body.password === user.password) { // User exists, verify password
           message = 'Logging user';
-          token = await Auth.generateToken(user);
+          token = await Auth.generateToken(user, 'session');
           res.status(303); // Redirecting
         }
       }
@@ -108,13 +109,22 @@ class Auth {
   }
 
   async session(req, res, next) {
-    const token = await Token.get(req.headers.token);
-    res.status(500).send({
-      token,
-    });
+    res.status(500).send('Quack');
   }
 
-  static async generateToken(user) {
+  async haveSession(req, res, next) {
+    const token = await Token.get(req.headers.token);
+    if (!(token.length === 0) && await token.isActive()) {
+      next();
+    } else {
+      next({
+        status: 403,
+        message: 'You need to be logged to perfom this action.',
+      });
+    }
+  }
+
+  static async generateToken(user, type) {
     const ACTIVE = true;
     let token;
 
@@ -132,7 +142,7 @@ class Auth {
           token: hash,
           created: datetime.toMySQLFromJS(now),
           expires: datetime.toMySQLFromJS(expires),
-          type: 'session',
+          type,
           status: ACTIVE,
           userId: user.id,
         }));
