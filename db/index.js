@@ -6,6 +6,7 @@ class DB {
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
+      timezone: 'utc',
     };
 
     // Decide host
@@ -31,7 +32,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM ??', [table], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -51,7 +52,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -60,11 +61,37 @@ class DB {
     return promise;
   }
 
+  /*
+  async getGeneric(table, columns, filter) {
+    const promise = new Promise((resolve, reject) => {
+      const filterArray = [];
+      Object.entries(filter).forEach((entry) => {
+        filterArray.push(entry);
+      });
+      this.con.query('SELECT ?? FROM ?? WHERE ?', [columns, table, ], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+      this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
+        if (error) {
+          return reject(this.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+  */
+
   async getObjectByForeignId(table, columns, idAttribName, id) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         this.tupples = results;
         return resolve(this.tupples);
@@ -78,7 +105,7 @@ class DB {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
         (error, results) => {
           if (error) {
-            return reject(this.processError(error));
+            return reject(DB.processError(error));
           }
           this.tupples = results;
           return resolve(this.tupples);
@@ -99,11 +126,24 @@ class DB {
       this.con.query(query, [userOne, userTwo, userTwo, userOne],
         (error, results) => {
           if (error) {
-            return reject(this.processError(error));
+            return reject(DB.processError(error));
           }
           this.tupples = results;
           return resolve(this.tupples);
         });
+    });
+    return promise;
+  }
+
+  async getToken(token) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM tokens WHERE status = TRUE AND token = ?', [token], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
     });
     return promise;
   }
@@ -118,7 +158,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('INSERT INTO ?? SET ?', [table, obj], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -136,7 +176,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('UPDATE ?? SET ? WHERE id = ?', [table, obj, id], (error, results) => {
         if (error) {
-          throw reject(this.processError(error));
+          throw reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -154,7 +194,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE id = ?', [table, id], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -166,7 +206,7 @@ class DB {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE email = ?', [table, emailName], (error, results) => {
         if (error) {
-          return reject(this.processError(error));
+          return reject(DB.processError(error));
         }
         return resolve(results);
       });
@@ -174,7 +214,7 @@ class DB {
     return promise;
   }
 
-  processError(err) {
+  static processError(err) {
     const error = {};
     let data;
 
@@ -193,7 +233,7 @@ class DB {
     return error;
   }
 
-  getDataFromErrorMsg(message) {
+  static getDataFromErrorMsg(message) {
     const data = unescape(message).match(/'([^']+)'/g);
     return {
       field: data[1].slice(1, -1),

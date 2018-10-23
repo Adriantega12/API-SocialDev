@@ -107,6 +107,20 @@ class User {
     }) : data;
   }
 
+  static async getByEmail(email) {
+    let data = [];
+
+    try {
+      data = await db.getObjectByForeignId('users', '*', 'email', email);
+    } catch (error) {
+      throw error;
+    }
+
+    return data.length !== 0 ? new User({
+      ...data[0],
+    }) : data;
+  }
+
   static async insert(user) {
     let id;
 
@@ -125,19 +139,17 @@ class User {
     const receivedMessages = [];
     const roles = [];
 
-    return new Promise((resolve, reject) => {
-      return id > 0 ? resolve(new User({
-        id,
-        ...user,
-        emails,
-        posts,
-        comments,
-        friends,
-        sentMessages,
-        receivedMessages,
-        roles,
-      })) : reject([]);
-    });
+    return new Promise(resolve => resolve(id > 0 ? new User({
+      id,
+      ...user,
+      emails,
+      posts,
+      comments,
+      friends,
+      sentMessages,
+      receivedMessages,
+      roles,
+    }) : []));
   }
 
   async update(keyVals) {
