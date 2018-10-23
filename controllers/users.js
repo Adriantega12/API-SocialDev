@@ -66,7 +66,7 @@ class UsersController {
     let data;
 
     try {
-      // data = await User.insert(req.body);
+      data = await User.insert(req.body);
     } catch (error) {
       return next(error);
     }
@@ -77,8 +77,7 @@ class UsersController {
       res.status(201); // Created
     }
 
-    // res.send(data);
-    res.status(201).send(req.body);
+    res.send(data);
   }
 
   async update(req, res, next) {
