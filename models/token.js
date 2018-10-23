@@ -39,17 +39,9 @@ class Token {
     const expires = new Date(this.expires);
     const status = now < expires;
 
-    if (status) {
-      this.token.deactivate();
+    if (!status) {
+      //this.token.deactivate();
     }
-
-    /*
-    if (!this.status) {
-      db.update('tokens', {
-        status: false,
-      }, this.id);
-    }
-    */
 
     return status;
   }

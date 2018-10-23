@@ -7,6 +7,7 @@ class Auth {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.session = this.session.bind(this);
   }
 
   /**
@@ -17,7 +18,7 @@ class Auth {
    * @return {[type]}        [description]
    */
   async register(req, res, next) {
-    /*let user;
+    let user;
     let token;
 
     try {
@@ -32,10 +33,12 @@ class Auth {
     res.status(201).send({
       data: {
         user,
+        token,
+        message: 'Succesfully registered.',
       },
     });
 
-    return next();*/
+    return next();
   }
 
   /**
@@ -46,58 +49,43 @@ class Auth {
    * @return {[type]}        [description]
    */
   async login(req, res, next) {
-    /*let user;
-    let token;
-
-    try {
-      user = await User.get(req.body.userId);
-      token = await Token.get(req.body.token);
-    } catch (error) {
-      return next(error);
-    }
-
-    if (token && !token.isActive()) {
-      token = await Auth.generateToken(user);
-    }
-
-    req.session = {
-      token,
-      user,
-    };
-
-    console.log(req);
-
-    res.status(303) // Redirecting: See other
-      .send('Succesfully authenticated.');
-
-    return next();*/
-
     let user;
     let token;
 
     try {
-      // User wasn't logged in previously
-      user = await User.getByEmail(req.body.email);
-      if (user.length === 0) {
-        res.status(404); // Not Found, user doesn't exists.
-      } else if (req.body.password === user.password) {
-        token = await Auth.generateToken(user);
-        req.session = {
-          token,
-        };
+      // Try first for session token
+      token = await Token.get(req.headers.token);
+
+      if (!(token.length === 0) && token.isActive()) { // If token exists and token is active
         res.status(303); // Redirecting
+      } else { // User wasn't logged in previously
+        user = await User.getByEmail(req.body.email); // Get user
+        if (user.length === 0) { // User doesn't exists
+          res.status(404); // Not Found, user doesn't exists.
+        } else if (req.body.password === user.password) { // User exists, verify password
+          token = await Auth.generateToken(user);
+          res.status(303); // Redirecting
+        }
       }
     } catch (error) {
       return next(error);
     }
 
-    res.send('Succesfully authenticated.');
+    res.send({
+      message: 'Succesfully authenticated.',
+      token,
+    });
 
     return next();
   }
 
   async logout(req, res, next) {
 
+  }
+
+  async session(req, res, next) {
+    console.log(req.headers);
+    res.status(500).send('Test');
   }
 
   static async generateToken(user) {
