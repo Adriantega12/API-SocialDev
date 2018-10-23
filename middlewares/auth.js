@@ -7,7 +7,6 @@ class Auth {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    this.session = this.session.bind(this);
     this.haveSession = this.haveSession.bind(this);
   }
 
@@ -108,13 +107,13 @@ class Auth {
     return next();
   }
 
-  async session(req, res, next) {
-    res.status(500).send('Quack');
-  }
-
   async haveSession(req, res, next) {
     const token = await Token.get(req.headers.token);
     if (!(token.length === 0) && await token.isActive()) {
+      req.session = {
+        token,
+      };
+
       next();
     } else {
       next({

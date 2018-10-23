@@ -26,6 +26,6 @@ router.use('/comments', commentsRoutes);
 router.use('/messages', messagesRoutes);
 
 // Auth
-router.use('/', authRoutes);
+router.use('/auth', authRoutes);
 
 module.exports = router;
