@@ -51,18 +51,22 @@ class Auth {
   async login(req, res, next) {
     let user;
     let token;
+    let message;
 
     try {
       // Try first for session token
       token = await Token.get(req.headers.token);
 
-      if (!(token.length === 0) && token.isActive()) { // If token exists and token is active
+      if (!(token.length === 0) && await token.isActive()) { // If token exists and token is active
+        message = 'Already logged in';
         res.status(303); // Redirecting
       } else { // User wasn't logged in previously
         user = await User.getByEmail(req.body.email); // Get user
         if (user.length === 0) { // User doesn't exists
+          message = 'User doesn\'t exists';
           res.status(404); // Not Found, user doesn't exists.
         } else if (req.body.password === user.password) { // User exists, verify password
+          message = 'Logging user';
           token = await Auth.generateToken(user);
           res.status(303); // Redirecting
         }
@@ -72,7 +76,7 @@ class Auth {
     }
 
     res.send({
-      message: 'Succesfully authenticated.',
+      message,
       token,
     });
 
@@ -84,8 +88,10 @@ class Auth {
   }
 
   async session(req, res, next) {
-    console.log(req.headers);
-    res.status(500).send('Test');
+    const token = await Token.get(req.headers.token);
+    res.status(500).send({
+      token,
+    });
   }
 
   static async generateToken(user) {
