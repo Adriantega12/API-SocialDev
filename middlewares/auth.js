@@ -84,7 +84,27 @@ class Auth {
   }
 
   async logout(req, res, next) {
+    let token;
+    let deactivated;
+    let message;
 
+    try {
+      token = await Token.get(req.headers.token);
+      deactivated = token.deactivate();
+    } catch (error) {
+      return next(error);
+    }
+
+    if (deactivated) {
+      message = 'Succesfully logged out.';
+      res.status(200); // OK
+    }
+
+    res.send({
+      message,
+    });
+
+    return next();
   }
 
   async session(req, res, next) {
