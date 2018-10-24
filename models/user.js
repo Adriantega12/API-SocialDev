@@ -87,8 +87,8 @@ class User {
     try {
       data = await db.get('users', '*', userId);
       emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
-      posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
-      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
+      posts = await db.getObjectByForeignId('posts', '*', 'userId', userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'userId', userId);
       friends = await this.getFriendlist(userId);
       sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
       receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
@@ -252,7 +252,7 @@ class User {
     try {
       friendList = await this.getFriendlist(userId);
       const myFriendsPostsPromises = friendList.map(async (friend) => {
-        friendPosts = await db.getObjectByForeignId('posts', '*', 'authorId', friend.friendId);
+        friendPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
         posts.push(...friendPosts);
       });
       await Promise.all(myFriendsPostsPromises);
