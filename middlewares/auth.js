@@ -153,6 +153,19 @@ class Auth {
 
     return tokenPromise;
   }
+
+  async generatePasswordHash(password) {
+    const passwordPromise = new Promise((resolve, reject) => {
+      bcrypt.hash(`${password}${Date.now()}`, Number(process.env.SALT_ROUNDS), async (error, hash) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(hash);
+      });
+    });
+
+    return passwordPromise;
+  }
 }
 
 module.exports = new Auth();

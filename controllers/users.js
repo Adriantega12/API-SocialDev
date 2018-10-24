@@ -1,6 +1,5 @@
-const bcrypt = require('bcrypt');
 const { User } = require('../models');
-const { datetime } = require('../middlewares');
+const { datetime, auth } = require('../middlewares');
 
 class UsersController {
   constructor() {
@@ -67,7 +66,7 @@ class UsersController {
     let data;
 
     try {
-      req.body.password = await UsersController.generatePasswordHash(req.body.password);
+      req.body.password = await auth.generatePasswordHash(req.body.password);
       data = await User.insert(req.body);
     } catch (error) {
       return next(error);
@@ -267,19 +266,6 @@ class UsersController {
     }
 
     res.send();
-  }
-
-  static async generatePasswordHash(password) {
-    const passwordPromise = new Promise((resolve, reject) => {
-      bcrypt.hash(`${password}${Date.now()}`, Number(process.env.SALT_ROUNDS), async (error, hash) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(hash);
-      });
-    });
-
-    return passwordPromise;
   }
 }
 
