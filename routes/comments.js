@@ -9,7 +9,7 @@ router.get('/', commentsController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      authorId: 'required integer',
+      userId: 'required integer',
       content: 'required word',
     },
   });

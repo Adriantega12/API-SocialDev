@@ -10,7 +10,7 @@ router.get('/', postsController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      authorId: 'required integer',
+      userId: 'required integer',
       title: 'required word',
       text: 'required word',
       score: 'required integer',
@@ -34,7 +34,6 @@ router.put('/:postId', (req, res, next) => {
       postId: 'integer',
     },
     body: {
-      authorId: 'integer',
       title: 'word',
       text: 'word',
       score: 'integer',
