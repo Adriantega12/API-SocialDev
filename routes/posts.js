@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
-const { validator } = require('../middlewares');
+const { validator, auth, Authorizer } = require('../middlewares');
 
 // INDEX Post
 router.get('/', postsController.getAll);
@@ -19,13 +19,13 @@ router.post('/', (req, res, next) => {
 }, postsController.insert);
 
 // SHOW Post
-router.get('/:postId', (req, res, next) => {
+router.get('/:postId', [(req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       postId: 'integer',
     },
   });
-}, postsController.get);
+}, auth.haveSession, Authorizer.authorize], postsController.get);
 
 // UPDATE Post
 router.put('/:postId', (req, res, next) => {

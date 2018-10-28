@@ -118,7 +118,7 @@ class Auth {
     if (!(token.length === 0) && await token.isActive()) {
       req.session = {
         token,
-        user: User.get(token.userId),
+        user: await User.get(token.userId),
       };
 
       next();
