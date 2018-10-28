@@ -10,9 +10,4 @@ router.post('/login', auth.login);
 // Logout route
 router.get('/logout', auth.logout);
 
-router.get('/session/:sessionId', [auth.haveSession, Authorizer.authorize], (req, res) => {
-  // console.log(req);
-  res.send('Quack');
-});
-
 module.exports = router;

@@ -124,7 +124,7 @@ class Auth {
       next();
     } else {
       next({
-        status: 403,
+        status: 401, // Unauthenticated
         message: 'You need to be logged to perfom this action.',
       });
     }
