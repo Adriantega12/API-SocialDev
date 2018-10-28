@@ -1,26 +1,25 @@
 class Authorizer {
   static owns(req) {
     const { user } = req.session;
-    const resource = req.baseUrl.split('/').slice(-1)[0];
+    const resource = req.baseUrl.split('/').slice(-1)[0]; // Gets resource's name
     const resourceId = req.params[resource.replace(/.$/, 'Id')];
 
-    if (user[resource].find(element => element.id === Number(resourceId))) {
-      return true;
-    }
-
-    return false;
+    return user[resource].length > 0
+      && Authorizer.userOwnsResource(user[resource], Number(resourceId));
   }
 
   static ownsParent(req) {
     const { user } = req.session;
-    const resource = req.baseUrl.split('/').slice(-3)[0];
+    const splitIndex = Object.keys(req.params).length > 1 ? -4 : -3;
+    const resource = req.originalUrl.split('/').slice(splitIndex)[0]; // Gets parent resource's name
     const resourceId = req.params[resource.replace(/.$/, 'Id')];
 
-    if (user[resource].find(element => element.id === Number(resourceId))) {
-      return true;
-    }
+    return user[resource].length > 0
+      && Authorizer.userOwnsResource(user[resource], Number(resourceId));
+  }
 
-    return false;
+  static userOwnsResource(resourceArray, resourceId) {
+    return resourceArray.find(element => element.id === resourceId);
   }
 
   static authorize(req, res, next, rule) {

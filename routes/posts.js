@@ -69,32 +69,56 @@ router.delete('/:postId', [
 ], postsController.delete);
 
 // INDEX Attachment
-router.get('/:postId/attachments', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      postId: 'integer',
-    },
-  });
-}, postsController.getAttachments);
+router.get('/:postId/attachments', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        postId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'ownsParent',
+    });
+  },
+], postsController.getAttachments);
 
 // NEW Attachment
-router.post('/:postId/attachments', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      postId: 'integer',
-    },
-  });
-}, postsController.addAttachment);
+router.post('/:postId/attachments', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        postId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'ownsParent',
+    });
+  },
+], postsController.addAttachment);
 
 // Delete Attachment
-router.delete('/:postId/attachments/:attachmentId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      postId: 'integer',
-      attachmentId: 'integer',
-    },
-  });
-}, postsController.deleteAttachment);
+router.delete('/:postId/attachments/:attachmentId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        postId: 'integer',
+        attachmentId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'ownsParent',
+    });
+  },
+], postsController.deleteAttachment);
 
 // INDEX score
 router.get('/:postId/scores', (req, res, next) => {
@@ -106,27 +130,38 @@ router.get('/:postId/scores', (req, res, next) => {
 }, postsController.getScores);
 
 // NEW score
-router.post('/:postId/scores', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      postId: 'integer',
-    },
-    body: {
-      userId: 'required integer',
-      score: 'required integer',
-    },
-  });
-}, postsController.addScore);
+router.post('/:postId/scores', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        postId: 'integer',
+      },
+      body: {
+        userId: 'required integer',
+        score: 'required integer',
+      },
+    });
+  },
+  auth.haveSession,
+], postsController.addScore);
 
 // DELETE score
-router.delete('/:postId/scores/:scoreId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      postId: 'integer',
-      scoreId: 'integer',
-    },
-  });
-}, postsController.deleteScore);
+router.delete('/:postId/scores/:scoreId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        postId: 'integer',
+        scoreId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'owns',
+    });
+  },
+], postsController.deleteScore);
 
 router.use('/:postId/comments', commentsRoutes);
 
