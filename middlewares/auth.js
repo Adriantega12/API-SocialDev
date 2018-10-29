@@ -9,6 +9,7 @@ class Auth {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.haveSession = this.haveSession.bind(this);
+    this.generatePasswordHash = this.generatePasswordHash.bind(this);
   }
 
   /**
@@ -32,7 +33,7 @@ class Auth {
       const response = await mailer.sendMail({
         to: req.body.email,
         subject: 'Welcome to SocialDev!',
-        text: `Please confirm your email at localhost:3000/${token.token}`,
+        text: `Please confirm your email at localhost:3000/register/${token.token}`,
       });
       console.log(response);
     } catch (error) {
@@ -138,6 +139,66 @@ class Auth {
     return next();
   }
 
+  async recoverPassword(req, res, next) {
+    let message;
+
+    try {
+      const user = await User.getByEmail(req.body.email);
+      if (user.length !== 0) {
+        const token = await Auth.generateToken(user, 'passRecovery');
+        const response = await mailer.sendMail({
+          to: req.body.email,
+          subject: 'Reset your password in SocialDev',
+          text: `Please recover your password by clicking localhost:3000/recover/${token.token}`,
+        });
+        console.log(response);
+        res.status(202);
+        message = 'Email to reset password sent.';
+      } else {
+        res.status(404);
+        message = 'Email doesn\'t exists.';
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+
+    res.send({ message });
+
+    return next();
+  }
+
+  async resetPassword(req, res, next) {
+    let token;
+    let user;
+
+    try {
+      // Get all relevant data
+      const resetToken = await Token.get(req.params.token);
+      await resetToken.deactivate();
+      user = await User.get(resetToken.userId);
+
+      if (user.length !== 0) {
+        // Update user password
+        await user.update({
+          password: await Auth.generatePasswordHash(req.body.password),
+        });
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+    res.status(202).send({
+      message: 'Password changed',
+      data: {
+        user,
+        token,
+      },
+    });
+
+    return next();
+  }
+
   /**
    * [logout description]
    * @param  {[type]}   req  [description]
@@ -236,6 +297,15 @@ class Auth {
    * @return {[type]}          [description]
    */
   async generatePasswordHash(password) {
+    return Auth.generatePasswordHash(password);
+  }
+
+  /**
+   * [generatePasswordHash description]
+   * @param  {[type]} password [description]
+   * @return {[type]}          [description]
+   */
+  static async generatePasswordHash(password) {
     const passwordPromise = new Promise((resolve, reject) => {
       bcrypt.hash(`${password}`, Number(process.env.SALT_ROUNDS), async (error, hash) => {
         if (error) {
