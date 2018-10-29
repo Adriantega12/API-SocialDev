@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { User, Token } = require('../models');
 const { datetime } = require('../middlewares');
+const mailer = require('../mail');
 
 class Auth {
   constructor() {
@@ -22,19 +23,67 @@ class Auth {
     let token;
 
     try {
-      user = await User.insert(req.body);
-      token = await Auth.generateToken(user, 'session');
-      console.log(token);
+      user = await User.insert({
+        ...req.body,
+        password: await this.generatePasswordHash(req.body.password),
+        roleId: 3,
+      });// Where roleId 3 is "Inactive"
+      token = await Auth.generateToken(user, 'register');
+      const response = await mailer.sendMail({
+        to: req.body.email,
+        subject: 'Welcome to SocialDev!',
+        text: `Please confirm your email at localhost:3000/${token.token}`,
+      });
+      console.log(response);
     } catch (error) {
       return next(error);
     }
 
 
     res.status(201).send({
+      message: 'Succesfully registered.',
       data: {
         user,
         token,
-        message: 'Succesfully registered.',
+      },
+    });
+
+    return next();
+  }
+
+  /**
+   * [confirmUser description]
+   * @param  {[type]}   req  [description]
+   * @param  {[type]}   res  [description]
+   * @param  {Function} next [description]
+   * @return {[type]}        [description]
+   */
+  async confirmUser(req, res, next) {
+    let token;
+    let user;
+
+    try {
+      // Get all relevant data
+      const registerToken = await Token.get(req.params.token);
+      user = await User.get(registerToken.userId);
+
+      if (user.length !== 0) {
+        // Generate new session token
+        token = await Auth.generateToken(user, 'session');
+        await registerToken.deactivate();
+        // Update user
+        await user.update({ roleId: 2 }); // Where role 2 is "user"
+        user.role = 'user';
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+    res.status(202).send({
+      message: 'Confirmed user',
+      data: {
+        user,
+        token,
       },
     });
 
@@ -89,6 +138,13 @@ class Auth {
     return next();
   }
 
+  /**
+   * [logout description]
+   * @param  {[type]}   req  [description]
+   * @param  {[type]}   res  [description]
+   * @param  {Function} next [description]
+   * @return {[type]}        [description]
+   */
   async logout(req, res, next) {
     let token;
     let deactivated;
@@ -113,6 +169,13 @@ class Auth {
     return next();
   }
 
+  /**
+   * [haveSession description]
+   * @param  {[type]}   req  [description]
+   * @param  {[type]}   res  [description]
+   * @param  {Function} next [description]
+   * @return {[type]}        [description]
+   */
   async haveSession(req, res, next) {
     const token = await Token.get(req.headers.token);
     if (!(token.length === 0) && await token.isActive()) {
@@ -130,6 +193,12 @@ class Auth {
     }
   }
 
+  /**
+   * [generateToken description]
+   * @param  {[type]} user [description]
+   * @param  {[type]} type [description]
+   * @return {[type]}      [description]
+   */
   static async generateToken(user, type) {
     const ACTIVE = true;
     let token;
@@ -143,9 +212,10 @@ class Auth {
         const now = new Date(Date.now());
         const expires = new Date(now);
         expires.setHours(expires.getHours() + Number(process.env.SESSION_LIVES));
+        const hashString = hash.split('/').join('');
 
         token = await Token.insert(new Token({
-          token: hash,
+          token: hashString,
           created: datetime.toMySQLFromJS(now),
           expires: datetime.toMySQLFromJS(expires),
           type,
@@ -160,6 +230,11 @@ class Auth {
     return tokenPromise;
   }
 
+  /**
+   * [generatePasswordHash description]
+   * @param  {[type]} password [description]
+   * @return {[type]}          [description]
+   */
   async generatePasswordHash(password) {
     const passwordPromise = new Promise((resolve, reject) => {
       bcrypt.hash(`${password}`, Number(process.env.SALT_ROUNDS), async (error, hash) => {
@@ -173,6 +248,12 @@ class Auth {
     return passwordPromise;
   }
 
+  /**
+   * [checkPassword description]
+   * @param  {[type]} plainText [description]
+   * @param  {[type]} hash      [description]
+   * @return {[type]}           [description]
+   */
   static async checkPassword(plainText, hash) {
     const isPasswordPromise = new Promise((resolve, reject) => {
       bcrypt.compare(plainText, hash, async (error, res) => {

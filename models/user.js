@@ -158,6 +158,11 @@ class User {
     try {
       const results = await db.update('users', keyVals, this.id);
       updatedRows = results.affectedRows;
+      if (updatedRows > 0) {
+        Object.keys(keyVals).forEach((key) => {
+          this[key] = keyVals[key];
+        });
+      }
     } catch (error) {
       throw error;
     }
