@@ -1,23 +1,21 @@
 const router = require('express').Router();
 const { messagesController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const { validator } = require('../middlewares');
 
 
 // INDEX Message
 router.get('/', messagesController.getAll);
 
 // NEW Message
-router.post('/', [
-  (req, res, next) => {
-    validator.validate(req, res, next, {
-      body: {
-        receiverId: 'required integer',
-        text: 'required word',
-      },
-    });
-  },
-  auth.haveSession,
-], messagesController.insert);
+router.post('/', (req, res, next) => {
+  validator.validate(req, res, next, {
+    body: {
+      senderId: 'required integer',
+      receiverId: 'required integer',
+      text: 'required word',
+    },
+  });
+}, messagesController.insert);
 
 // SHOW Message
 router.get('/:messageId', (req, res, next) => {

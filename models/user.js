@@ -32,6 +32,12 @@ class User {
     age,
     level,
     profilePic,
+    emails,
+    comments,
+    posts,
+    friends,
+    sentMessages,
+    receivedMessages,
   }) {
     this.id = id;
     this.roleId = roleId;
@@ -43,6 +49,12 @@ class User {
     this.age = age;
     this.level = level;
     this.profilePic = profilePic;
+    this.emails = emails;
+    this.posts = posts;
+    this.comments = comments;
+    this.friends = friends;
+    this.sentMessages = sentMessages;
+    this.receivedMessages = receivedMessages;
   }
 
   static async getAll() {
@@ -65,59 +77,33 @@ class User {
 
   static async get(userId) {
     let data = [];
-    let role;
     let emails;
     let posts;
     let comments;
     let friends;
     let sentMessages;
     let receivedMessages;
-    let user;
 
     try {
       data = await db.get('users', '*', userId);
-      if (data.length !== 0) {
-        role = (await db.get('roles', '*', data[0].roleId))[0].name;
-        emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
-        posts = await db.getObjectByForeignId('posts', '*', 'userId', userId);
-        comments = await db.getObjectByForeignId('comments', '*', 'userId', userId);
-        friends = await this.getFriendlist(userId);
-        sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
-        receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
-      }
-    } catch (error) {
-      throw error;
-    }
-
-    if (data.length !== 0) {
-      // Creating user from model data
-      user = new User(data[0]);
-      // Adding relevant data
-      user.role = role;
-      user.emails = emails;
-      user.posts = posts;
-      user.comments = comments;
-      user.friends = friends;
-      user.sentMessages = sentMessages;
-      user.receivedMessages = receivedMessages;
-    } else {
-      user = data; // data here is an empty array, so will user.
-    }
-
-    return user;
-  }
-
-  static async getByEmail(email) {
-    let data = [];
-
-    try {
-      data = await db.getObjectByForeignId('users', '*', 'email', email);
+      emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
+      posts = await db.getObjectByForeignId('posts', '*', 'authorId', userId);
+      comments = await db.getObjectByForeignId('comments', '*', 'authorId', userId);
+      friends = await this.getFriendlist(userId);
+      sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
+      receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
     } catch (error) {
       throw error;
     }
 
     return data.length !== 0 ? new User({
       ...data[0],
+      emails,
+      posts,
+      comments,
+      friends,
+      sentMessages,
+      receivedMessages,
     }) : data;
   }
 
@@ -139,17 +125,19 @@ class User {
     const receivedMessages = [];
     const roles = [];
 
-    return new Promise(resolve => resolve(id > 0 ? new User({
-      id,
-      ...user,
-      emails,
-      posts,
-      comments,
-      friends,
-      sentMessages,
-      receivedMessages,
-      roles,
-    }) : []));
+    return new Promise((resolve, reject) => {
+      return id > 0 ? resolve(new User({
+        id,
+        ...user,
+        emails,
+        posts,
+        comments,
+        friends,
+        sentMessages,
+        receivedMessages,
+        roles,
+      })) : reject([]);
+    });
   }
 
   async update(keyVals) {
@@ -158,11 +146,6 @@ class User {
     try {
       const results = await db.update('users', keyVals, this.id);
       updatedRows = results.affectedRows;
-      if (updatedRows > 0) {
-        Object.keys(keyVals).forEach((key) => {
-          this[key] = keyVals[key];
-        });
-      }
     } catch (error) {
       throw error;
     }
@@ -257,7 +240,7 @@ class User {
     try {
       friendList = await this.getFriendlist(userId);
       const myFriendsPostsPromises = friendList.map(async (friend) => {
-        friendPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
+        friendPosts = await db.getObjectByForeignId('posts', '*', 'authorId', friend.friendId);
         posts.push(...friendPosts);
       });
       await Promise.all(myFriendsPostsPromises);

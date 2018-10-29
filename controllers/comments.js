@@ -58,7 +58,6 @@ class CommentsController {
     let data;
 
     const comment = {
-      userId: req.session.user.id,
       ...req.body,
       postId: req.params.postId,
       date: datetime.toMySQLFromJS(Date.now()),

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { usersController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const { validator } = require('../middlewares');
 
 // const emailsRoutes = require('./emails');
 
@@ -62,6 +62,9 @@ router.delete('/:userId', (req, res, next) => {
   });
 }, usersController.delete);
 
+// Email routes
+// router.use('/:userId/emails', emailsRoutes);
+
 // Friendships
 // INDEX Friendship
 router.get('/:userId/friendships', (req, res, next) => {
@@ -92,57 +95,33 @@ router.get('/:userId/feed', (req, res, next) => {
 }, usersController.getFeed);
 
 // INDEX emails
-router.get('/:userId/emails', [
-  (req, res, next) => {
-    validator.validate(req, res, next, {
-      params: {
-        userId: 'integer',
-      },
-    });
-  },
-  auth.haveSession,
-  (req, res, next) => {
-    Authorizer.authorize(req, res, next, {
-      user: 'isUser',
-    });
-  },
-], usersController.getEmails);
+router.get('/:userId/emails', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.getEmails);
 
 // NEW email
-router.post('/:userId/emails', [
-  (req, res, next) => {
-    validator.validate(req, res, next, {
-      params: {
-        userId: 'integer',
-      },
-    });
-  },
-  auth.haveSession,
-  (req, res, next) => {
-    Authorizer.authorize(req, res, next, {
-      user: 'isUser',
-    });
-  },
-], usersController.addEmail);
+router.post('/:userId/emails', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+  });
+}, usersController.addEmail);
 
 // DELETE email
-router.delete('/:userId/emails', [
-  (req, res, next) => {
-    validator.validate(req, res, next, {
-      params: {
-        userId: 'integer',
-      },
-      body: {
-        email: 'email',
-      },
-    });
-  },
-  auth.haveSession,
-  (req, res, next) => {
-    Authorizer.authorize(req, res, next, {
-      user: 'isUser',
-    });
-  },
-], usersController.deleteEmail);
+router.delete('/:userId/emails', (req, res, next) => {
+  validator.validate(req, res, next, {
+    params: {
+      userId: 'integer',
+    },
+    body: {
+      email: 'email',
+    },
+  });
+}, usersController.deleteEmail);
 
 module.exports = router;

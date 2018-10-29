@@ -5,7 +5,7 @@ class Comment {
    * Constructor for class Comment.
    * @param  {number}  id        Unique value, identifies a unique comment.
    * @param  {number}  postId    Identifier of the post the comment was posted to.
-   * @param  {number}  userId    Identifier of the user that posted the comment.
+   * @param  {number}  authorId  Identifier of the user that posted the comment.
    * @param  {Date}    date      Date the comment was created.
    * @param  {string}  content   Content of the comment.
    * @param  {boolean} isEdited  Indicates if the comment was edited before.
@@ -14,14 +14,14 @@ class Comment {
   constructor({
     id,
     postId,
-    userId,
+    authorId,
     date,
     content,
     isEdited,
   }) {
     this.id = id;
     this.postId = postId;
-    this.userId = userId;
+    this.authorId = authorId;
     this.date = date;
     this.content = content;
     this.isEdited = isEdited;

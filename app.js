@@ -11,7 +11,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Cargar rutas
 app.use(router);
 
 // Cargar errorHandler
