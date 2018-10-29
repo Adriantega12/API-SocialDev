@@ -98,7 +98,7 @@ class UsersController {
     data = new User(req.body);
 
     if (updated) {
-      res.status(200); // OK
+      res.status(202); // Accepted
     } else {
       res.status(409); // Conflict
     }
