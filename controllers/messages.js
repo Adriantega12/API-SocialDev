@@ -58,6 +58,7 @@ class MessagesController {
     let data;
 
     const message = {
+      senderId: req.session.user.id,
       ...req.body,
       date: datetime.toMySQLFromJS(Date.now()),
     };

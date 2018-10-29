@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { auth } = require('../middlewares');
+const { auth, Authorizer } = require('../middlewares');
 
 // Register route
 router.post('/register', auth.register);

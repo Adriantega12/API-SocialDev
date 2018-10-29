@@ -63,12 +63,18 @@ class Auth {
       } else { // User wasn't logged in previously
         user = await User.getByEmail(req.body.email); // Get user
         if (user.length === 0) { // User doesn't exists
-          message = 'User doesn\'t exists';
-          res.status(404); // Not Found, user doesn't exists.
-        } else if (req.body.password === user.password) { // User exists, verify password
-          message = 'Logging user';
-          token = await Auth.generateToken(user, 'session');
-          res.status(303); // Redirecting
+          message = 'Credentials are wrong.';
+          res.status(400); // Bad Request
+        } else { // User exists, verify password
+          const correctPassword = await Auth.checkPassword(req.body.password, user.password);
+          if (correctPassword) {
+            token = await Auth.generateToken(user, 'session');
+            message = 'Logging in.';
+            res.status(303); // Redirecting
+          } else {
+            message = 'Credentials are wrong.';
+            res.status(400); // Bad Request
+          }
         }
       }
     } catch (error) {
@@ -112,12 +118,13 @@ class Auth {
     if (!(token.length === 0) && await token.isActive()) {
       req.session = {
         token,
+        user: await User.get(token.userId),
       };
 
       next();
     } else {
       next({
-        status: 403,
+        status: 401, // Unauthenticated
         message: 'You need to be logged to perfom this action.',
       });
     }
@@ -151,6 +158,32 @@ class Auth {
     });
 
     return tokenPromise;
+  }
+
+  async generatePasswordHash(password) {
+    const passwordPromise = new Promise((resolve, reject) => {
+      bcrypt.hash(`${password}`, Number(process.env.SALT_ROUNDS), async (error, hash) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(hash);
+      });
+    });
+
+    return passwordPromise;
+  }
+
+  static async checkPassword(plainText, hash) {
+    const isPasswordPromise = new Promise((resolve, reject) => {
+      bcrypt.compare(plainText, hash, async (error, res) => {
+        if (error) {
+          return reject(error);
+        }
+
+        return resolve(res);
+      });
+    });
+    return isPasswordPromise;
   }
 }
 

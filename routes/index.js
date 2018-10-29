@@ -6,7 +6,7 @@ const router = Router();
 // Router requires
 const usersRoutes = require('./users');
 const postsRoutes = require('./posts');
-const commentsRoutes = require('./comments');
+// const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
 const authRoutes = require('./auth');
 
@@ -20,7 +20,7 @@ router.use('/users', usersRoutes);
 router.use('/posts', postsRoutes);
 
 // Comments
-router.use('/comments', commentsRoutes);
+// router.use('/posts/:postId/comments', commentsRoutes);
 
 // Messages
 router.use('/messages', messagesRoutes);
