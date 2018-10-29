@@ -1,4 +1,8 @@
 class Authorizer {
+  static isUser(req) {
+    return req.session.user.id === Number(req.params.userId);
+  }
+
   static owns(req) {
     const { user } = req.session;
     const resource = req.baseUrl.split('/').slice(-1)[0]; // Gets resource's name
