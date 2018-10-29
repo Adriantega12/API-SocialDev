@@ -6,43 +6,61 @@ const { validator, auth, Authorizer } = require('../middlewares');
 router.get('/', commentsController.getAll);
 
 // NEW Comment
-router.post('/', (req, res, next) => {
-  validator.validate(req, res, next, {
-    body: {
-      userId: 'required integer',
-      content: 'required word',
-    },
-  });
-}, commentsController.insert);
+router.post('/', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      body: {
+        content: 'required word',
+      },
+    });
+  },
+  auth.haveSession,
+], commentsController.insert);
 
 // SHOW Comment
-router.get('/:commentId', [(req, res, next) => {
+router.get('/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       commentId: 'integer',
     },
   });
-}, auth.haveSession, Authorizer.authorize], commentsController.get);
+}, commentsController.get);
 
 // UPDATE Comment
-router.put('/:commentId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      commentId: 'integer',
-    },
-    body: {
-      content: 'word',
-    },
-  });
-}, commentsController.update);
+router.put('/:commentId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        commentId: 'integer',
+      },
+      body: {
+        content: 'word',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'owns',
+    });
+  },
+], commentsController.update);
 
 // DESTROY Comment
-router.delete('/:commentId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      commentId: 'integer',
-    },
-  });
-}, commentsController.delete);
+router.delete('/:commentId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        commentId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'owns',
+    });
+  },
+], commentsController.delete);
 
 module.exports = router;
