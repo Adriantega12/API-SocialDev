@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { datetime } = require('../middlewares');
+const { datetime, auth } = require('../middlewares');
 
 class UsersController {
   constructor() {
@@ -66,6 +66,7 @@ class UsersController {
     let data;
 
     try {
+      req.body.password = await auth.generatePasswordHash(req.body.password);
       data = await User.insert(req.body);
     } catch (error) {
       return next(error);
@@ -97,7 +98,7 @@ class UsersController {
     data = new User(req.body);
 
     if (updated) {
-      res.status(200); // OK
+      res.status(202); // Accepted
     } else {
       res.status(409); // Conflict
     }

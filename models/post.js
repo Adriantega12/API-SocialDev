@@ -3,17 +3,17 @@ const db = require('../db');
 class Post {
   /**
    * Constructor for class Post.
-   * @param  {number} id       Unique value, identifies a unique post.
-   * @param  {number} authorId Identifier of the user that originally wrote the post.
-   * @param  {string} title    Title of the post.
-   * @param  {string} text     Body of the post.
-   * @param  {Date} date       Creation date.
-   * @param  {number} score    Post score, average of all scores related to this post.
-   * @return {Post}            New instance of a Post.
+   * @param  {number} id     Unique value, identifies a unique post.
+   * @param  {number} userId Identifier of the user that originally wrote the post.
+   * @param  {string} title  Title of the post.
+   * @param  {string} text   Body of the post.
+   * @param  {Date}   date   Creation date.
+   * @param  {number} score  Post score, average of all scores related to this post.
+   * @return {Post}          New instance of a Post.
    */
   constructor({
     id,
-    authorId,
+    userId,
     title,
     text,
     date,
@@ -23,7 +23,7 @@ class Post {
     scores,
   }) {
     this.id = id;
-    this.authorId = authorId;
+    this.userId = userId;
     this.title = title;
     this.text = text;
     this.date = date;
@@ -204,4 +204,5 @@ class Post {
     return deletedRows > 0;
   }
 }
+
 module.exports = Post;
