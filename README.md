@@ -314,7 +314,7 @@ URL: https://socialdev-218019.appspot.com/
 
 ##  6. Colección de Postman utilizada para hacer pruebas
 
-Colección: https://www.getpostman.com/collections/b88701d2295f78763b3e
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/b88701d2295f78763b3e)
 
 ## 7. Autores
 
