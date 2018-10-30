@@ -4,6 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes');
 const { errorHandler } = require('./middlewares');
+const mailer = require('./mail');
+
+(async () => { mailer.init(); })();
 
 const app = express();
 
