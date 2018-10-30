@@ -34,33 +34,49 @@ router.get('/:userId', (req, res, next) => {
 }, usersController.get);
 
 // UPDATE User
-router.put('/:userId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-    body: {
-      roleId: 'integer',
-      email: 'email',
-      password: 'specialalphanum',
-      githubToken: 'specialalphanum',
-      firstName: 'word',
-      lastName: 'word',
-      age: 'integer',
-      level: 'integer',
-      profilePic: 'blob',
-    },
-  });
-}, usersController.update);
+router.put('/:userId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+      },
+      body: {
+        roleId: 'integer',
+        email: 'email',
+        password: 'specialalphanum',
+        githubToken: 'specialalphanum',
+        firstName: 'word',
+        lastName: 'word',
+        age: 'integer',
+        level: 'integer',
+        profilePic: 'blob',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'isUser',
+    });
+  },
+], usersController.update);
 
 // DESTROY User
-router.delete('/:userId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-  });
-}, usersController.delete);
+router.delete('/:userId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'isUser',
+    });
+  },
+], usersController.delete);
 
 // Friendships
 // INDEX Friendship
@@ -73,23 +89,33 @@ router.get('/:userId/friendships', (req, res, next) => {
 }, usersController.getFriends);
 
 // NEW Friendship
-router.post('/:userId/friendships/:friendId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-      friendId: 'integer',
-    },
-  });
-}, usersController.addFriend);
+router.post('/:userId/friendships/:friendId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+        friendId: 'integer',
+      },
+    });
+  }, auth.haveSession,
+], usersController.addFriend);
 
 // User Feed
-router.get('/:userId/feed', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-  });
-}, usersController.getFeed);
+router.get('/:userId/feed', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+      },
+    });
+  },
+  auth.haveSession,
+  (req, res, next) => {
+    Authorizer.authorize(req, res, next, {
+      user: 'isUser',
+    });
+  },
+], usersController.getFeed);
 
 // INDEX emails
 router.get('/:userId/emails', [
