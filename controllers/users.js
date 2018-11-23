@@ -21,6 +21,13 @@ class UsersController {
     this.deleteEmail = this.deleteEmail.bind(this);
   }
 
+  /**
+   * Obtains all users registered into the database
+   * @param  {object}   req  [description]
+   * @param  {object}   res  [description]
+   * @param  {Function} next [description]
+   * @return {[type]}        [description]
+   */
   async getAll(req, res, next) {
     let data;
 
@@ -72,6 +79,7 @@ class UsersController {
       // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
       req.body.password = await auth.generatePasswordHash(req.body.password);
+      req.body.roleId = 3;
       data = await User.insert(req.body);
     } catch (error) {
       return next(error);
