@@ -32,7 +32,7 @@ class Validator {
   }
 
   static required(data) {
-    return data !== undefined && data !== null && (data.length || Validator.integer(data));
+    return data !== undefined && data !== null && data.length > 0;
   }
 
   static validate(req, res, next, rules) {
@@ -45,18 +45,26 @@ class Validator {
     for (let part in rules) { // part = body, params
       for (let field in rules[part]) { // field = body { attrib }
         let validators = rules[part][field].split(' '); // validator = body { attrib: 'validator' }
+        const isRequired = validators.find(rule => rule === 'required');
         validators.forEach((f) => { // validators = [ 'required', 'word' ]
-          if (!Validator[f](req[part][field] || '')) { //
-            if (Array.isArray(error.details[field])) {
-              error.details[field].push(`The field ${field} should be a valid ${f}`);
-            } else {
-              error.details[field] = [`The field ${field} should be a valid ${f}`];
+          if (isRequired || req[part].hasOwnProperty(field)) {
+            if (!Validator[f](req[part][field] || '')) {
+              if (Array.isArray(error.details[field])) {
+                error.details[field].push(`The field ${field} should be a valid ${f}`);
+              } else {
+                error.details[field] = [`The field ${field} should be a valid ${f}`];
+              }
             }
           }
         });
       }
     }
-    Object.keys(error.details).length ? next(error) : next();
+
+    if (Object.keys(error.details).length !== 0) {
+      next(error);
+    } else {
+      next();
+    }
   }
 }
 

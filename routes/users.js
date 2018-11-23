@@ -11,7 +11,6 @@ router.get('/', usersController.getAll);
 router.post('/', (req, res, next) => {
   validator.validate(req, res, next, {
     body: {
-      roleId: 'required integer',
       email: 'required email',
       password: 'required specialalphanum',
       githubToken: 'specialalphanum',
@@ -48,7 +47,7 @@ router.put('/:userId', (req, res, next) => {
       lastName: 'word',
       age: 'integer',
       level: 'integer',
-      profilePic: 'blob',
+      profilePic: 'specialalphanum',
     },
   });
 }, usersController.update);
