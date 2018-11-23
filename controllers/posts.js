@@ -69,6 +69,7 @@ class PostsController {
     let data;
 
     const post = {
+      userId: req.session.user.id,
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
       date: datetime.toMySQLFromJS(Date.now()),

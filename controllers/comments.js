@@ -61,6 +61,7 @@ class CommentsController {
     let data;
 
     const comment = {
+      userId: req.session.user.id,
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
       postId: req.params.postId,

@@ -31,10 +31,6 @@ class Validator {
     return !Number.isNaN(Date.parse(data));
   }
 
-  static blob(data) {
-    return true;
-  }
-
   static required(data) {
     return data !== undefined && data !== null && (data.length || Validator.integer(data));
   }
