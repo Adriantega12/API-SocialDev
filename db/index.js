@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 
+// FIXME Todos los metodos deben estar documentados
+
 class DB {
   constructor() {
     const config = {
@@ -24,6 +26,7 @@ class DB {
   }
 
   /**
+   * FIXME Falta paginado y filtrado
    * Database method to get all tupples from a tabler
    * @param  {string} table Name of table to get all tupples from.
    * @return {object}       Array of tupples as objects

@@ -1,5 +1,7 @@
 const db = require('../db');
 
+// FIXME Todos los metodos deben estar documentados
+
 class Comment {
   /**
    * Constructor for class Comment.
