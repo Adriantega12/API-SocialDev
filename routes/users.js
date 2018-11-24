@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const multer = require('multer');
 const { usersController } = require('../controllers');
 const { validator, auth, Authorizer } = require('../middlewares');
 
-// const emailsRoutes = require('./emails');
+const upload = multer({ dest: 'tmp/' });
 
 // INDEX User
 router.get('/', usersController.getAll);
@@ -33,7 +34,7 @@ router.get('/:userId', (req, res, next) => {
 }, usersController.get);
 
 // UPDATE User
-router.put('/:userId', (req, res, next) => {
+router.put('/:userId', upload.single('profilePic'), (req, res, next) => {
   validator.validate(req, res, next, {
     params: {
       userId: 'integer',
