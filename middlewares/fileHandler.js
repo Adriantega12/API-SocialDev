@@ -34,6 +34,14 @@ class FileHandler {
       });
     }
   }
+
+  static async removeFileFromPath(path) {
+    fs.unlink(path, (error) => {
+      if (error) {
+        throw error;
+      }
+    });
+  }
 }
 
 module.exports = FileHandler;
