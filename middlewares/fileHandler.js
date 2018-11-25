@@ -6,15 +6,20 @@ class FileHandler {
   }
 
   static async moveFiles(req, res, next) {
+    let filePaths = [];
     for (const fileField in req.files) {
       req.files[fileField].forEach((file) => {
-        fs.rename(file.path, `uploads/file-${file.filename}`, (error) => {
+        const filePath = `uploads/file-${file.filename}`;
+        fs.rename(file.path, filePath, (error) => {
           if (error) {
             return next(error);
           }
         });
+        filePaths.push(filePath);
       });
     }
+
+    req.filePaths = filePaths;
     return next();
   }
 

@@ -27,6 +27,10 @@ router.post('/', [
     });
   },
   FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.profilePic] = req.filePaths;
+    next();
+  },
 ], usersController.insert);
 
 // SHOW User
@@ -59,6 +63,10 @@ router.put('/:userId', [
     });
   },
   FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.profilePic] = req.filePaths;
+    next();
+  },
 ], usersController.update);
 
 // DESTROY User
