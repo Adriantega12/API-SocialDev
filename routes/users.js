@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const multer = require('multer');
 const { usersController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const {
+  validator, FileHandler, auth, Authorizer,
+} = require('../middlewares');
 
 const upload = multer({ dest: 'tmp/' });
 
@@ -19,7 +21,6 @@ router.post('/', (req, res, next) => {
       lastName: 'word',
       age: 'integer',
       level: 'integer',
-      profilePic: 'specialalphanum',
     },
   });
 }, usersController.insert);
@@ -34,24 +35,27 @@ router.get('/:userId', (req, res, next) => {
 }, usersController.get);
 
 // UPDATE User
-router.put('/:userId', upload.single('profilePic'), (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-    body: {
-      roleId: 'integer',
-      email: 'email',
-      password: 'specialalphanum',
-      githubToken: 'specialalphanum',
-      firstName: 'word',
-      lastName: 'word',
-      age: 'integer',
-      level: 'integer',
-      profilePic: 'specialalphanum',
-    },
-  });
-}, usersController.update);
+router.put('/:userId', [
+  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // File uploading
+  (req, res, next) => { // Params and body validation
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+      },
+      body: {
+        roleId: 'integer',
+        email: 'email',
+        password: 'specialalphanum',
+        githubToken: 'specialalphanum',
+        firstName: 'word',
+        lastName: 'word',
+        age: 'integer',
+        level: 'integer',
+      },
+    });
+  },
+  FileHandler.moveFiles,
+], usersController.update);
 
 // DESTROY User
 router.delete('/:userId', (req, res, next) => {
