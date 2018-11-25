@@ -1,7 +1,12 @@
 const router = require('express').Router();
+const multer = require('multer');
 const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const {
+  validator, FileHandler, auth, Authorizer,
+} = require('../middlewares');
+
+const upload = multer({ dest: 'tmp/' });
 
 // INDEX Post
 router.get('/', postsController.getAll);
@@ -87,6 +92,7 @@ router.get('/:postId/attachments', [
 
 // NEW Attachment
 router.post('/:postId/attachments', [
+  upload.fields([{ name: 'data', maxCount: 1 }]), // Upload attachment
   (req, res, next) => {
     validator.validate(req, res, next, {
       params: {
@@ -100,9 +106,14 @@ router.post('/:postId/attachments', [
       user: 'ownsParent',
     });
   },
+  FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.data] = req.filePaths;
+    next();
+  },
 ], postsController.addAttachment);
 
-// Delete Attachment
+// DELETE Attachment
 router.delete('/:postId/attachments/:attachmentId', [
   (req, res, next) => {
     validator.validate(req, res, next, {

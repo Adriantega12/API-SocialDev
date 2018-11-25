@@ -174,7 +174,7 @@ class PostsController {
     }
 
     if (data.length === 0) {
-      res.status(204); // No content
+      res.status(409); // Conflict
     } else {
       res.status(200); // OK
     }
