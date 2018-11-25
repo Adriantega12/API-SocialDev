@@ -11,19 +11,23 @@ const upload = multer({ dest: 'tmp/' });
 router.get('/', usersController.getAll);
 
 // NEW User
-router.post('/', (req, res, next) => {
-  validator.validate(req, res, next, {
-    body: {
-      email: 'required email',
-      password: 'required specialalphanum',
-      githubToken: 'specialalphanum',
-      firstName: 'word',
-      lastName: 'word',
-      age: 'integer',
-      level: 'integer',
-    },
-  });
-}, usersController.insert);
+router.post('/', [
+  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
+  (req, res, next) => { // Params and body validation
+    validator.validate(req, res, next, {
+      body: {
+        email: 'required email',
+        password: 'required specialalphanum',
+        githubToken: 'specialalphanum',
+        firstName: 'word',
+        lastName: 'word',
+        age: 'integer',
+        level: 'integer',
+      },
+    });
+  },
+  FileHandler.moveFiles, // Move profile picture to correct folder
+], usersController.insert);
 
 // SHOW User
 router.get('/:userId', (req, res, next) => {
@@ -36,7 +40,7 @@ router.get('/:userId', (req, res, next) => {
 
 // UPDATE User
 router.put('/:userId', [
-  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // File uploading
+  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
   (req, res, next) => { // Params and body validation
     validator.validate(req, res, next, {
       params: {
@@ -54,7 +58,7 @@ router.put('/:userId', [
       },
     });
   },
-  FileHandler.moveFiles,
+  FileHandler.moveFiles, // Move profile picture to correct folder
 ], usersController.update);
 
 // DESTROY User
