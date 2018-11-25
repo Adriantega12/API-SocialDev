@@ -1,27 +1,37 @@
 const router = require('express').Router();
+const multer = require('multer');
 const { usersController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const {
+  validator, FileHandler, auth, Authorizer,
+} = require('../middlewares');
 
-// const emailsRoutes = require('./emails');
+const upload = multer({ dest: 'tmp/' });
 
 // INDEX User
 router.get('/', usersController.getAll);
 
 // NEW User
-router.post('/', (req, res, next) => {
-  validator.validate(req, res, next, {
-    body: {
-      email: 'required email',
-      password: 'required specialalphanum',
-      githubToken: 'specialalphanum',
-      firstName: 'word',
-      lastName: 'word',
-      age: 'integer',
-      level: 'integer',
-      profilePic: 'specialalphanum',
-    },
-  });
-}, usersController.insert);
+router.post('/', [
+  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
+  (req, res, next) => { // Params and body validation
+    validator.validate(req, res, next, {
+      body: {
+        email: 'required email',
+        password: 'required specialalphanum',
+        githubToken: 'specialalphanum',
+        firstName: 'word',
+        lastName: 'word',
+        age: 'integer',
+        level: 'integer',
+      },
+    });
+  },
+  FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.profilePic] = req.filePaths;
+    next();
+  },
+], usersController.insert);
 
 // SHOW User
 router.get('/:userId', (req, res, next) => {
@@ -33,24 +43,31 @@ router.get('/:userId', (req, res, next) => {
 }, usersController.get);
 
 // UPDATE User
-router.put('/:userId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-    body: {
-      roleId: 'integer',
-      email: 'email',
-      password: 'specialalphanum',
-      githubToken: 'specialalphanum',
-      firstName: 'word',
-      lastName: 'word',
-      age: 'integer',
-      level: 'integer',
-      profilePic: 'specialalphanum',
-    },
-  });
-}, usersController.update);
+router.put('/:userId', [
+  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
+  (req, res, next) => { // Params and body validation
+    validator.validate(req, res, next, {
+      params: {
+        userId: 'integer',
+      },
+      body: {
+        roleId: 'integer',
+        email: 'email',
+        password: 'specialalphanum',
+        githubToken: 'specialalphanum',
+        firstName: 'word',
+        lastName: 'word',
+        age: 'integer',
+        level: 'integer',
+      },
+    });
+  },
+  FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.profilePic] = req.filePaths;
+    next();
+  },
+], usersController.update);
 
 // DESTROY User
 router.delete('/:userId', (req, res, next) => {

@@ -47,7 +47,7 @@ class Validator {
         let validators = rules[part][field].split(' '); // validator = body { attrib: 'validator' }
         const isRequired = validators.find(rule => rule === 'required');
         validators.forEach((f) => { // validators = [ 'required', 'word' ]
-          if (isRequired || req[part].hasOwnProperty(field)) {
+          if (isRequired || field in req[part]) {
             if (!Validator[f](req[part][field] || '')) {
               if (Array.isArray(error.details[field])) {
                 error.details[field].push(`The field ${field} should be a valid ${f}`);
