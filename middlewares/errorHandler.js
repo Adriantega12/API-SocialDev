@@ -1,6 +1,9 @@
+const FileHandler = require('./fileHandler');
+
 function errorHandler(err, req, res, next) {
-  if (req.files && req.files.length > 0) {
-    // Do something
+  // Handle file uploading (if there is any)
+  if (req.files) {
+    FileHandler.removeFiles(req, res, next);
   }
   console.error('Error handler', err);
   return res.status(err.status || 500).send(err);
