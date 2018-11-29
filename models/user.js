@@ -1,7 +1,6 @@
 const db = require('../db');
 
 // FIXME Todos los metodos deben estar documentados
-
 class User {
   /**
    * Constructor for class User.
@@ -15,12 +14,6 @@ class User {
    * @param  {number} age          User's age.
    * @param  {number} level        User's level for the gamefication of SocialDev.
    * @param  {string} profilePic   User's route to profilePic.
-   * @param  {[type]} emails       [description]
-   * @param  {[type]} comments     [description]
-   * @param  {[type]} posts        [description]
-   * @param  {[type]} friends      [description]
-   * @param  {[type]} messages     [description]
-   * @param  {[type]}              [description]
    * @return {User}                New instance of a User.
    */
   constructor({
