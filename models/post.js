@@ -1,4 +1,5 @@
 const db = require('../db');
+const { User } = require('../models');
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -44,23 +45,28 @@ class Post {
       throw error;
     }
 
-    const response = [];
-
-    data.forEach((row) => {
-      response.push(new Post(row));
+    const responsePromise = await data.map(async (row) => {
+      const post = new Post(row);
+      post.author = await User.getUserFullName(row.userId);
+      return post;
     });
+
+    const response = await Promise.all(responsePromise);
 
     return response;
   }
 
   static async get(postId) {
     let data;
+    let user;
     let attachments;
     let comments;
     let scores;
+    let post;
 
     try {
       data = await db.get('posts', '*', postId);
+      user = await db.get('users', ['firstName', 'lastName'], data[0].userId);
       attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
       comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
       scores = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
@@ -68,12 +74,25 @@ class Post {
       throw error;
     }
 
-    return data.length !== 0 ? new Post({
-      ...data[0],
-      attachments,
-      comments,
-      scores,
-    }) : data;
+    if (data.length !== 0) {
+      // Creating user from model data
+      post = new Post(data[0]);
+      // Adding relevant data
+      post.author = `${user[0].firstName} ${user[0].lastName}`;
+      post.attachments = attachments.map(attachment => attachment.data);
+      post.comments = await Promise.all(await comments.map(async (comment) => {
+        const commentView = {};
+        commentView.author = await User.getUserFullName(comment.userId);
+        commentView.content = comment.content;
+        return commentView;
+      }));
+      post.scores = scores.map(score => score.score);
+    } else {
+      // Data is empty, so will post.
+      post = data;
+    }
+
+    return post;
   }
 
   static async insert(post) {

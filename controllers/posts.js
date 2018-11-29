@@ -32,7 +32,7 @@ class PostsController {
 
     // FIXME this is not real pagination because the db is not doing it
     const json = {
-      data: data,
+      data,
       total_count: data.length,
       per_page: req.params.per_page,
       page: req.params.page,
@@ -72,6 +72,7 @@ class PostsController {
       userId: req.session.user.id,
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
+      score: 0,
       date: datetime.toMySQLFromJS(Date.now()),
     };
 
