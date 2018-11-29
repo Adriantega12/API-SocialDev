@@ -81,9 +81,12 @@ class Post {
       post.author = `${user[0].firstName} ${user[0].lastName}`;
       post.attachments = attachments.map(attachment => attachment.data);
       post.comments = await Promise.all(await comments.map(async (comment) => {
-        const commentView = {};
-        commentView.author = await User.getUserFullName(comment.userId);
-        commentView.content = comment.content;
+        const userComment = (await db.get('users', ['firstName', 'lastName', 'profilePic'], comment.userId))[0];
+        const commentView = {
+          ppPath: userComment.profilePic,
+          author: `${userComment.firstName} ${userComment.lastName}`,
+          content: comment.content,
+        };
         return commentView;
       }));
       post.scores = scores.map(score => score.score);
