@@ -18,7 +18,6 @@ router.post('/', [
       body: {
         title: 'required word',
         text: 'required word',
-        score: 'required integer',
       },
     });
   },

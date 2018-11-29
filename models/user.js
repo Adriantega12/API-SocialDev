@@ -304,6 +304,12 @@ class User {
 
     return deletedRows > 0;
   }
+
+  // Extra data
+  static async getUserFullName(userId) {
+    const user = await db.get('users', ['firstName', 'lastName'], userId);
+    return `${user[0].firstName} ${user[0].lastName}`;
+  }
 }
 
 module.exports = User;
