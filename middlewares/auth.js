@@ -33,7 +33,7 @@ class Auth {
       const response = await mailer.sendMail({
         to: req.body.email,
         subject: 'Welcome to SocialDev!',
-        text: `Please confirm your email at localhost:3000/register/${token.token}`,
+        text: `Please confirm your email at ${process.env.HOST}/auth/register/${token.token}`,
       });
       console.log(response);
     } catch (error) {
@@ -149,7 +149,7 @@ class Auth {
         const response = await mailer.sendMail({
           to: req.body.email,
           subject: 'Reset your password in SocialDev',
-          text: `Please recover your password by clicking localhost:3000/recover/${token.token}`,
+          text: `Please recover your password by clicking localhost:3000/auth/recover/${token.token}`,
         });
         console.log(response);
         res.status(202);

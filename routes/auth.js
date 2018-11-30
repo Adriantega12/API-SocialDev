@@ -5,7 +5,7 @@ const { auth } = require('../middlewares');
 router.post('/register', auth.register);
 
 // Confirm user route
-router.patch('/register/:token', auth.confirmUser);
+router.get('/register/:token', auth.confirmUser);
 
 // Login route
 router.post('/login', auth.login);

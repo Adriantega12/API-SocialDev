@@ -64,32 +64,6 @@ class DB {
     return promise;
   }
 
-  /*
-  async getGeneric(table, columns, filter) {
-    const promise = new Promise((resolve, reject) => {
-      const filterArray = [];
-      Object.entries(filter).forEach((entry) => {
-        filterArray.push(entry);
-      });
-      this.con.query('SELECT ?? FROM ?? WHERE ?', [columns, table, ], (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
-      this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
-    });
-    return promise;
-  }
-  */
-
   async getObjectByForeignId(table, columns, idAttribName, id) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
