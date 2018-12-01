@@ -45,7 +45,6 @@ class Auth {
       message: 'Succesfully registered.',
       data: {
         user,
-        token,
       },
     });
 

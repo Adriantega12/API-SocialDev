@@ -170,8 +170,15 @@ class User {
 
   static async delete(userId) {
     let deletedRows;
+    let deletedPostsRows;
+    let deletedCommentsRows;
+    let deletedEmailsRows;
 
     try {
+      const resPosts = await db.deleteFromUser('posts', userId);
+      const resComments = await db.deleteFromUser('comments', userId);
+      const resEmails = await db.deleteFromUser('emails', userId);
+      const resTokens = await db.deleteFromUser('tokens', userId);
       const results = await db.delete('users', userId);
       deletedRows = results.affectedRows;
     } catch (error) {
