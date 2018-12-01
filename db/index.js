@@ -179,6 +179,18 @@ class DB {
     return promise;
   }
 
+  async deleteFromUser(table, userId) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('DELETE FROM ?? WHERE userId = ?', [table, userId], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        return resolve(results);
+      });
+    });
+    return promise;
+  }
+
   async deleteEmail(table, emailName) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE email = ?', [table, emailName], (error, results) => {

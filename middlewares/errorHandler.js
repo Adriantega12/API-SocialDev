@@ -5,7 +5,7 @@ function errorHandler(err, req, res, next) {
   if (req.files) {
     FileHandler.removeFiles(req, res, next);
   }
-  console.error('Error handler', err);
+  console.error(`[${new Date(Date.now())}] Error handler: `, err);
   return res.status(err.status || 500).send(err);
 }
 
