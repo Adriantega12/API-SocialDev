@@ -118,15 +118,18 @@ class User {
 
   static async insert(user) {
     let id;
+    let email;
 
     try {
       const response = await db.insert('users', user);
       id = response.insertId;
+      email = { email: user.email, userId: id };
+      await User.addEmail(email);
     } catch (error) {
       throw error;
     }
 
-    const emails = [];
+    const emails = [email.email];
     const posts = [];
     const comments = [];
     const friends = [];

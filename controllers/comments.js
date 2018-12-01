@@ -124,7 +124,7 @@ class CommentsController {
     }
 
     if (deleted) {
-      res.status(200); // OK
+      res.status(204); // No content
     } else {
       res.status(404); // Not Found
     }
