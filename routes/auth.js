@@ -19,4 +19,11 @@ router.patch('/recover/:token', auth.resetPassword);
 // Logout route
 router.get('/logout', auth.logout);
 
+// Has session route
+router.get('/session', auth.haveSession, (req, res) => {
+  res.status(303).send({
+    message: 'User is logged in',
+  });
+});
+
 module.exports = router;
