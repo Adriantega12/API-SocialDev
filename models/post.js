@@ -66,10 +66,12 @@ class Post {
 
     try {
       data = await db.get('posts', '*', postId);
-      user = await db.get('users', ['firstName', 'lastName'], data[0].userId);
-      attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
-      comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
-      scores = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+      if (data.length) {
+        user = await db.get('users', ['firstName', 'lastName'], data[0].userId);
+        attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
+        comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
+        scores = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+      }
     } catch (error) {
       throw error;
     }
