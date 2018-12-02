@@ -9,6 +9,7 @@ class Auth {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.haveSession = this.haveSession.bind(this);
+    this.session = this.session.bind(this);
     this.generatePasswordHash = this.generatePasswordHash.bind(this);
   }
 
@@ -251,6 +252,25 @@ class Auth {
         message: 'You need to be logged to perfom this action.',
       });
     }
+  }
+
+  async session(req, res, next) {
+    const token = await Token.get(req.headers.token);
+    if (!(token.length === 0) && await token.isActive()) {
+      const user = await User.get(token.userId);
+      res.status(303).send({
+        message: 'User is logged in',
+        userId: user.id,
+        ppPath: user.profilePic,
+      });
+    } else {
+      res.status(401).send({
+        message: 'User isn\'t logged in',
+        userId: undefined,
+        ppPath: undefined,
+      });
+    }
+    return next();
   }
 
   /**
