@@ -147,7 +147,6 @@ router.post('/:postId/scores', [
         postId: 'integer',
       },
       body: {
-        userId: 'required integer',
         score: 'required integer',
       },
     });
@@ -168,7 +167,7 @@ router.delete('/:postId/scores/:scoreId', [
   auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
-      user: 'owns',
+      user: 'ownsChild',
     });
   },
 ], postsController.deleteScore);

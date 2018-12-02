@@ -64,6 +64,7 @@ class User {
     let emails;
     let posts;
     let comments;
+    let scores;
     let friends;
     let sentMessages;
     let receivedMessages;
@@ -76,6 +77,7 @@ class User {
         emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
         posts = await db.getObjectByForeignId('posts', '*', 'userId', userId);
         comments = await db.getObjectByForeignId('comments', '*', 'userId', userId);
+        scores = await db.getObjectByForeignId('scores', '*', 'userId', userId);
         friends = await this.getFriendlist(userId);
         sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
         receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
@@ -92,6 +94,7 @@ class User {
       user.emails = emails;
       user.posts = posts;
       user.comments = comments;
+      user.scores = scores;
       user.friends = friends;
       user.sentMessages = sentMessages;
       user.receivedMessages = receivedMessages;

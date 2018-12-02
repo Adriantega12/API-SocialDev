@@ -8,6 +8,8 @@ class Authorizer {
     const resource = req.baseUrl.split('/').slice(-1)[0]; // Gets resource's name
     const resourceId = req.params[resource.replace(/.$/, 'Id')];
 
+    console.log(resource, resourceId);
+
     return user[resource].length > 0
       && Authorizer.userOwnsResource(user[resource], Number(resourceId));
   }
@@ -16,6 +18,15 @@ class Authorizer {
     const { user } = req.session;
     const splitIndex = Object.keys(req.params).length > 1 ? -4 : -3;
     const resource = req.originalUrl.split('/').slice(splitIndex)[0]; // Gets parent resource's name
+    const resourceId = req.params[resource.replace(/.$/, 'Id')];
+
+    return user[resource].length > 0
+      && Authorizer.userOwnsResource(user[resource], Number(resourceId));
+  }
+
+  static ownsChild(req) {
+    const { user } = req.session;
+    const resource = req.originalUrl.split('/').slice(-2)[0]; // Gets child resource's name
     const resourceId = req.params[resource.replace(/.$/, 'Id')];
 
     return user[resource].length > 0
