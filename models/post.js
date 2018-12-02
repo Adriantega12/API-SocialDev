@@ -83,6 +83,7 @@ class Post {
       post.comments = await Promise.all(await comments.map(async (comment) => {
         const userComment = (await db.get('users', ['firstName', 'lastName', 'profilePic'], comment.userId))[0];
         const commentView = {
+          commentId: comment.id,
           userId: comment.userId,
           ppPath: userComment.profilePic,
           author: `${userComment.firstName} ${userComment.lastName}`,
