@@ -8,8 +8,6 @@ class Authorizer {
     const resource = req.baseUrl.split('/').slice(-1)[0]; // Gets resource's name
     const resourceId = req.params[resource.replace(/.$/, 'Id')];
 
-    console.log(resource, resourceId);
-
     return user[resource].length > 0
       && Authorizer.userOwnsResource(user[resource], Number(resourceId));
   }

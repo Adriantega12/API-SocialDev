@@ -90,6 +90,7 @@ class Post {
           ppPath: userComment.profilePic,
           author: `${userComment.firstName} ${userComment.lastName}`,
           content: comment.content,
+          isEdited: comment.isEdited,
         };
         return commentView;
       }));
