@@ -64,7 +64,9 @@ router.put('/:userId', [
   },
   FileHandler.moveFiles, // Move profile picture to correct folder
   (req, res, next) => {
-    [req.body.profilePic] = req.filePaths;
+    if (req.filePaths.length > 0) {
+      [req.body.profilePic] = req.filePaths;
+    }
     next();
   },
 ], usersController.update);
