@@ -231,7 +231,7 @@ class PostsController {
     let data;
 
     const score = {
-      postsId: Number(req.params.postId),
+      postId: Number(req.params.postId),
       userId: req.session.user.id,
       score: Number(req.body.score),
       date: datetime.toMySQLFromJS(Date.now()),
