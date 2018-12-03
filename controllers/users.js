@@ -80,6 +80,7 @@ class UsersController {
       // the clean up can be here or in the model.
       req.body.password = await auth.generatePasswordHash(req.body.password);
       req.body.roleId = 3;
+      req.body.level = 1;
       data = await User.insert(req.body);
     } catch (error) {
       return next(error);
