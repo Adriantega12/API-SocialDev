@@ -92,7 +92,16 @@ class User {
       // Adding relevant data
       user.role = role;
       user.emails = emails;
-      user.posts = posts;
+      user.posts = posts.map((post) => {
+        return {
+          id: post.id,
+          title: post.title,
+          excerpt: `${post.text.substring(0, 256)}...`,
+          date: post.date,
+          score: post.score,
+          // path: I have some ideas for this
+        };
+      });
       user.comments = comments;
       user.scores = scores;
       user.friends = friends;
