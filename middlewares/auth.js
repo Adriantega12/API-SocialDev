@@ -3,6 +3,8 @@ const { User, Token } = require('../models');
 const { datetime } = require('../middlewares');
 const mailer = require('../mail');
 
+// FIXME Esta clase y sus metodos deben estar documentados
+
 class Auth {
   constructor() {
     this.register = this.register.bind(this);
@@ -33,7 +35,7 @@ class Auth {
       const response = await mailer.sendMail({
         to: req.body.email,
         subject: 'Welcome to SocialDev!',
-        text: `Please confirm your email at localhost:3000/auth/register/${token.token}`,
+        text: `Please confirm your email at localhost:3000/auth/register/${token.token}`, // FIXME las urls no deben estar hardcodeadeas y deberian tomarse de confgiuracio de environment
       });
       console.log(response);
     } catch (error) {

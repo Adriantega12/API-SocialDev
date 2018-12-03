@@ -1,5 +1,7 @@
 const db = require('../db');
 
+// FIXME esta clase y sus metodos deben estar documentados
+
 class Token {
   /**
    * [constructor description]
@@ -51,7 +53,7 @@ class Token {
   }
 
   async deactivate() {
-    const INNACTIVE = false;
+    const INNACTIVE = false; // FIXME no hay necesidad de crear esta constante
     return this.update({ status: INNACTIVE });
   }
 

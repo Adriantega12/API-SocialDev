@@ -3,6 +3,7 @@ const { commentsController } = require('../controllers');
 const { validator, auth, Authorizer } = require('../middlewares');
 
 // INDEX Comment
+// FIXME Se pueden ver todos los comentarios sin tener sesion?
 router.get('/', commentsController.getAll);
 
 // NEW Comment
@@ -18,6 +19,7 @@ router.post('/', [
 ], commentsController.insert);
 
 // SHOW Comment
+// FIXME Se pueden ver comentarios sin tener sesion?
 router.get('/:commentId', (req, res, next) => {
   validator.validate(req, res, next, {
     params: {

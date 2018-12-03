@@ -3,6 +3,8 @@ const { google } = require('googleapis');
 
 const { OAuth2 } = google.auth;
 
+// FIXME Esta clase y sus metodos deberian estar documentados
+
 class Mailer {
   constructor() {
     // Creating OAuth2Client
@@ -26,7 +28,7 @@ class Mailer {
     this.accessToken = await this.oauth2Client.refreshAccessToken()
       .then(res => res.credentials.access_token);
     this.transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: 'gmail', // FIXME el servicio deberia tomarse de variables de configuracion de entorno
       auth: {
         type: 'OAuth2',
         user: process.env.MAIL_USER,
