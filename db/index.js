@@ -77,6 +77,25 @@ class DB {
     return promise;
   }
 
+  async getTopPosts() {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM posts ORDER BY score', (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  /**
+   * Get relationship of a user with others given his ID
+   * @param  {Number}    userId ID of user to look friendships for
+   * @return {[Friends]} Array of Friends
+   */
   async getFriends(userId) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
@@ -95,7 +114,7 @@ class DB {
    * Get an existent friendship between two users
    * @param  {Number}     userOne User number one that belongs to the friendship
    * @param  {Number}     userTwo User number two that belongs to the friendship
-   * @return {Friendship}         Friendship
+   * @return {Friendship} Friendship
    */
   async getFriendship(userOne, userTwo) {
     const promise = new Promise((resolve, reject) => {
