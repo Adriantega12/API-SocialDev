@@ -23,9 +23,12 @@ class PostsController {
 
   async getAll(req, res, next) {
     let data;
+    let totalCount;
+
 
     try {
-      data = await Post.getAll();
+      totalCount = await Post.getTotal();
+      data = await Post.getAll(Number(req.query.page), Number(req.query.per_page));
     } catch (error) {
       next(error);
     }
@@ -33,9 +36,9 @@ class PostsController {
     // FIXME this is not real pagination because the db is not doing it
     const json = {
       data,
-      total_count: data.length,
-      per_page: req.params.per_page,
-      page: req.params.page,
+      total_count: totalCount,
+      page: req.query.page,
+      per_page: req.query.per_page,
     };
 
     if (data.length === 0) {
@@ -62,7 +65,7 @@ class PostsController {
       res.status(200); // OK
     }
 
-    res.send(data.slice(0, 5)); // Get just the first 5 posts
+    res.send(data);
   }
 
   async get(req, res, next) {

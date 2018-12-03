@@ -31,9 +31,9 @@ class DB {
    * @param  {string} table Name of table to get all tupples from.
    * @return {object}       Array of tupples as objects
    */
-  async getAll(table) {
+  async getAll(table, page = 0, perPage = 10) {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM ??', [table], (error, results) => {
+      this.con.query('SELECT * FROM ?? LIMIT ?, ?', [table, page, perPage], (error, results) => {
         if (error) {
           return reject(DB.processError(error));
         }
@@ -43,6 +43,32 @@ class DB {
     });
     return promise;
   }
+
+  async getCount(table) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT COUNT(*) FROM ??', [table], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  /*async getPageAscend(table, page, orderBy) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM ?? ORDER BY ?? LIMIT', [table, orderBy], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }*/
 
   /**
    * Database method to get a tupple (and some or all of it's attributes) identified by ID.
@@ -77,9 +103,13 @@ class DB {
     return promise;
   }
 
+  /**
+   * Query for getting just the top 5 posts
+   * @return {[type]} [description]
+   */
   async getTopPosts() {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM posts ORDER BY score DESC', (error, results) => {
+      this.con.query('SELECT * FROM posts ORDER BY score DESC LIMIT 0, 5', (error, results) => {
         if (error) {
           return reject(DB.processError(error));
         }

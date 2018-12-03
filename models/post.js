@@ -36,11 +36,11 @@ class Post {
     this.scores = scores;
   }
 
-  static async getAll() {
+  static async getAll(page = 0, perPage = 10) {
     let data;
 
     try {
-      data = await db.getAll('posts');
+      data = await db.getAll('posts', page, perPage);
     } catch (error) {
       throw error;
     }
@@ -54,6 +54,18 @@ class Post {
     const response = await Promise.all(responsePromise);
 
     return response;
+  }
+
+  static async getTotal() {
+    let data;
+
+    try {
+      data = await db.getCount('posts');
+    } catch (error) {
+      throw error;
+    }
+
+    return data[0]['COUNT(*)'];
   }
 
   static async getTopPosts() {
