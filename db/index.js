@@ -79,7 +79,7 @@ class DB {
 
   async getTopPosts() {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM posts ORDER BY score', (error, results) => {
+      this.con.query('SELECT * FROM posts ORDER BY score DESC', (error, results) => {
         if (error) {
           return reject(DB.processError(error));
         }
