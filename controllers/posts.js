@@ -47,6 +47,24 @@ class PostsController {
     res.send(json);
   }
 
+  async getTopPosts(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.getTopPosts();
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(data.slice(0, 4)); // Get just the first 5 posts
+  }
+
   async get(req, res, next) {
     let data;
 
