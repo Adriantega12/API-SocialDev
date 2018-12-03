@@ -70,7 +70,7 @@ class Post {
         user = await db.get('users', ['firstName', 'lastName'], data[0].userId);
         attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
         comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
-        scores = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+        scores = await db.getObjectByForeignId('scores', '*', 'postId', postId);
       }
     } catch (error) {
       throw error;
@@ -95,7 +95,13 @@ class Post {
         };
         return commentView;
       }));
-      post.scores = scores.map(score => score.score);
+      post.scores = scores.map((score) => {
+        return {
+          userId: score.userId,
+          score: score.score,
+          date: score.date,
+        };
+      });
     } else {
       // Data is empty, so will post.
       post = data;
@@ -196,7 +202,7 @@ class Post {
   static async getScores(postId) {
     let data;
     try {
-      data = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+      data = await db.getObjectByForeignId('scores', '*', 'postId', postId);
     } catch (error) {
       throw error;
     }
@@ -213,8 +219,17 @@ class Post {
     let id;
 
     try {
+      const post = await Post.get(score.postId);
       const response = await db.insert('scores', score);
       id = response.insertId;
+      if (id > 0) {
+        if (post.scores.length === 0) {
+          post.update({ score: Number(score.score) });
+        } else {
+          const average = (post.score + score.score) / 2;
+          post.update({ score: average });
+        }
+      }
     } catch (error) {
       throw error;
     }

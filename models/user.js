@@ -25,7 +25,7 @@ class User {
     firstName,
     lastName,
     age,
-    level,
+    level = 1,
     profilePic,
   }) {
     this.id = id;
