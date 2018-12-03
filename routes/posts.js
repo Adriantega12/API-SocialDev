@@ -11,6 +11,9 @@ const upload = multer({ dest: 'tmp/' });
 // INDEX Post
 router.get('/', postsController.getAll);
 
+// INDEX Network posts
+router.get('/network', postsController.getTopPosts);
+
 // NEW Post
 router.post('/', [
   (req, res, next) => {

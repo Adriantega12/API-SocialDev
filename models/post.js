@@ -56,6 +56,26 @@ class Post {
     return response;
   }
 
+  static async getTopPosts() {
+    let data;
+
+    try {
+      data = await db.getTopPosts('posts');
+    } catch (error) {
+      throw error;
+    }
+
+    const responsePromise = await data.map(async (row) => {
+      const post = new Post(row);
+      post.author = await User.getUserFullName(row.userId);
+      return post;
+    });
+
+    const response = await Promise.all(responsePromise);
+
+    return response;
+  }
+
   static async get(postId) {
     let data;
     let user;
