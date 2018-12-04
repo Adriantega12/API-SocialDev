@@ -3,14 +3,14 @@ const db = require('../db');
 class Token {
   /**
    * [constructor description]
-   * @param  {[type]} options.id       [description]
-   * @param  {[type]} options.token    [description]
-   * @param  {[type]} options.created  [description]
-   * @param  {[type]} options.duration [description]
-   * @param  {[type]} options.type     [description]
-   * @param  {[type]} options.status   [description]
-   * @param  {[type]} options.userId   [description]
-   * @return {[type]}                  [description]
+   * @param  {[type]} id       [description]
+   * @param  {[type]} token    [description]
+   * @param  {[type]} created  [description]
+   * @param  {[type]} duration [description]
+   * @param  {[type]} type     [description]
+   * @param  {[type]} status   [description]
+   * @param  {[type]} userId   [description]
+   * @return {[type]}          [description]
    */
   constructor({
     id,

@@ -1,4 +1,5 @@
 const db = require('../db');
+// const { Datetime } = require('../middlewares');
 
 // FIXME Todos los metodos deben estar documentados
 class User {
@@ -92,10 +93,38 @@ class User {
       // Adding relevant data
       user.role = role;
       user.emails = emails;
-      user.posts = posts;
-      user.comments = comments;
-      user.scores = scores;
-      user.friends = friends;
+      user.posts = posts.map((post) => {
+        const d = new Date(post.date);
+        return {
+          id: post.id,
+          title: post.title,
+          excerpt: `${post.text.substring(0, 256)}...`,
+          author: `${user.firstName} ${user.lastName}`,
+          // date: Datetime.toJSFromMySQL(post.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+          score: post.score,
+          // path: I have some ideas for this
+        };
+      });
+      user.comments = comments.map((comment) => {
+        const d = new Date(comment.date);
+        return {
+          ...comment,
+          // date: Datetime.toJSFromMySQL(comment.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+        };
+      });
+      user.scores = scores.map((score) => {
+        const d = new Date(score.date);
+        return {
+          ...score,
+          // date: Datetime.toJSFromMySQL(score.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+        };
+      });
+      user.friends = friends.map((friend) => {
+        return { ...friend };
+      });
       user.sentMessages = sentMessages;
       user.receivedMessages = receivedMessages;
     } else {
@@ -257,23 +286,32 @@ class User {
     return friends;
   }
 
-  static async getFeed(userId) {
+  static async getFeed(userId, page = 0, perPage = 10) {
     let friendList = [];
-    let friendPosts = [];
-    const posts = [];
+    const collection = [];
 
     try {
       friendList = await this.getFriendlist(userId);
-      const myFriendsPostsPromises = friendList.map(async (friend) => {
-        friendPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
-        posts.push(...friendPosts);
+      const myFriendsPostsPromises = await friendList.map(async (friend) => {
+        const userPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
+        if (userPosts.length > 0) {
+          const userName = await User.getUserFullName(friend.friendId);
+          for (const index in userPosts) {
+            userPosts[index].author = userName;
+          }
+          collection.push(...userPosts);
+        }
       });
       await Promise.all(myFriendsPostsPromises);
     } catch (error) {
       throw error;
     }
 
-    return posts;
+    const posts = collection.sort((postA, postB) => {
+      return postB.id - postA.id;
+    });
+
+    return posts.slice(page * perPage, page * perPage + perPage);
   }
 
   // Email

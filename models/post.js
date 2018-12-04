@@ -36,11 +36,11 @@ class Post {
     this.scores = scores;
   }
 
-  static async getAll() {
+  static async getAll(page = 0, perPage = 10) {
     let data;
 
     try {
-      data = await db.getAll('posts');
+      data = await db.getAll('posts', page, perPage);
     } catch (error) {
       throw error;
     }
@@ -54,6 +54,18 @@ class Post {
     const response = await Promise.all(responsePromise);
 
     return response;
+  }
+
+  static async getTotal() {
+    let data;
+
+    try {
+      data = await db.getCount('posts');
+    } catch (error) {
+      throw error;
+    }
+
+    return data[0]['COUNT(*)'];
   }
 
   static async getTopPosts() {
@@ -103,6 +115,7 @@ class Post {
       post.author = `${user[0].firstName} ${user[0].lastName}`;
       post.attachments = attachments.map(attachment => attachment.data);
       post.comments = await Promise.all(await comments.map(async (comment) => {
+        const d = new Date(comment.date);
         const userComment = (await db.get('users', ['firstName', 'lastName', 'profilePic'], comment.userId))[0];
         const commentView = {
           commentId: comment.id,
@@ -110,7 +123,7 @@ class Post {
           ppPath: userComment.profilePic,
           author: `${userComment.firstName} ${userComment.lastName}`,
           content: comment.content,
-          commentDate: comment.date,
+          commentDate: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
           isEdited: comment.isEdited,
         };
         return commentView;

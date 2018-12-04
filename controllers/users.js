@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { datetime, auth } = require('../middlewares');
+const { /*Datetime,*/ auth } = require('../middlewares');
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -145,10 +145,15 @@ class UsersController {
     let data;
 
     try {
-      data = await User.getFriends(Number(req.params.userId));
+      data = await User.getFriends(Number(req.session.user.id));
     } catch (error) {
       return next(error);
     }
+
+    data.forEach((friendship) => {
+      const d = new Date(friendship.date);
+      friendship.date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+    });
 
     const json = {
       data,
@@ -170,10 +175,11 @@ class UsersController {
     let data;
 
     const friendship = {
-      userOneId: req.params.userId,
+      userOneId: req.session.user.id,
       userTwoId: req.params.friendId,
-      lastActionId: req.params.userId,
-      date: datetime.toMySQLFromJS(Date.now()),
+      lastActionId: req.session.user.id,
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
       status: 1,
     };
 
@@ -196,16 +202,28 @@ class UsersController {
     let data;
 
     try {
-      data = await User.getFeed(Number(req.params.userId));
+      data = await User.getFeed(
+        Number(req.session.user.id),
+        req.query.page
+          ? Number(req.query.page) : undefined,
+        req.query.per_page
+          ? Number(req.query.per_page) : undefined,
+      );
     } catch (error) {
       return next(error);
     }
 
+    data.forEach((post) => {
+      const d = new Date(post.date);
+      // post.date = Datetime.toJSFromMySQL(post.date)
+      post.date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+    });
+
     const json = {
-      data: data,
+      data,
       total_count: data.length,
-      per_page: req.params.per_page,
-      page: req.params.page,
+      per_page: req.query.per_page,
+      page: req.query.page,
     };
 
     if (data.length === 0) {

@@ -2,10 +2,29 @@ const router = require('express').Router();
 const multer = require('multer');
 const { usersController } = require('../controllers');
 const {
-  validator, FileHandler, auth, Authorizer,
+  validator, FileHandler, Auth, Authorizer,
 } = require('../middlewares');
 
 const upload = multer({ dest: 'tmp/' });
+
+// Friendships
+// INDEX Friendship
+router.get('/friends', Auth.haveSession, usersController.getFriends);
+
+// NEW Friendship
+router.post('/friends/:friendId', [
+  (req, res, next) => {
+    validator.validate(req, res, next, {
+      params: {
+        friendId: 'integer',
+      },
+    });
+  },
+  Auth.haveSession],
+usersController.addFriend);
+
+// User Feed
+router.get('/feed', Auth.haveSession, usersController.getFeed);
 
 // INDEX User
 router.get('/', usersController.getAll);
@@ -80,35 +99,6 @@ router.delete('/:userId', (req, res, next) => {
   });
 }, usersController.delete);
 
-// Friendships
-// INDEX Friendship
-router.get('/:userId/friendships', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-  });
-}, usersController.getFriends);
-
-// NEW Friendship
-router.post('/:userId/friendships/:friendId', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-      friendId: 'integer',
-    },
-  });
-}, usersController.addFriend);
-
-// User Feed
-router.get('/:userId/feed', (req, res, next) => {
-  validator.validate(req, res, next, {
-    params: {
-      userId: 'integer',
-    },
-  });
-}, usersController.getFeed);
-
 // INDEX emails
 router.get('/:userId/emails', [
   (req, res, next) => {
@@ -118,7 +108,7 @@ router.get('/:userId/emails', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'isUser',
@@ -135,7 +125,7 @@ router.post('/:userId/emails', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'isUser',
@@ -155,7 +145,7 @@ router.delete('/:userId/emails', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'isUser',

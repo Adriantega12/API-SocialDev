@@ -1,5 +1,5 @@
 const { Comment } = require('../models');
-const { datetime } = require('../middlewares'); // FIXME if is a static class, using PascalCase
+// const { Datetime } = require('../middlewares'); // FIXME if is a static class, using PascalCase
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -21,6 +21,11 @@ class CommentsController {
     } catch (error) {
       next(error);
     }
+
+    data.forEach((comment) => {
+      const d = new Date(comment.date);
+      comment.date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+    });
 
     // FIXME this is not real pagination because the db is not doing it
     const json = {
@@ -51,6 +56,7 @@ class CommentsController {
     if (data.length === 0) {
       res.status(404); // Not Found
     } else {
+      data.date = Datetime.toJSFromMySQL(data.date);
       res.status(200); // OK
     }
 
@@ -65,7 +71,8 @@ class CommentsController {
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
       postId: req.params.postId,
-      date: datetime.toMySQLFromJS(Date.now()),
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
       isEdited: false,
     };
 
