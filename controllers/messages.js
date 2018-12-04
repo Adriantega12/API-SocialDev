@@ -1,5 +1,7 @@
 const { Message } = require('../models');
-const { datetime } = require('../middlewares');
+const { Datetime } = require('../middlewares');
+
+// FIXME Todos los metodos deben estar documentados
 
 class MessagesController {
   constructor() {
@@ -20,6 +22,7 @@ class MessagesController {
       next(error);
     }
 
+    // FIXME this is not real pagination because the db is not doing it
     const json = {
       data: data,
       total_count: data.length,
@@ -59,8 +62,10 @@ class MessagesController {
 
     const message = {
       senderId: req.session.user.id,
-      ...req.body,
-      date: datetime.toMySQLFromJS(Date.now()),
+      ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+      // the clean up can be here or in the model.
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {
@@ -113,7 +118,7 @@ class MessagesController {
     }
 
     if (deleted) {
-      res.status(200); // OK
+      res.status(204); // No content
     } else {
       res.status(404); // Not Found
     }

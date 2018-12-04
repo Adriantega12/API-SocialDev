@@ -1,5 +1,7 @@
 const { Post } = require('../models');
-const { datetime } = require('../middlewares');
+// const { Datetime } = require('../middlewares');
+
+// FIXME Todos los metodos deben estar documentados
 
 class PostsController {
   constructor() {
@@ -21,18 +23,27 @@ class PostsController {
 
   async getAll(req, res, next) {
     let data;
+    let totalCount;
+
 
     try {
-      data = await Post.getAll();
+      totalCount = await Post.getTotal();
+      data = await Post.getAll(
+        req.query.page
+          ? Number(req.query.page) : undefined,
+        req.query.per_page
+          ? Number(req.query.per_page) : undefined,
+      );
     } catch (error) {
       next(error);
     }
 
+    // FIXME this is not real pagination because the db is not doing it
     const json = {
-      data: data,
-      total_count: data.length,
-      per_page: req.params.per_page,
-      page: req.params.page,
+      data,
+      total_count: totalCount,
+      page: req.query.page,
+      per_page: req.query.per_page,
     };
 
     if (data.length === 0) {
@@ -42,6 +53,24 @@ class PostsController {
     }
 
     res.send(json);
+  }
+
+  async getTopPosts(req, res, next) {
+    let data;
+
+    try {
+      data = await Post.getTopPosts();
+    } catch (error) {
+      next(error);
+    }
+
+    if (data.length === 0) {
+      res.status(204); // No content
+    } else {
+      res.status(200); // OK
+    }
+
+    res.send(data);
   }
 
   async get(req, res, next) {
@@ -67,8 +96,11 @@ class PostsController {
 
     const post = {
       userId: req.session.user.id,
-      ...req.body,
-      date: datetime.toMySQLFromJS(Date.now()),
+      ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
+      // the clean up can be here or in the model.
+      score: 0,
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {
@@ -121,7 +153,7 @@ class PostsController {
     }
 
     if (deleted) {
-      res.status(200); // OK
+      res.status(204); // No content
     } else {
       res.status(404); // Not Found
     }
@@ -170,7 +202,7 @@ class PostsController {
     }
 
     if (data.length === 0) {
-      res.status(204); // No content
+      res.status(409); // Conflict
     } else {
       res.status(200); // OK
     }
@@ -188,7 +220,7 @@ class PostsController {
     }
 
     if (deleted) {
-      res.status(200); // OK
+      res.status(204); // No content
     } else {
       res.status(404); // Not Found
     }
@@ -226,10 +258,11 @@ class PostsController {
     let data;
 
     const score = {
-      postsId: Number(req.params.postId),
-      userId: req.body.userId,
-      score: req.body.score,
-      date: datetime.toMySQLFromJS(Date.now()),
+      postId: Number(req.params.postId),
+      userId: req.session.user.id,
+      score: Number(req.body.score),
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {
@@ -257,7 +290,7 @@ class PostsController {
     }
 
     if (deleted) {
-      res.status(200); // OK
+      res.status(204); // No content
     } else {
       res.status(404); // Not Found
     }

@@ -1,17 +1,9 @@
 const bcrypt = require('bcrypt');
-const { User, Token } = require('../models');
-const { datetime } = require('../middlewares');
 const mailer = require('../mail');
+//const { Datetime } = require('../middlewares');
+const { User, Token } = require('../models');
 
 class Auth {
-  constructor() {
-    this.register = this.register.bind(this);
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.haveSession = this.haveSession.bind(this);
-    this.generatePasswordHash = this.generatePasswordHash.bind(this);
-  }
-
   /**
    * Requires token
    * @param  {[type]}   req  [description]
@@ -19,21 +11,21 @@ class Auth {
    * @param  {Function} next [description]
    * @return {[type]}        [description]
    */
-  async register(req, res, next) {
+  static async register(req, res, next) {
     let user;
     let token;
 
     try {
       user = await User.insert({
         ...req.body,
-        password: await this.generatePasswordHash(req.body.password),
+        password: await Auth.generatePasswordHash(req.body.password),
         roleId: 3,
       });// Where roleId 3 is "Inactive"
       token = await Auth.generateToken(user, 'register');
       const response = await mailer.sendMail({
         to: req.body.email,
         subject: 'Welcome to SocialDev!',
-        text: `Please confirm your email at localhost:3000/auth/register/${token.token}`,
+        text: `Please confirm your email at ${process.env.CLIENT_HOST}/register/${token.token}`,
       });
       console.log(response);
     } catch (error) {
@@ -45,7 +37,6 @@ class Auth {
       message: 'Succesfully registered.',
       data: {
         user,
-        token,
       },
     });
 
@@ -59,7 +50,7 @@ class Auth {
    * @param  {Function} next [description]
    * @return {[type]}        [description]
    */
-  async confirmUser(req, res, next) {
+  static async confirmUser(req, res, next) {
     let token;
     let user;
 
@@ -98,7 +89,7 @@ class Auth {
    * @param  {Function} next [description]
    * @return {[type]}        [description]
    */
-  async login(req, res, next) {
+  static async login(req, res, next) {
     let user;
     let token;
     let message;
@@ -139,7 +130,7 @@ class Auth {
     return next();
   }
 
-  async recoverPassword(req, res, next) {
+  static async recoverPassword(req, res, next) {
     let message;
 
     try {
@@ -149,7 +140,7 @@ class Auth {
         const response = await mailer.sendMail({
           to: req.body.email,
           subject: 'Reset your password in SocialDev',
-          text: `Please recover your password by clicking localhost:3000/auth/recover/${token.token}`,
+          text: `Please recover your password by clicking ${process.env.CLIENT_HOST}/register/${token.token}`,
         });
         console.log(response);
         res.status(202);
@@ -168,7 +159,7 @@ class Auth {
     return next();
   }
 
-  async resetPassword(req, res, next) {
+  static async resetPassword(req, res, next) {
     let token;
     let user;
 
@@ -206,7 +197,7 @@ class Auth {
    * @param  {Function} next [description]
    * @return {[type]}        [description]
    */
-  async logout(req, res, next) {
+  static async logout(req, res, next) {
     let token;
     let deactivated;
     let message;
@@ -237,7 +228,7 @@ class Auth {
    * @param  {Function} next [description]
    * @return {[type]}        [description]
    */
-  async haveSession(req, res, next) {
+  static async haveSession(req, res, next) {
     const token = await Token.get(req.headers.token);
     if (!(token.length === 0) && await token.isActive()) {
       req.session = {
@@ -252,6 +243,25 @@ class Auth {
         message: 'You need to be logged to perfom this action.',
       });
     }
+  }
+
+  static async session(req, res, next) {
+    const token = await Token.get(req.headers.token);
+    if (!(token.length === 0) && await token.isActive()) {
+      const user = await User.get(token.userId);
+      res.status(303).send({
+        message: 'User is logged in',
+        userId: user.id,
+        ppPath: user.profilePic,
+      });
+    } else {
+      res.status(401).send({
+        message: 'User isn\'t logged in',
+        userId: undefined,
+        ppPath: undefined,
+      });
+    }
+    return next();
   }
 
   /**
@@ -277,8 +287,10 @@ class Auth {
 
         token = await Token.insert(new Token({
           token: hashString,
-          created: datetime.toMySQLFromJS(now),
-          expires: datetime.toMySQLFromJS(expires),
+          // created: Datetime.toMySQLFromJS(now),
+          created: new Date(now).toISOString().slice(0, 19).replace('T', ' '),
+          // expires: Datetime.toMySQLFromJS(expires),
+          expires: new Date(expires).toISOString().slice(0, 19).replace('T', ' '),
           type,
           status: ACTIVE,
           userId: user.id,
@@ -289,15 +301,6 @@ class Auth {
     });
 
     return tokenPromise;
-  }
-
-  /**
-   * [generatePasswordHash description]
-   * @param  {[type]} password [description]
-   * @return {[type]}          [description]
-   */
-  async generatePasswordHash(password) {
-    return Auth.generatePasswordHash(password);
   }
 
   /**
@@ -338,4 +341,4 @@ class Auth {
   }
 }
 
-module.exports = new Auth();
+module.exports = Auth;

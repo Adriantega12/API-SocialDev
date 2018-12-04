@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 
+// FIXME Todos los metodos deben estar documentados
+
 class DB {
   constructor() {
     const config = {
@@ -24,13 +26,27 @@ class DB {
   }
 
   /**
+   * FIXME Falta paginado y filtrado
    * Database method to get all tupples from a tabler
    * @param  {string} table Name of table to get all tupples from.
    * @return {object}       Array of tupples as objects
    */
-  async getAll(table) {
+  async getAll(table, page = 0, perPage = 10) {
     const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM ??', [table], (error, results) => {
+      this.con.query('SELECT * FROM ?? LIMIT ?, ?', [table, page, perPage], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  async getCount(table) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT COUNT(*) FROM ??', [table], (error, results) => {
         if (error) {
           return reject(DB.processError(error));
         }
@@ -61,32 +77,6 @@ class DB {
     return promise;
   }
 
-  /*
-  async getGeneric(table, columns, filter) {
-    const promise = new Promise((resolve, reject) => {
-      const filterArray = [];
-      Object.entries(filter).forEach((entry) => {
-        filterArray.push(entry);
-      });
-      this.con.query('SELECT ?? FROM ?? WHERE ?', [columns, table, ], (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
-      this.con.query('SELECT ?? FROM ?? WHERE id = ?', [columns, table, id], (error, results) => {
-        if (error) {
-          return reject(this.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
-    });
-    return promise;
-  }
-  */
-
   async getObjectByForeignId(table, columns, idAttribName, id) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT ?? FROM ?? WHERE ?? = ?', [columns, table, idAttribName, id], (error, results) => {
@@ -100,6 +90,29 @@ class DB {
     return promise;
   }
 
+  /**
+   * Query for getting just the top 5 posts
+   * @return {[type]} [description]
+   */
+  async getTopPosts() {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('SELECT * FROM posts ORDER BY score DESC LIMIT 0, 5', (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+
+        this.tupples = results;
+        return resolve(this.tupples);
+      });
+    });
+    return promise;
+  }
+
+  /**
+   * Get relationship of a user with others given his ID
+   * @param  {Number}    userId ID of user to look friendships for
+   * @return {[Friends]} Array of Friends
+   */
   async getFriends(userId) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('SELECT * FROM friendships WHERE userOneId = ? OR userTwoId = ?', [userId, userId],
@@ -118,7 +131,7 @@ class DB {
    * Get an existent friendship between two users
    * @param  {Number}     userOne User number one that belongs to the friendship
    * @param  {Number}     userTwo User number two that belongs to the friendship
-   * @return {Friendship}         Friendship
+   * @return {Friendship} Friendship
    */
   async getFriendship(userOne, userTwo) {
     const promise = new Promise((resolve, reject) => {
@@ -193,6 +206,18 @@ class DB {
   async delete(table, id) {
     const promise = new Promise((resolve, reject) => {
       this.con.query('DELETE FROM ?? WHERE id = ?', [table, id], (error, results) => {
+        if (error) {
+          return reject(DB.processError(error));
+        }
+        return resolve(results);
+      });
+    });
+    return promise;
+  }
+
+  async deleteFromUser(table, userId) {
+    const promise = new Promise((resolve, reject) => {
+      this.con.query('DELETE FROM ?? WHERE userId = ?', [table, userId], (error, results) => {
         if (error) {
           return reject(DB.processError(error));
         }

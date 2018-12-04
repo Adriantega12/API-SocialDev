@@ -1,5 +1,7 @@
 const db = require('../db');
+// const { Datetime } = require('../middlewares');
 
+// FIXME Todos los metodos deben estar documentados
 class User {
   /**
    * Constructor for class User.
@@ -13,12 +15,6 @@ class User {
    * @param  {number} age          User's age.
    * @param  {number} level        User's level for the gamefication of SocialDev.
    * @param  {string} profilePic   User's route to profilePic.
-   * @param  {[type]} emails       [description]
-   * @param  {[type]} comments     [description]
-   * @param  {[type]} posts        [description]
-   * @param  {[type]} friends      [description]
-   * @param  {[type]} messages     [description]
-   * @param  {[type]}              [description]
    * @return {User}                New instance of a User.
    */
   constructor({
@@ -30,7 +26,7 @@ class User {
     firstName,
     lastName,
     age,
-    level,
+    level = 1,
     profilePic,
   }) {
     this.id = id;
@@ -69,6 +65,7 @@ class User {
     let emails;
     let posts;
     let comments;
+    let scores;
     let friends;
     let sentMessages;
     let receivedMessages;
@@ -81,6 +78,7 @@ class User {
         emails = (await db.getObjectByForeignId('emails', '*', 'userId', userId)).map(email => email.email);
         posts = await db.getObjectByForeignId('posts', '*', 'userId', userId);
         comments = await db.getObjectByForeignId('comments', '*', 'userId', userId);
+        scores = await db.getObjectByForeignId('scores', '*', 'userId', userId);
         friends = await this.getFriendlist(userId);
         sentMessages = await db.getObjectByForeignId('messages', '*', 'senderId', userId);
         receivedMessages = await db.getObjectByForeignId('messages', '*', 'receiverId', userId);
@@ -95,9 +93,38 @@ class User {
       // Adding relevant data
       user.role = role;
       user.emails = emails;
-      user.posts = posts;
-      user.comments = comments;
-      user.friends = friends;
+      user.posts = posts.map((post) => {
+        const d = new Date(post.date);
+        return {
+          id: post.id,
+          title: post.title,
+          excerpt: `${post.text.substring(0, 256)}...`,
+          author: `${user.firstName} ${user.lastName}`,
+          // date: Datetime.toJSFromMySQL(post.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+          score: post.score,
+          // path: I have some ideas for this
+        };
+      });
+      user.comments = comments.map((comment) => {
+        const d = new Date(comment.date);
+        return {
+          ...comment,
+          // date: Datetime.toJSFromMySQL(comment.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+        };
+      });
+      user.scores = scores.map((score) => {
+        const d = new Date(score.date);
+        return {
+          ...score,
+          // date: Datetime.toJSFromMySQL(score.date),
+          date: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+        };
+      });
+      user.friends = friends.map((friend) => {
+        return { ...friend };
+      });
       user.sentMessages = sentMessages;
       user.receivedMessages = receivedMessages;
     } else {
@@ -123,15 +150,18 @@ class User {
 
   static async insert(user) {
     let id;
+    let email;
 
     try {
       const response = await db.insert('users', user);
       id = response.insertId;
+      email = { email: user.email, userId: id };
+      await User.addEmail(email);
     } catch (error) {
       throw error;
     }
 
-    const emails = [];
+    const emails = [email.email];
     const posts = [];
     const comments = [];
     const friends = [];
@@ -172,8 +202,15 @@ class User {
 
   static async delete(userId) {
     let deletedRows;
+    let deletedPostsRows;
+    let deletedCommentsRows;
+    let deletedEmailsRows;
 
     try {
+      const resPosts = await db.deleteFromUser('posts', userId);
+      const resComments = await db.deleteFromUser('comments', userId);
+      const resEmails = await db.deleteFromUser('emails', userId);
+      const resTokens = await db.deleteFromUser('tokens', userId);
       const results = await db.delete('users', userId);
       deletedRows = results.affectedRows;
     } catch (error) {
@@ -249,23 +286,32 @@ class User {
     return friends;
   }
 
-  static async getFeed(userId) {
+  static async getFeed(userId, page = 0, perPage = 10) {
     let friendList = [];
-    let friendPosts = [];
-    const posts = [];
+    const collection = [];
 
     try {
       friendList = await this.getFriendlist(userId);
-      const myFriendsPostsPromises = friendList.map(async (friend) => {
-        friendPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
-        posts.push(...friendPosts);
+      const myFriendsPostsPromises = await friendList.map(async (friend) => {
+        const userPosts = await db.getObjectByForeignId('posts', '*', 'userId', friend.friendId);
+        if (userPosts.length > 0) {
+          const userName = await User.getUserFullName(friend.friendId);
+          for (const index in userPosts) {
+            userPosts[index].author = userName;
+          }
+          collection.push(...userPosts);
+        }
       });
       await Promise.all(myFriendsPostsPromises);
     } catch (error) {
       throw error;
     }
 
-    return posts;
+    const posts = collection.sort((postA, postB) => {
+      return postB.id - postA.id;
+    });
+
+    return posts.slice(page * perPage, page * perPage + perPage);
   }
 
   // Email
@@ -308,6 +354,12 @@ class User {
     }
 
     return deletedRows > 0;
+  }
+
+  // Extra data
+  static async getUserFullName(userId) {
+    const user = await db.get('users', ['firstName', 'lastName'], userId);
+    return `${user[0].firstName} ${user[0].lastName}`;
   }
 }
 

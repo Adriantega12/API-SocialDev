@@ -22,6 +22,15 @@ class Authorizer {
       && Authorizer.userOwnsResource(user[resource], Number(resourceId));
   }
 
+  static ownsChild(req) {
+    const { user } = req.session;
+    const resource = req.originalUrl.split('/').slice(-2)[0]; // Gets child resource's name
+    const resourceId = req.params[resource.replace(/.$/, 'Id')];
+
+    return user[resource].length > 0
+      && Authorizer.userOwnsResource(user[resource], Number(resourceId));
+  }
+
   static userOwnsResource(resourceArray, resourceId) {
     return resourceArray.find(element => element.id === resourceId);
   }

@@ -1,10 +1,18 @@
 const router = require('express').Router();
+const multer = require('multer');
 const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const {
+  validator, FileHandler, Auth, Authorizer,
+} = require('../middlewares');
+
+const upload = multer({ dest: 'tmp/' });
 
 // INDEX Post
 router.get('/', postsController.getAll);
+
+// INDEX Network posts
+router.get('/network', postsController.getTopPosts);
 
 // NEW Post
 router.post('/', [
@@ -13,11 +21,10 @@ router.post('/', [
       body: {
         title: 'required word',
         text: 'required word',
-        score: 'required integer',
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], postsController.insert);
 
 // SHOW Post
@@ -43,7 +50,7 @@ router.put('/:postId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
@@ -60,7 +67,7 @@ router.delete('/:postId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
@@ -77,7 +84,7 @@ router.get('/:postId/attachments', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
@@ -87,6 +94,7 @@ router.get('/:postId/attachments', [
 
 // NEW Attachment
 router.post('/:postId/attachments', [
+  upload.fields([{ name: 'data', maxCount: 1 }]), // Upload attachment
   (req, res, next) => {
     validator.validate(req, res, next, {
       params: {
@@ -94,15 +102,20 @@ router.post('/:postId/attachments', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
     });
   },
+  FileHandler.moveFiles, // Move profile picture to correct folder
+  (req, res, next) => {
+    [req.body.data] = req.filePaths;
+    next();
+  },
 ], postsController.addAttachment);
 
-// Delete Attachment
+// DELETE Attachment
 router.delete('/:postId/attachments/:attachmentId', [
   (req, res, next) => {
     validator.validate(req, res, next, {
@@ -112,7 +125,7 @@ router.delete('/:postId/attachments/:attachmentId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
@@ -137,12 +150,11 @@ router.post('/:postId/scores', [
         postId: 'integer',
       },
       body: {
-        userId: 'required integer',
         score: 'required integer',
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], postsController.addScore);
 
 // DELETE score
@@ -155,10 +167,10 @@ router.delete('/:postId/scores/:scoreId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
-      user: 'owns',
+      user: 'ownsChild',
     });
   },
 ], postsController.deleteScore);

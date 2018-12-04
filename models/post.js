@@ -1,4 +1,7 @@
 const db = require('../db');
+const { User } = require('../models');
+
+// FIXME Todos los metodos deben estar documentados
 
 class Post {
   /**
@@ -33,45 +36,111 @@ class Post {
     this.scores = scores;
   }
 
-  static async getAll() {
+  static async getAll(page = 0, perPage = 10) {
     let data;
 
     try {
-      data = await db.getAll('posts');
+      data = await db.getAll('posts', page, perPage);
     } catch (error) {
       throw error;
     }
 
-    const response = [];
-
-    data.forEach((row) => {
-      response.push(new Post(row));
+    const responsePromise = await data.map(async (row) => {
+      const post = new Post(row);
+      post.author = await User.getUserFullName(row.userId);
+      return post;
     });
+
+    const response = await Promise.all(responsePromise);
+
+    return response;
+  }
+
+  static async getTotal() {
+    let data;
+
+    try {
+      data = await db.getCount('posts');
+    } catch (error) {
+      throw error;
+    }
+
+    return data[0]['COUNT(*)'];
+  }
+
+  static async getTopPosts() {
+    let data;
+
+    try {
+      data = await db.getTopPosts('posts');
+    } catch (error) {
+      throw error;
+    }
+
+    const responsePromise = await data.map(async (row) => {
+      const post = new Post(row);
+      post.author = await User.getUserFullName(row.userId);
+      return post;
+    });
+
+    const response = await Promise.all(responsePromise);
 
     return response;
   }
 
   static async get(postId) {
     let data;
+    let user;
     let attachments;
     let comments;
     let scores;
+    let post;
 
     try {
       data = await db.get('posts', '*', postId);
-      attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
-      comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
-      scores = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+      if (data.length) {
+        user = await db.get('users', ['firstName', 'lastName'], data[0].userId);
+        attachments = await db.getObjectByForeignId('attachments', '*', 'postId', postId);
+        comments = await db.getObjectByForeignId('comments', '*', 'postId', postId);
+        scores = await db.getObjectByForeignId('scores', '*', 'postId', postId);
+      }
     } catch (error) {
       throw error;
     }
 
-    return data.length !== 0 ? new Post({
-      ...data[0],
-      attachments,
-      comments,
-      scores,
-    }) : data;
+    if (data.length !== 0) {
+      // Creating user from model data
+      post = new Post(data[0]);
+      // Adding relevant data
+      post.author = `${user[0].firstName} ${user[0].lastName}`;
+      post.attachments = attachments.map(attachment => attachment.data);
+      post.comments = await Promise.all(await comments.map(async (comment) => {
+        const d = new Date(comment.date);
+        const userComment = (await db.get('users', ['firstName', 'lastName', 'profilePic'], comment.userId))[0];
+        const commentView = {
+          commentId: comment.id,
+          userId: comment.userId,
+          ppPath: userComment.profilePic,
+          author: `${userComment.firstName} ${userComment.lastName}`,
+          content: comment.content,
+          commentDate: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
+          isEdited: comment.isEdited,
+        };
+        return commentView;
+      }));
+      post.scores = scores.map((score) => {
+        return {
+          userId: score.userId,
+          score: score.score,
+          date: score.date,
+        };
+      });
+    } else {
+      // Data is empty, so will post.
+      post = data;
+    }
+
+    return post;
   }
 
   static async insert(post) {
@@ -166,7 +235,7 @@ class Post {
   static async getScores(postId) {
     let data;
     try {
-      data = await db.getObjectByForeignId('scores', '*', 'postsId', postId);
+      data = await db.getObjectByForeignId('scores', '*', 'postId', postId);
     } catch (error) {
       throw error;
     }
@@ -183,8 +252,17 @@ class Post {
     let id;
 
     try {
+      const post = await Post.get(score.postId);
       const response = await db.insert('scores', score);
       id = response.insertId;
+      if (id > 0) {
+        if (post.scores.length === 0) {
+          post.update({ score: Number(score.score) });
+        } else {
+          const average = (post.score + score.score) / 2;
+          post.update({ score: average });
+        }
+      }
     } catch (error) {
       throw error;
     }

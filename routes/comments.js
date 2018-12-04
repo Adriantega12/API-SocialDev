@@ -1,6 +1,6 @@
 const router = require('express').Router({ mergeParams: true });
 const { commentsController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const { validator, Auth, Authorizer } = require('../middlewares');
 
 // INDEX Comment
 router.get('/', commentsController.getAll);
@@ -14,7 +14,7 @@ router.post('/', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], commentsController.insert);
 
 // SHOW Comment
@@ -38,7 +38,7 @@ router.put('/:commentId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
@@ -55,7 +55,7 @@ router.delete('/:commentId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
