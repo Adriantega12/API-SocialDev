@@ -57,19 +57,6 @@ class DB {
     return promise;
   }
 
-  /*async getPageAscend(table, page, orderBy) {
-    const promise = new Promise((resolve, reject) => {
-      this.con.query('SELECT * FROM ?? ORDER BY ?? LIMIT', [table, orderBy], (error, results) => {
-        if (error) {
-          return reject(DB.processError(error));
-        }
-        this.tupples = results;
-        return resolve(this.tupples);
-      });
-    });
-    return promise;
-  }*/
-
   /**
    * Database method to get a tupple (and some or all of it's attributes) identified by ID.
    * @param  {string}       table   Name of table to get tupples from.

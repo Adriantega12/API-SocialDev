@@ -1,5 +1,5 @@
 const { Post } = require('../models');
-const { datetime } = require('../middlewares');
+// const { Datetime } = require('../middlewares');
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -28,7 +28,12 @@ class PostsController {
 
     try {
       totalCount = await Post.getTotal();
-      data = await Post.getAll(Number(req.query.page), Number(req.query.per_page));
+      data = await Post.getAll(
+        req.query.page
+          ? Number(req.query.page) : undefined,
+        req.query.per_page
+          ? Number(req.query.per_page) : undefined,
+      );
     } catch (error) {
       next(error);
     }
@@ -94,7 +99,8 @@ class PostsController {
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
       score: 0,
-      date: datetime.toMySQLFromJS(Date.now()),
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {
@@ -255,7 +261,8 @@ class PostsController {
       postId: Number(req.params.postId),
       userId: req.session.user.id,
       score: Number(req.body.score),
-      date: datetime.toMySQLFromJS(Date.now()),
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {

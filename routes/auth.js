@@ -1,25 +1,25 @@
 const router = require('express').Router();
-const { auth } = require('../middlewares');
+const { Auth } = require('../middlewares');
 
 // Register route
-router.post('/register', auth.register);
+router.post('/register', Auth.register);
 
 // Confirm user route
-router.get('/register/:token', auth.confirmUser);
+router.get('/register/:token', Auth.confirmUser);
 
 // Login route
-router.post('/login', auth.login);
+router.post('/login', Auth.login);
 
 // Recover password route
-router.post('/recover', auth.recoverPassword);
+router.post('/recover', Auth.recoverPassword);
 
 // Reset password route
-router.patch('/recover/:token', auth.resetPassword);
+router.patch('/recover/:token', Auth.resetPassword);
 
 // Logout route
-router.get('/logout', auth.logout);
+router.get('/logout', Auth.logout);
 
 // Has session route
-router.get('/session', auth.session);
+router.get('/session', Auth.session);
 
 module.exports = router;

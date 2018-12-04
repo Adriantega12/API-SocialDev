@@ -115,6 +115,7 @@ class Post {
       post.author = `${user[0].firstName} ${user[0].lastName}`;
       post.attachments = attachments.map(attachment => attachment.data);
       post.comments = await Promise.all(await comments.map(async (comment) => {
+        const d = new Date(comment.date);
         const userComment = (await db.get('users', ['firstName', 'lastName', 'profilePic'], comment.userId))[0];
         const commentView = {
           commentId: comment.id,
@@ -122,7 +123,7 @@ class Post {
           ppPath: userComment.profilePic,
           author: `${userComment.firstName} ${userComment.lastName}`,
           content: comment.content,
-          commentDate: comment.date,
+          commentDate: `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`,
           isEdited: comment.isEdited,
         };
         return commentView;

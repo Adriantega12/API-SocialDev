@@ -1,6 +1,6 @@
 exports.validator = require('./validator');
 exports.errorHandler = require('./errorHandler');
-exports.datetime = require('./datetime');
-exports.auth = require('./auth');
+exports.Datetime = require('./datetime');
 exports.Authorizer = require('./authorizer');
 exports.FileHandler = require('./fileHandler');
+exports.Auth = require('./auth');

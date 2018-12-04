@@ -3,7 +3,7 @@ const multer = require('multer');
 const commentsRoutes = require('./comments');
 const { postsController } = require('../controllers');
 const {
-  validator, FileHandler, auth, Authorizer,
+  validator, FileHandler, Auth, Authorizer,
 } = require('../middlewares');
 
 const upload = multer({ dest: 'tmp/' });
@@ -24,7 +24,7 @@ router.post('/', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], postsController.insert);
 
 // SHOW Post
@@ -50,7 +50,7 @@ router.put('/:postId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
@@ -67,7 +67,7 @@ router.delete('/:postId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'owns',
@@ -84,7 +84,7 @@ router.get('/:postId/attachments', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
@@ -102,7 +102,7 @@ router.post('/:postId/attachments', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
@@ -125,7 +125,7 @@ router.delete('/:postId/attachments/:attachmentId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsParent',
@@ -154,7 +154,7 @@ router.post('/:postId/scores', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], postsController.addScore);
 
 // DELETE score
@@ -167,7 +167,7 @@ router.delete('/:postId/scores/:scoreId', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
   (req, res, next) => {
     Authorizer.authorize(req, res, next, {
       user: 'ownsChild',

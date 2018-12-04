@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { messagesController } = require('../controllers');
-const { validator, auth, Authorizer } = require('../middlewares');
+const { validator, Auth, Authorizer } = require('../middlewares');
 
 
 // INDEX Message
@@ -16,7 +16,7 @@ router.post('/', [
       },
     });
   },
-  auth.haveSession,
+  Auth.haveSession,
 ], messagesController.insert);
 
 // SHOW Message

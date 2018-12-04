@@ -1,5 +1,5 @@
 const { Message } = require('../models');
-const { datetime } = require('../middlewares');
+const { Datetime } = require('../middlewares');
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -64,7 +64,8 @@ class MessagesController {
       senderId: req.session.user.id,
       ...req.body, // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
-      date: datetime.toMySQLFromJS(Date.now()),
+      // date: Datetime.toMySQLFromJS(Date.now()),
+      date: new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' '),
     };
 
     try {
