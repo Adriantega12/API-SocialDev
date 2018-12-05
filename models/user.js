@@ -97,6 +97,7 @@ class User {
         const d = new Date(post.date);
         return {
           id: post.id,
+          userId: user.id,
           title: post.title,
           excerpt: `${post.text.substring(0, 256)}...`,
           author: `${user.firstName} ${user.lastName}`,
