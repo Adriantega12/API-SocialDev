@@ -1,11 +1,14 @@
 const router = require('express').Router();
-const multer = require('multer');
+// const multer = require('multer');
 const { usersController } = require('../controllers');
 const {
-  validator, FileHandler, Auth, Authorizer,
+  validator,
+  // FileHandler,
+  Auth,
+  Authorizer,
 } = require('../middlewares');
 
-const upload = multer({ dest: 'tmp/' });
+// const upload = multer({ dest: 'tmp/' });
 
 // Friendships
 // INDEX Friendship
@@ -31,7 +34,7 @@ router.get('/', usersController.getAll);
 
 // NEW User
 router.post('/', [
-  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
+//  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
   (req, res, next) => { // Params and body validation
     validator.validate(req, res, next, {
       body: {
@@ -45,11 +48,11 @@ router.post('/', [
       },
     });
   },
-  FileHandler.moveFiles, // Move profile picture to correct folder
-  (req, res, next) => {
-    [req.body.profilePic] = req.filePaths;
-    next();
-  },
+//  FileHandler.moveFiles, // Move profile picture to correct folder
+//  (req, res, next) => {
+//    [req.body.profilePic] = req.filePaths;
+//    next();
+//  },
 ], usersController.insert);
 
 // SHOW User
@@ -63,7 +66,7 @@ router.get('/:userId', (req, res, next) => {
 
 // UPDATE User
 router.put('/:userId', [
-  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
+//  upload.fields([{ name: 'profilePic', maxCount: 1 }]), // Upload profile picture
   (req, res, next) => { // Params and body validation
     validator.validate(req, res, next, {
       params: {
@@ -81,13 +84,13 @@ router.put('/:userId', [
       },
     });
   },
-  FileHandler.moveFiles, // Move profile picture to correct folder
-  (req, res, next) => {
-    if (req.filePaths.length > 0) {
-      [req.body.profilePic] = req.filePaths;
-    }
-    next();
-  },
+//  FileHandler.moveFiles, // Move profile picture to correct folder
+//  (req, res, next) => {
+//    if (req.filePaths.length > 0) {
+//      [req.body.profilePic] = req.filePaths;
+//    }
+//    next();
+//  },
 ], usersController.update);
 
 // DESTROY User

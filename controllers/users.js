@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { /*Datetime,*/ auth } = require('../middlewares');
+const { /*Datetime,*/ Auth } = require('../middlewares');
 
 // FIXME Todos los metodos deben estar documentados
 
@@ -78,7 +78,7 @@ class UsersController {
     try {
       // FIXME Before sending all the req.body you want to remove any extra data is not required for the model
       // the clean up can be here or in the model.
-      req.body.password = await auth.generatePasswordHash(req.body.password);
+      req.body.password = await Auth.generatePasswordHash(req.body.password);
       req.body.roleId = 3;
       req.body.level = 1;
       data = await User.insert(req.body);
