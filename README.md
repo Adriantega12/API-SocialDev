@@ -319,7 +319,7 @@ URL: https://socialdev-218019.appspot.com/
 
 ## 7. Autores
 
-- Adrián Octavio Terrazas García: _Darktega_
+- Adrián Octavio Terrazas García: _Adriantega12_
 
 [NVMRepo]: https://github.com/creationix/nvm#installation
 [NodeGuide]: https://blog.teamtreehouse.com/install-node-js-npm-linux
